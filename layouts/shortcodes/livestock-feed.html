@@ -1,0 +1,38 @@
+{{ $livestock := site.Data.livestock_feed.livestock }}
+<div class="livestock-feed" id="livestock-feed">
+  <h3>Livestock & Feed Calculator</h3>
+  <div class="lf-animals">
+    {{ range $livestock }}
+    <div class="lf-row"><span title="{{ .note }}">{{ .name }} ({{ .feed }} nutrition/day, {{ .produce }})</span><input type="number" min="0" value="0" data-feed="{{ .feed }}"></div>
+    {{ end }}
+  </div>
+  <button id="lf-calc" class="btn">Calculate Feed Needs</button>
+  <div class="lf-result">
+    <p><strong>Total daily feed:</strong> <span id="lf-total">—</span> nutrition</p>
+    <p><strong>Haygrass tiles needed:</strong> <span id="lf-hay">—</span></p>
+    <p><strong>Tip:</strong> <span id="lf-tip">—</span></p>
+  </div>
+  <p class="lf-note">Community-consensus feed values for RimWorld 1.6. A haygrass tile produces roughly 3-4 nutrition over its growth cycle.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('livestock-feed');
+  var btn = root.querySelector('#lf-calc');
+  var elT = root.querySelector('#lf-total');
+  var elH = root.querySelector('#lf-hay');
+  var elTip = root.querySelector('#lf-tip');
+  function calc(){
+    var total = 0;
+    var count = 0;
+    root.querySelectorAll('.lf-row input').forEach(function(inp){
+      var n = parseInt(inp.value)||0;
+      if(n>0){ total += n * parseInt(inp.getAttribute('data-feed')); count += n; }
+    });
+    elT.textContent = total.toFixed(1);
+    elH.textContent = Math.ceil(total / 3.5) + ' tiles (~' + Math.ceil(total/3.5/4) + ' growers per season)';
+    elTip.textContent = count === 0 ? 'Add animals to see feed needs.' : 'Plan haygrass fields before winter to avoid starvation.';
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>

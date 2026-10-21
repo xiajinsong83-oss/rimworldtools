@@ -1,0 +1,22 @@
+# RimWorld Room Budget — 房间家具美观/成本参考（1.6 社区共识值）
+# beauty: 美观值；cost: 大致造价（steel/silver 单位）
+
+furniture:
+  - { name: "Bed (single)",            beauty: 0, cost: 60, note: "Essential" }
+  - { name: "Dresser",                 beauty: 2, cost: 80, note: "Storage + comfort" }
+  - { name: "End table",               beauty: 2, cost: 30, note: "Small bonus" }
+  - { name: "Plant pot (decorative)",  beauty: 5, cost: 20, note: "Cheap beauty" }
+  - { name: "Sculpture (small, good)", beauty: 50, cost: 120, note: "Big beauty per cost" }
+  - { name: "Sculpture (large, good)", beauty: 100, cost: 300, note: "Premium room centerpiece" }
+  - { name: "Flower vase",             beauty: 10, cost: 40, note: "Nice mid option" }
+  - { name: "Bookshelf",               beauty: 6, cost: 60, note: "Study bonus" }
+  - { name: "Table (dining)",          beauty: 2, cost: 70, note: "Shared use" }
+  - { name: "Carpet (per tile)",       beauty: 2, cost: 5,  note: "Cheap floor boost" }
+  - { name: "Light (wall lamp)",       beauty: 2, cost: 25, note: "Needed for bright" }
+  - { name: "Art statue (masterwork)", beauty: 500, cost: 1500, note: "End-game showpiece" }
+
+# 空间与整洁对房间评分影响（约值）
+room_factors:
+  - { label: "Clean room (+1 cleanliness)",   bonus: 5 }
+  - { label: "Large room (20+ tiles)",        bonus: 10 }
+  - { label: "Small cramped room (<10 tiles)", bonus: -5 }

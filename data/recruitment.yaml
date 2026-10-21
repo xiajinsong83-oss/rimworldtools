@@ -1,0 +1,22 @@
+# RimWorld Recruitment — 招募参考（1.6 社区共识值）
+
+# 谈判者 Social 技能 → 每日招募进度（约值，0-100 总进度）
+social_levels:
+  - { label: "Social 0-4",   progress_per_day: 2 }
+  - { label: "Social 5-8",   progress_per_day: 3 }
+  - { label: "Social 9-12",  progress_per_day: 5 }
+  - { label: "Social 13-16", progress_per_day: 7 }
+  - { label: "Social 17-20", progress_per_day: 9 }
+
+# 囚犯抵抗值 → 总进度需求（约值）
+resistance:
+  - { label: "Low resistance (0-25)",  total_needed: 50 }
+  - { label: "Medium (26-50)",         total_needed: 100 }
+  - { label: "High (51-75)",           total_needed: 160 }
+  - { label: "Very high (76+)",        total_needed: 240 }
+
+# 心情/意愿修正
+willingness:
+  - { label: "Prisoner unhappy",  mult: 0.8 }
+  - { label: "Neutral",           mult: 1.0 }
+  - { label: "Prisoner happy",    mult: 1.3 }

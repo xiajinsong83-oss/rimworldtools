@@ -1,0 +1,45 @@
+{{ $bm := site.Data.research_speed.benchmarks }}
+{{ $bon := site.Data.research_speed.bonuses }}
+<div class="research-speed" id="research-speed">
+  <h3>Research Speed Calculator</h3>
+  <div class="rs-field">
+    <label for="rs-project">Research project</label>
+    <select id="rs-project">
+      {{ range $bm }}<option value="{{ .points }}">{{ .name }} ({{ .points }} pts)</option>{{ end }}
+    </select>
+  </div>
+  <div class="rs-bonuses">
+    {{ range $bon }}
+    <label class="rs-b"><input type="checkbox" data-pct="{{ .pct }}"> {{ .name }} (+{{ .pct }}%)</label>
+    {{ end }}
+  </div>
+  <div class="rs-field">
+    <label for="rs-researchers">Researchers</label>
+    <input type="number" id="rs-researchers" min="1" value="1">
+  </div>
+  <button id="rs-calc" class="btn">Estimate Research Time</button>
+  <div class="rs-result">
+    <p><strong>Research speed:</strong> <span id="rs-speed">—</span>%</p>
+    <p><strong>Estimated time:</strong> <span id="rs-days">—</span></p>
+  </div>
+  <p class="rs-note">Community-consensus baseline for RimWorld 1.6. One researcher produces ~1 point/day at 100% speed. Actual speed also depends on light, work time and inspiration.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('research-speed');
+  var btn = root.querySelector('#rs-calc');
+  var elS = root.querySelector('#rs-speed');
+  var elD = root.querySelector('#rs-days');
+  function calc(){
+    var points = parseInt(root.querySelector('#rs-project').value)||0;
+    var pct = 100;
+    root.querySelectorAll('.rs-b input:checked').forEach(function(cb){ pct += parseInt(cb.getAttribute('data-pct')); });
+    var n = parseInt(root.querySelector('#rs-researchers').value)||1;
+    var days = points / (n * pct / 100);
+    elS.textContent = pct;
+    elD.textContent = days.toFixed(1) + ' days (~' + Math.ceil(days) + ' in-game days)';
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>

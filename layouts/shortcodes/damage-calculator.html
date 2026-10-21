@@ -1,0 +1,49 @@
+{{ $weapons := site.Data.damage_calc.weapons }}
+{{ $quality := site.Data.damage_calc.quality_mult }}
+<div class="damage-calc" id="damage-calc">
+  <h3>Weapon Damage Calculator</h3>
+  <div class="dc-field">
+    <label for="dc-weapon">Weapon</label>
+    <select id="dc-weapon">
+      {{ range $weapons }}<option value="{{ .base }}">{{ .name }} (base {{ .base }} {{ .type }})</option>{{ end }}
+    </select>
+  </div>
+  <div class="dc-field">
+    <label for="dc-quality">Quality</label>
+    <select id="dc-quality">
+      {{ range $quality }}<option value="{{ .mult }}">{{ .label }}</option>{{ end }}
+    </select>
+  </div>
+  <div class="dc-field">
+    <label for="dc-armor">Enemy armor (0-100)</label>
+    <input type="number" id="dc-armor" min="0" max="100" value="30">
+  </div>
+  <button id="dc-calc" class="btn">Calculate Damage</button>
+  <div class="dc-result">
+    <p><strong>Damage per hit:</strong> <span id="dc-dmg">—</span></p>
+    <p><strong>Effective vs armor:</strong> <span id="dc-eff">—</span></p>
+    <p><strong>Tip:</strong> <span id="dc-tip">—</span></p>
+  </div>
+  <p class="dc-note">Community-consensus weapon values for RimWorld 1.6. Armor absorbs damage probabilistically; high armor favors sharp-damage weapons that pierce less.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('damage-calc');
+  var btn = root.querySelector('#dc-calc');
+  var elD = root.querySelector('#dc-dmg');
+  var elE = root.querySelector('#dc-eff');
+  var elTip = root.querySelector('#dc-tip');
+  function calc(){
+    var base = parseFloat(root.querySelector('#dc-weapon').value)||1;
+    var mult = parseFloat(root.querySelector('#dc-quality').value);
+    var armor = parseInt(root.querySelector('#dc-armor').value)||0;
+    var dmg = base * mult;
+    var eff = dmg * (1 - Math.min(0.8, armor/200));
+    elD.textContent = dmg.toFixed(1) + ' damage';
+    elE.textContent = eff.toFixed(1) + ' effective';
+    elTip.textContent = armor > 60 ? 'Heavy armor — use blunt or EMP weapons instead.' : (dmg >= 20 ? 'Heavy hitter — great against unarmored targets.' : 'Fast-firing weapon — DPS matters more than single hits.');
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>

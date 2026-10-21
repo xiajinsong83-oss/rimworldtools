@@ -1,0 +1,41 @@
+{{ $types := site.Data.recreation.recreation_types }}
+{{ $facilities := site.Data.recreation.facilities }}
+<div class="recreation-calc" id="recreation-calc">
+  <h3>Recreation Variety Calculator</h3>
+  <p>Check the facilities you have:</p>
+  <div class="rc-facs">
+    {{ range $facilities }}
+    <label class="rc-f"><input type="checkbox" data-types="{{ .types }}"> {{ .name }}</label>
+    {{ end }}
+  </div>
+  <button id="rc-calc" class="btn">Check Recreation Coverage</button>
+  <div class="rc-result">
+    <p><strong>Recreation types covered:</strong> <span id="rc-types">—</span></p>
+    <p><strong>Mood bonus:</strong> <span id="rc-bonus">—</span></p>
+    <p><strong>Tip:</strong> <span id="rc-tip">—</span></p>
+  </div>
+  <p class="rc-note">Recreation variety boosts recreation-fill mood. Covering 4+ types gives a strong bonus for RimWorld 1.6.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('recreation-calc');
+  var btn = root.querySelector('#rc-calc');
+  var elT = root.querySelector('#rc-types');
+  var elB = root.querySelector('#rc-bonus');
+  var elTip = root.querySelector('#rc-tip');
+  var allTypes = {{ $types | jsonify }};
+  function calc(){
+    var covered = {};
+    root.querySelectorAll('.rc-f input:checked').forEach(function(cb){
+      JSON.parse(cb.getAttribute('data-types')).forEach(function(t){ covered[t] = 1; });
+    });
+    var count = Object.keys(covered).length;
+    elT.textContent = count + ' / ' + allTypes.length + ' types';
+    var bonus = Math.min(12, count * 4);
+    elB.textContent = '+' + bonus + ' recreation mood (variety)';
+    elTip.textContent = count >= 4 ? 'Great variety — colonists stay happy.' : 'Add 1-2 more facilities to lift recreation mood.';
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>

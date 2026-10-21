@@ -1,0 +1,49 @@
+{{ $base := site.Data.freezer_cooler.baseline_tiles_per_cooler }}
+{{ $tempF := site.Data.freezer_cooler.temp_factor }}
+{{ $biomeF := site.Data.freezer_cooler.biome_factor }}
+<div class="freezer-cooler" id="freezer-cooler">
+  <h3>Freezer Cooler Count Calculator</h3>
+  <div class="fc-field">
+    <label for="fc-tiles">Freezer size (walkable tiles)</label>
+    <input type="number" id="fc-tiles" min="10" value="200">
+  </div>
+  <div class="fc-field">
+    <label for="fc-temp">Target temperature (°C)</label>
+    <select id="fc-temp">
+      {{ range $tempF }}<option value="{{ .target }}">{{ .target }}°C — {{ .note }}</option>{{ end }}
+    </select>
+  </div>
+  <div class="fc-field">
+    <label for="fc-biome">Biome</label>
+    <select id="fc-biome">
+      {{ range $biomeF }}<option value="{{ .factor }}">{{ .name }}</option>{{ end }}
+    </select>
+  </div>
+  <button id="fc-calc" class="btn">Calculate Coolers</button>
+  <div class="fc-result">
+    <p><strong>Recommended coolers:</strong> <span id="fc-count">—</span></p>
+    <p><strong>Tip:</strong> <span id="fc-tip">—</span></p>
+  </div>
+  <p class="fc-note">Experience-based estimate for RimWorld 1.6. Each cooler maintains roughly {{ $base }} tiles at ~0°C. Add 1 spare cooler for safety. Walls, insulation and double-doors improve efficiency.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('freezer-cooler');
+  var btn = root.querySelector('#fc-calc');
+  var elC = root.querySelector('#fc-count');
+  var elT = root.querySelector('#fc-tip');
+  var base = {{ $base }};
+  function num(id){ return parseFloat(root.querySelector(id).value)||0; }
+  function calc(){
+    var tiles = num('#fc-tiles');
+    var tempF = parseFloat(root.querySelector('#fc-temp').value);
+    var biomeF = parseFloat(root.querySelector('#fc-biome').value);
+    var perCooler = base * tempF * biomeF;
+    var count = Math.max(1, Math.ceil(tiles / perCooler));
+    elC.textContent = count;
+    elT.textContent = 'Run ' + (count+1) + ' for safety margin. Use double doors + insulated walls to reduce load.';
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>

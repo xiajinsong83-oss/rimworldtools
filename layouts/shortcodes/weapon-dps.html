@@ -1,0 +1,53 @@
+{{ $wpns := site.Data.weapon_dps.weapons }}
+{{ $qm := site.Data.weapon_dps.quality_mult }}
+<div class="weapon-dps" id="weapon-dps">
+  <h3>Weapon DPS Comparator</h3>
+  <div class="wd-field">
+    <label>Select weapons to compare</label>
+    <div class="wd-weapons">
+      {{ range $wpns }}
+      <label class="wd-w"><input type="checkbox" value="{{ .name }}"> {{ .name }}</label>
+      {{ end }}
+    </div>
+  </div>
+  <div class="wd-field">
+    <label for="wd-quality">Quality</label>
+    <select id="wd-quality">
+      {{ range $qm }}<option value="{{ .m }}">{{ .q }}</option>{{ end }}
+    </select>
+  </div>
+  <button id="wd-calc" class="btn">Compare DPS</button>
+  <div class="wd-result">
+    <table><thead><tr><th>Weapon</th><th>DPS</th><th>Range</th><th>Damage</th><th>Accuracy</th></tr></thead>
+    <tbody id="wd-body"></tbody></table>
+  </div>
+  <p class="wd-note">Community-consensus base DPS for RimWorld 1.6. Adjusted by quality. Real values shift with shooting skill, cover and range.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('weapon-dps');
+  var btn = root.querySelector('#wd-calc');
+  var body = root.querySelector('#wd-body');
+  var qualitySel = root.querySelector('#wd-quality');
+  var weapons = {{ $wpns | jsonify }};
+  function calc(){
+    var qm = parseFloat(qualitySel.value);
+    body.innerHTML = '';
+    var checked = root.querySelectorAll('.wd-weapons input:checked');
+    var rows = [];
+    checked.forEach(function(cb){
+      var w = weapons.find(function(x){ return x.name === cb.value; });
+      if(w){ rows.push({ name:w.name, dps:(w.dps*qm).toFixed(1), range:w.range, damage:w.damage, acc:(w.accuracy*100).toFixed(0)+'%' }); }
+    });
+    rows.sort(function(a,b){ return parseFloat(b.dps)-parseFloat(a.dps); });
+    rows.forEach(function(r){
+      var tr = document.createElement('tr');
+      [r.name, r.dps, r.range, r.damage, r.acc].forEach(function(c){
+        var td = document.createElement('td'); td.textContent = c; tr.appendChild(td);
+      });
+      body.appendChild(tr);
+    });
+  }
+  btn.addEventListener('click', calc);
+})();
+</script>

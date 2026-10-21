@@ -1,0 +1,46 @@
+{{ $genes := site.Data.gene_designer.genes }}
+{{ $notes := site.Data.gene_designer.notes }}
+<div class="gene-designer" id="gene-designer">
+  <h3>Gene Designer — Metabolic Budget</h3>
+  <p>Check the genes you want; see the metabolic cost total and whether the pawn stays balanced.</p>
+  <div class="gd-genes">
+    {{ range $genes }}
+    <label class="gd-g"><input type="checkbox" data-cost="{{ .cost }}" title="{{ .note }}"> {{ .name }} ({{ .category }}, cost {{ .cost }})</label>
+    {{ end }}
+  </div>
+  <button id="gd-calc" class="btn">Check Metabolic Budget</button>
+  <div class="gd-result">
+    <p><strong>Metabolic cost:</strong> <span id="gd-cost">—</span></p>
+    <p><strong>Status:</strong> <span id="gd-status">—</span></p>
+    <p><strong>Tip:</strong> <span id="gd-tip">—</span></p>
+  </div>
+  <h4>Gene rules</h4>
+  <ul class="gd-notes">
+    {{ range $notes }}<li>{{ . }}</li>{{ end }}
+  </ul>
+  <p class="gd-note">Community-consensus gene values for RimWorld 1.6 + Biotech. Exact effects and costs can vary by version.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('gene-designer');
+  var btn = root.querySelector('#gd-calc');
+  var elC = root.querySelector('#gd-cost');
+  var elS = root.querySelector('#gd-status');
+  var elTip = root.querySelector('#gd-tip');
+  function calc(){
+    var cost = 0;
+    var count = 0;
+    root.querySelectorAll('.gd-g input:checked').forEach(function(cb){
+      cost += parseInt(cb.getAttribute('data-cost'));
+      count++;
+    });
+    elC.textContent = cost + ' metabolic';
+    if(count === 0){ elS.textContent = 'No genes selected'; elTip.textContent = 'Add genes to design a xenotype.'; }
+    else if(cost < 0){ elS.textContent = 'Balanced (negative cost, sustainable)'; elTip.textContent = 'Negative-cost genes power positive ones — good for a custom xenotype.'; }
+    else if(cost === 0){ elS.textContent = 'Neutral'; elTip.textContent = 'Neutral budget is fine for endogenes but limits strong positives.'; }
+    else { elS.textContent = 'Over budget (needs archite or metabolic debt)'; elTip.textContent = 'Add negative-cost genes or use archite capsules to offset.'; }
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>

@@ -1,0 +1,28 @@
+# RimWorld Mood — 常见心情修正参考（1.6 社区共识值）
+# 基准心情 ~50（中性），加减修正后为当前心情
+# break_threshold: 低于该值有崩溃风险
+
+baseline_mood: 50
+break_threshold: 30
+
+# 心情修正项（name / delta）
+mood_mods:
+  - { name: "Impressive bedroom (5+ mood)", delta: 5 }
+  - { name: "Good meal (+4)", delta: 4 }
+  - { name: "Lavish meal (+8)", delta: 8 }
+  - { name: "Ate without table (-3)", delta: -3 }
+  - { name: "Slept in own room", delta: 0 }
+  - { name: "Slept on ground (-7)", delta: -7 }
+  - { name: "Witnessed death (-4)", delta: -4 }
+  - { name: "Colonist died recently (-6)", delta: -6 }
+  - { name: "Pain (moderate, -10)", delta: -10 }
+  - { name: "Pain (severe, -20)", delta: -20 }
+  - { name: "Cold (-8)", delta: -8 }
+  - { name: "Hot (-8)", delta: -8 }
+  - { name: "Darkness (-4)", delta: -4 }
+  - { name: "Socially isolated (-10)", delta: -10 }
+  - { name: "Beautiful surroundings (+8)", delta: 8 }
+  - { name: "Recreation satisfied (+4)", delta: 4 }
+  - { name: "Drug high (mild, +6)", delta: 6 }
+  - { name: "Drug withdrawal (-15)", delta: -15 }
+  - { name: "Psycast / psychic drone (-12)", delta: -12 }

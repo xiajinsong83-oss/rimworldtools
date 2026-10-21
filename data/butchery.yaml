@@ -1,0 +1,21 @@
+# RimWorld Butchery — 屠宰产出参考（1.6 社区共识值）
+# meat/leather 为约值（受屠宰台质量与技能影响）
+
+animals:
+  - { name: "Chicken",   meat: 8,   leather: 6,  other: "-",      note: "Cheap, low yield" }
+  - { name: "Rabbit",    meat: 6,   leather: 4,  other: "-",      note: "Low yield, fast breed" }
+  - { name: "Pig",       meat: 55,  leather: 30, other: "-",      note: "Good early meat" }
+  - { name: "Cow",       meat: 120, leather: 60, other: "Milk (if alive)", note: "Best all-round livestock" }
+  - { name: "Goat",      meat: 45,  leather: 25, other: "Milk (if alive)", note: "Cheap dairy" }
+  - { name: "Sheep",     meat: 40,  leather: 25, other: "Wool (if alive)", note: "Wool source" }
+  - { name: "Muffalo",   meat: 150, leather: 90, other: "Wool (if alive)", note: "Cold-hardy" }
+  - { name: "Alpaca",    meat: 35,  leather: 20, other: "Wool (if alive)", note: "Cheap wool" }
+  - { name: "Deer",      meat: 40,  leather: 30, other: "-",      note: "Wild hunt" }
+  - { name: "Boar",      meat: 60,  leather: 35, other: "-",      note: "Wild hunt" }
+  - { name: "Thrumbo",   meat: 500, leather: 300, other: "Thrumbo fur (precious)", note: "Legendary hunt" }
+
+# 屠宰台效率倍率（约值）
+butcher_quality:
+  - { label: "Butcher spot",     mult: 1.0 }
+  - { label: "Butcher table",    mult: 1.1 }
+  - { label: "Sterile butcher table", mult: 1.2 }

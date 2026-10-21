@@ -1,0 +1,45 @@
+{{ $ores := site.Data.mining_yield.ores }}
+{{ $skills := site.Data.mining_yield.skill_mult }}
+<div class="mining-yield" id="mining-yield">
+  <h3>Mining Yield Calculator</h3>
+  <div class="my-field">
+    <label for="my-ore">Ore type</label>
+    <select id="my-ore">
+      {{ range $ores }}<option value="{{ .per_tile }}">{{ .name }} (~{{ .per_tile }}/tile, vein {{ .vein }})</option>{{ end }}
+    </select>
+  </div>
+  <div class="my-field">
+    <label for="my-tiles">Vein tiles to mine</label>
+    <input type="number" id="my-tiles" min="1" value="10">
+  </div>
+  <div class="my-field">
+    <label for="my-skill">Miner skill</label>
+    <select id="my-skill">
+      {{ range $skills }}<option value="{{ .mult }}">{{ .label }}</option>{{ end }}
+    </select>
+  </div>
+  <button id="my-calc" class="btn">Calculate Yield</button>
+  <div class="my-result">
+    <p><strong>Estimated total yield:</strong> <span id="my-total">—</span></p>
+    <p><strong>Tip:</strong> <span id="my-tip">—</span></p>
+  </div>
+  <p class="my-note">Community-consensus estimates for RimWorld 1.6. Deep drill yields differ from surface veins.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('mining-yield');
+  var btn = root.querySelector('#my-calc');
+  var elT = root.querySelector('#my-total');
+  var elTip = root.querySelector('#my-tip');
+  function calc(){
+    var perTile = parseFloat(root.querySelector('#my-ore').value)||0;
+    var tiles = parseInt(root.querySelector('#my-tiles').value)||1;
+    var mult = parseFloat(root.querySelector('#my-skill').value);
+    var total = perTile * tiles * mult;
+    elT.textContent = Math.round(total) + ' units';
+    elTip.textContent = 'Higher Mining skill gives more per tile — keep your best miner on ore duty.';
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>

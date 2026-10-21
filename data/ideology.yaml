@@ -1,0 +1,26 @@
+# RimWorld Ideology — 教条/仪式参考（Ideology DLC，1.6 社区共识值）
+
+precepts:
+  - { name: "Blindness (Honorable)",      category: "Sight",   effect: "Blind pawns get mood bonus + social respect" }
+  - { name: "Cannibalism (Accepted)",     category: "Food",    effect: "No mood penalty for eating human meat" }
+  - { name: "Slavery (Accepted)",         category: "Social",  effect: "Slaves work without mood penalty" }
+  - { name: "Drug use (Intense)",         category: "Drugs",   effect: "Drugs give bigger mood boosts, addiction risk" }
+  - { name: "Tree connection (Revered)",  category: "Nature",  effect: "Cutting trees causes mood penalty" }
+  - { name: "Ritual (Drum party)",        category: "Rituals", effect: "Drum parties boost mood + social" }
+  - { name: "Raiding (Approved)",         category: "Combat",  effect: "Raiding gives mood boost to participants" }
+  - { name: "Pain (Voluntary)",           category: "Pain",    effect: "Pain from implants/treatments gives mood bonus" }
+  - { name: "Human sacrifice (Approved)", category: "Rituals", effect: "Sacrifice rituals give big mood + royal favor" }
+  - { name: "Meat eating (Venerated)",    category: "Food",    effect: "Meat meals give extra mood" }
+
+rituals:
+  - { name: "Drum party",        frequency: "4 days",   mood_boost: "+8", note: "Easy, cheap, social" }
+  - { name: "Blinding ceremony", frequency: "10 days",  mood_boost: "+15", note: "Honor ritual, needs pawn" }
+  - { name: "Sacrifice",         frequency: "10 days",  mood_boost: "+15", note: "Controversial, high reward" }
+  - { name: "Festival",          frequency: "10 days",  mood_boost: "+12", note: "Needs food + decorations" }
+  - { name: "Skygazing",         frequency: "7 days",   mood_boost: "+10", note: "Night ritual, no resources" }
+
+# 戒律组合思路（示例 build）
+builds:
+  - { name: "Comfortable Optimist", precepts: "Tunneler + Nature run + no drugs", note: "Stable mood, easy upkeep" }
+  - { name: "Warrior Cult", precepts: "Raiding approved + pain voluntary + combat", note: "Aggressive, high reward" }
+  - { name: "High Life", precepts: "Drugs intense + luxury + recreation", note: "Rich colony, addiction risk" }

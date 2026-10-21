@@ -1,0 +1,23 @@
+# RimWorld Crop Yield — 作物产量参考（1.6 社区共识值）
+# 生长天数约值；产量受土壤肥沃度与种植技能影响
+
+crops:
+  - { name: "Rice",              grow_days: 5,   yield: 4,  note: "Fastest, low yield per tile" }
+  - { name: "Potatoes",          grow_days: 9,   yield: 8,  note: "Good on poor soil" }
+  - { name: "Corn",              grow_days: 17,  yield: 17, note: "Best per tile on rich soil" }
+  - { name: "Strawberries",      grow_days: 9,   yield: 6,  note: "No sowing needed (perennial)" }
+  - { name: "Haygrass",          grow_days: 10,  yield: 12, note: "Animal feed" }
+  - { name: "Cotton",            grow_days: 9,   yield: 6,  note: "For cloth" }
+  - { name: "Smokeleaf",         grow_days: 11,  yield: 6,  note: "Drug crop" }
+  - { name: "Psychoid (yayo)",   grow_days: 16,  yield: 8,  note: "Drug crop (psychite)" }
+  - { name: "Healroot",          grow_days: 14,  yield: 4,  note: "Medicine ingredient" }
+  - { name: "Agave",             grow_days: 9,   yield: 5,  note: "Desert staple" }
+  - { name: "Beer hops",         grow_days: 9,   yield: 5,  note: "Brewing ingredient" }
+  - { name: "Mushrooms (nutrifungus)", grow_days: 8, yield: 7, note: "Good in caves/dark" }
+
+# 肥沃度倍率（约值）：普通土1.0，水培1.5-1.9，沙土0.5
+fertility:
+  - { label: "Sandy soil",   mult: 0.6 }
+  - { label: "Normal soil",  mult: 1.0 }
+  - { label: "Rich soil",    mult: 1.4 }
+  - { label: "Hydroponics",  mult: 1.8 }

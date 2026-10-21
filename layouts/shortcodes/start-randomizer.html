@@ -1,0 +1,42 @@
+{{ $data := site.Data.start_randomizer }}
+<div class="start-randomizer" id="start-randomizer">
+  <h3>Generate a random colony start</h3>
+  <p class="controls"><button id="rz-roll" class="btn">🎲 Roll Random Start</button></p>
+  <div class="rz-result">
+    <p><strong>Scenario:</strong> <span id="rz-scenario">—</span></p>
+    <p><strong>Biome:</strong> <span id="rz-biome">—</span></p>
+    <p><strong>Difficulty hint:</strong> <span id="rz-diff">—</span></p>
+  </div>
+
+  <h3>Recommended starting traits</h3>
+  <table class="rz-traits">
+    <thead><tr><th>Traits</th><th>Role</th></tr></thead>
+    <tbody>
+      {{ range $data.starter_traits }}
+      <tr><td>{{ .name }}</td><td>{{ .role }}</td></tr>
+      {{ end }}
+    </tbody>
+  </table>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('start-randomizer');
+  var btn = root.querySelector('#rz-roll');
+  var elS = root.querySelector('#rz-scenario');
+  var elB = root.querySelector('#rz-biome');
+  var elD = root.querySelector('#rz-diff');
+
+  var scenarios = {{ $data.scenarios | jsonify }};
+  var biomes = {{ $data.biomes | jsonify }};
+
+  function roll(){
+    var s = scenarios[Math.floor(Math.random()*scenarios.length)];
+    var b = biomes[Math.floor(Math.random()*biomes.length)];
+    elS.textContent = s.name + ' — ' + s.desc;
+    elB.textContent = b.name + ' (' + b.temp + ')';
+    elD.textContent = 'Difficulty ' + b.difficulty + '/4';
+  }
+  btn.addEventListener('click', roll);
+  roll();
+})();
+</script>

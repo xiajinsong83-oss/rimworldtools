@@ -1,0 +1,16 @@
+# RimWorld Livestock — 牲畜饲料/产出参考（1.6 社区共识值）
+# 饲料消耗单位：营养/天（约值）；产出为肉/皮革等
+
+livestock:
+  - { name: "Chicken",   feed: 1.2, produce: "Eggs",      note: "Cheap, eggs feed colony" }
+  - { name: "Pig",       feed: 5.0, produce: "Meat + leather", note: "Fast growth, good meat" }
+  - { name: "Cow",       feed: 6.0, produce: "Milk + meat", note: "Milk for fine meals" }
+  - { name: "Goat",      feed: 4.5, produce: "Milk",       note: "Good early dairy" }
+  - { name: "Sheep",     feed: 4.0, produce: "Wool",       note: "Wool for clothing" }
+  - { name: "Muffalo",   feed: 7.0, produce: "Wool + meat", note: "Cold-hardy, pack animal" }
+  - { name: "Horse",     feed: 7.5, produce: "Pack + speed", note: "Best pack animal" }
+  - { name: "Alpaca",    feed: 3.5, produce: "Wool",       note: "Cheap wool source" }
+  - { name: "Elephant",  feed: 12.0, produce: "Ivory + meat", note: "Huge but expensive to feed" }
+
+# 每营养约等于的干草/饲料量（1 营养 ≈ 1 份动物饲料/干草捆 约）
+nutrition_per_feed: 1.0

@@ -1,0 +1,48 @@
+{{ $social := site.Data.recruitment.social_levels }}
+{{ $resistance := site.Data.recruitment.resistance }}
+{{ $willingness := site.Data.recruitment.willingness }}
+<div class="recruitment" id="recruitment">
+  <h3>Prisoner Recruitment Calculator</h3>
+  <div class="rc-field">
+    <label for="rc-social">Negotiator Social skill</label>
+    <select id="rc-social">
+      {{ range $social }}<option value="{{ .progress_per_day }}">{{ .label }} (~{{ .progress_per_day }}/day)</option>{{ end }}
+    </select>
+  </div>
+  <div class="rc-field">
+    <label for="rc-res">Prisoner resistance</label>
+    <select id="rc-res">
+      {{ range $resistance }}<option value="{{ .total_needed }}">{{ .label }}</option>{{ end }}
+    </select>
+  </div>
+  <div class="rc-field">
+    <label for="rc-will">Prisoner mood</label>
+    <select id="rc-will">
+      {{ range $willingness }}<option value="{{ .mult }}">{{ .label }}</option>{{ end }}
+    </select>
+  </div>
+  <button id="rc-calc" class="btn">Estimate Recruitment Time</button>
+  <div class="rc-result">
+    <p><strong>Estimated days to recruit:</strong> <span id="rc-days">—</span></p>
+    <p><strong>Tip:</strong> <span id="rc-tip">—</span></p>
+  </div>
+  <p class="rc-note">Community-consensus recruitment estimates for RimWorld 1.6. Progress also benefits from prisoner treatment, food quality and ideology.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('recruitment');
+  var btn = root.querySelector('#rc-calc');
+  var elD = root.querySelector('#rc-days');
+  var elTip = root.querySelector('#rc-tip');
+  function calc(){
+    var daily = parseInt(root.querySelector('#rc-social').value)||3;
+    var need = parseInt(root.querySelector('#rc-res').value)||100;
+    var will = parseFloat(root.querySelector('#rc-will').value)||1;
+    var days = Math.ceil(need / (daily * will));
+    elD.textContent = '~' + days + ' days';
+    elTip.textContent = days > 20 ? 'Slow — improve the negotiator or prisoner mood to speed it up.' : 'Good pace — keep the prisoner fed and healthy.';
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>

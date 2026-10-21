@@ -1,0 +1,31 @@
+# RimWorld 装备品质概率参考（1.6 口径，近似值）
+# 用于 Crafting Quality Calculator
+# 品质概率随 crafting 技能与是否激发变化；此处为常见基准区间
+
+quality_levels:
+  - name: Awful
+    weight: 5
+  - name: Poor
+    weight: 10
+  - name: Normal
+    weight: 60
+  - name: Good
+    weight: 15
+  - name: Excellent
+    weight: 7
+  - name: Masterwork
+    weight: 2.5
+  - name: Legendary
+    weight: 0.5
+
+# 技能对品质的加成权重（低→高）
+skill_boost:
+  0: 0.6
+  3: 0.8
+  5: 1.0
+  8: 1.2
+  10: 1.4
+  13: 1.6
+  15: 1.8
+  18: 2.0
+  20: 2.2

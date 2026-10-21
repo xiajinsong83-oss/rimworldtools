@@ -1,0 +1,51 @@
+{{ $wealth := site.Data.raid_threat.wealth_tiers }}
+{{ $population := site.Data.raid_threat.population_factor }}
+{{ $difficulty := site.Data.raid_threat.difficulty_mult }}
+<div class="raid-threat" id="raid-threat">
+  <h3>Raid Threat Calculator</h3>
+  <div class="rt-field">
+    <label for="rt-wealth">Colony wealth</label>
+    <select id="rt-wealth">
+      {{ range $wealth }}<option value="{{ .points }}">{{ .label }}</option>{{ end }}
+    </select>
+  </div>
+  <div class="rt-field">
+    <label for="rt-pop">Colonists</label>
+    <select id="rt-pop">
+      {{ range $population }}<option value="{{ .mult }}">{{ .label }}</option>{{ end }}
+    </select>
+  </div>
+  <div class="rt-field">
+    <label for="rt-diff">Difficulty</label>
+    <select id="rt-diff">
+      {{ range $difficulty }}<option value="{{ .mult }}">{{ .label }}</option>{{ end }}
+    </select>
+  </div>
+  <button id="rt-calc" class="btn">Estimate Raid Threat</button>
+  <div class="rt-result">
+    <p><strong>Estimated raid points:</strong> <span id="rt-points">—</span></p>
+    <p><strong>Threat level:</strong> <span id="rt-level">—</span></p>
+    <p><strong>Tip:</strong> <span id="rt-tip">—</span></p>
+  </div>
+  <p class="rt-note">Community-consensus threat estimate for RimWorld 1.6. Actual raids scale with wealth, population, days survived and storyteller settings.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('raid-threat');
+  var btn = root.querySelector('#rt-calc');
+  var elP = root.querySelector('#rt-points');
+  var elL = root.querySelector('#rt-level');
+  var elTip = root.querySelector('#rt-tip');
+  function calc(){
+    var base = parseInt(root.querySelector('#rt-wealth').value)||300;
+    var pop = parseFloat(root.querySelector('#rt-pop').value)||1;
+    var diff = parseFloat(root.querySelector('#rt-diff').value)||1;
+    var points = Math.round(base * pop * diff);
+    elP.textContent = '~' + points + ' points';
+    elL.textContent = points < 500 ? 'Light (1-3 raiders)' : (points < 1500 ? 'Moderate (4-8 raiders)' : (points < 3500 ? 'Heavy (10-20 raiders)' : 'Massive (20+ raiders / siege)'));
+    elTip.textContent = points >= 3500 ? 'High threat — build defenses, arm everyone and stock medicine.' : 'Manageable — keep turrets fed with power and ammo.';
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>

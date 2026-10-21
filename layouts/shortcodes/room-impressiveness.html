@@ -1,0 +1,59 @@
+{{ $lvl := site.Data.room_impressiveness.levels }}
+<div class="room-impressiveness" id="room-impressiveness">
+  <h3>Room Impressiveness Calculator</h3>
+  <div class="ri-field">
+    <label for="ri-wealth">Room wealth (silver)</label>
+    <input type="number" id="ri-wealth" min="0" value="2000">
+  </div>
+  <div class="ri-field">
+    <label for="ri-beauty">Room beauty</label>
+    <input type="number" id="ri-beauty" value="4" step="0.1">
+  </div>
+  <div class="ri-field">
+    <label for="ri-space">Walkable tiles (space)</label>
+    <input type="number" id="ri-space" min="1" value="60">
+  </div>
+  <div class="ri-field">
+    <label for="ri-clean">Cleanliness</label>
+    <input type="number" id="ri-clean" value="0" step="0.1">
+  </div>
+  <button id="ri-calc" class="btn">Calculate Impressiveness</button>
+  <div class="ri-result">
+    <p><strong>Impressiveness score:</strong> <span id="ri-score">—</span></p>
+    <p><strong>Level:</strong> <span id="ri-level">—</span></p>
+    <p><strong>Mood (bedroom):</strong> <span id="ri-mood">—</span></p>
+  </div>
+  <p class="ri-note">Formula from RimWorld wiki: score = ((avg of 4 factors + lowest factor) / 2) × 100. Higher cleanliness and beauty boost the score fastest.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('room-impressiveness');
+  var btn = root.querySelector('#ri-calc');
+  var elS = root.querySelector('#ri-score');
+  var elL = root.querySelector('#ri-level');
+  var elM = root.querySelector('#ri-mood');
+  var levels = {{ $lvl | jsonify }};
+
+  function num(id){ return parseFloat(root.querySelector(id).value)||0; }
+  function calc(){
+    var wealth = num('#ri-wealth');
+    var beauty = num('#ri-beauty');
+    var space = num('#ri-space');
+    var clean = num('#ri-clean');
+    var fW = wealth/3500;
+    var fB = beauty/6;
+    var fS = space/125;
+    var fC = 1 + clean/2.5;
+    var x = (fW + fB + fS + fC)/4;
+    var y = Math.min(fW, fB, fS, fC);
+    var score = (x + y)/2 * 100;
+    var lvl = levels[levels.length-1];
+    for(var i=0;i<levels.length;i++){ if(score >= levels[i].min){ lvl = levels[i]; } }
+    elS.textContent = score.toFixed(1);
+    elL.textContent = lvl.name;
+    elM.textContent = lvl.mood;
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>

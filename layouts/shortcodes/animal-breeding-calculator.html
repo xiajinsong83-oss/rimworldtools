@@ -1,0 +1,48 @@
+{{ $breeds := site.Data.animal_breeding.breeds }}
+<div class="animal-breeding" id="animal-breeding">
+  <h3>Animal Breeding Calculator</h3>
+  <div class="ab-field">
+    <label for="ab-breed">Animal</label>
+    <select id="ab-breed">
+      {{ range $breeds }}<option value="{{ .gestation }}|{{ .litter }}|{{ .maturity }}">{{ .name }} ({{ .gestation }}d gestation, {{ .litter }}/litter)</option>{{ end }}
+    </select>
+  </div>
+  <div class="ab-field">
+    <label for="ab-pairs">Breeding pairs</label>
+    <input type="number" id="ab-pairs" min="1" value="2">
+  </div>
+  <div class="ab-field">
+    <label for="ab-days">Simulate days</label>
+    <input type="number" id="ab-days" min="10" value="60">
+  </div>
+  <button id="ab-calc" class="btn">Project Herd Growth</button>
+  <div class="ab-result">
+    <p><strong>New offspring expected:</strong> <span id="ab-offspring">—</span></p>
+    <p><strong>Herd size after simulation:</strong> <span id="ab-herd">—</span></p>
+    <p><strong>Tip:</strong> <span id="ab-tip">—</span></p>
+  </div>
+  <p class="ab-note">Community-consensus breeding values for RimWorld 1.6. Actual offspring depend on fertility, pen space and slaughtering.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('animal-breeding');
+  var btn = root.querySelector('#ab-calc');
+  var elO = root.querySelector('#ab-offspring');
+  var elH = root.querySelector('#ab-herd');
+  var elTip = root.querySelector('#ab-tip');
+  function calc(){
+    var v = root.querySelector('#ab-breed').value.split('|');
+    var gest = parseInt(v[0])||1;
+    var litter = parseInt(v[1])||1;
+    var pairs = parseInt(root.querySelector('#ab-pairs').value)||1;
+    var days = parseInt(root.querySelector('#ab-days').value)||1;
+    var cycles = Math.floor(days / (gest + 5));
+    var offspring = cycles * litter * pairs;
+    elO.textContent = '~' + offspring + ' offspring';
+    elH.textContent = '~' + (pairs*2 + offspring) + ' animals';
+    elTip.textContent = litter > 1 ? 'Fast breeder — watch food and pen space.' : 'Slow breeder — keep the herd stable and protect breeding stock.';
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>

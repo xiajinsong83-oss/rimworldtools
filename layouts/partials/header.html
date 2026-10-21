@@ -1,0 +1,20 @@
+<header class="site-header">
+  <div class="header-inner">
+    <a class="logo" href="{{ .Site.Home.Permalink }}">
+      <img class="logo-icon" src="/img/app-icons/rimworld-icon.png" alt="{{ .Site.Params.siteName }}" width="22" height="22">
+      <span class="logo-text">{{ .Site.Params.siteName }}</span>
+    </a>
+    <nav class="main-nav">
+      <a href="/tools/">Tools</a>
+      <a href="/databases/">Guides & Lists</a>
+      <a href="/seeds/">Seeds</a>
+      <a href="/databases/mods/">MODs</a>
+      <a href="/guides/">FAQ</a>
+    </nav>
+    <div class="lang-switch">
+      {{- range .Site.Languages }}
+      <a href="{{ if eq .Lang "en" }}{{ $.Site.BaseURL }}{{ else }}{{ $.Site.BaseURL }}{{ .Lang }}/{{ end }}" lang="{{ .Lang }}">{{ upper .Lang }}</a>
+      {{- end }}
+    </div>
+  </div>
+</header>

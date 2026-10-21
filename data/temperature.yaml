@@ -1,0 +1,24 @@
+# RimWorld Temperature — 气候/温控参考（1.6 社区共识值）
+# winter_low: 冬季最冷约值（℃）；summer_high: 夏季最热约值
+
+climates:
+  - { name: "Tropical rainforest", winter_low: 18, summer_high: 40, note: "Coolers essential" }
+  - { name: "Arid shrubland",      winter_low: 0,  summer_high: 42, note: "Coolers for storage" }
+  - { name: "Temperate forest",    winter_low: -10, summer_high: 30, note: "Balanced, heaters + coolers" }
+  - { name: "Boreal forest",       winter_low: -25, summer_high: 25, note: "Heaters essential" }
+  - { name: "Tundra",              winter_low: -40, summer_high: 20, note: "Heavy heating, short summer" }
+  - { name: "Ice sheet",           winter_low: -60, summer_high: 5,  note: "Extreme heating, grow indoors" }
+  - { name: "Desert",              winter_low: -5,  summer_high: 50, note: "Coolers for everything" }
+
+# 温控设备能力（约值）：功率/温度变化（每台对标准房间的作用）
+devices:
+  - { name: "Campfire",          effect: "+5°C small room",  power: 0, note: "Free, fuel needed" }
+  - { name: "Heater",            effect: "+20°C medium room", power: 400, note: "Standard heating" }
+  - { name: "Passive cooler",    effect: "-5°C small room",  power: 0, note: "No power, low effect" }
+  - { name: "Cooler (air-con)",  effect: "-25°C medium room", power: 600, note: "Standard cooling" }
+  - { name: "Industrial heater", effect: "+30°C large room",  power: 1000, note: "Big bases" }
+
+targets:
+  - { label: "Living area (comfortable)",  temp: 21 }
+  - { label: "Freezer / storage (frozen)", temp: -10 }
+  - { label: "Workshop (workable)",        temp: 15 }

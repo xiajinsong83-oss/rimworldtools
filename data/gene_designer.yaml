@@ -1,0 +1,27 @@
+# RimWorld Genes — 基因参考（Biotech DLC，1.6 社区共识值）
+# cost: 代谢成本（正=消耗，负=提供）；xenogenes 需基因装配器，endogenes 遗传
+
+genes:
+  - { name: "Aggressive",              category: "Personality", cost: -1, note: "-5 opinion, +2 melee" }
+  - { name: "Nearsighted",             category: "Personality", cost: -1, note: "-1 shooting accuracy" }
+  - { name: "Kind",                    category: "Personality", cost: -1, note: "+5 opinion" }
+  - { name: "Fast Walker",             category: "Movement",    cost: -1, note: "+15% move speed" }
+  - { name: "Jogger",                  category: "Movement",    cost: -1, note: "+15% move speed (stackable)" }
+  - { name: "Super Immunity",          category: "Immunity",    cost: -2, note: "+100% immunity gain" }
+  - { name: "Tough",                   category: "Combat",      cost: -2, note: "-50% pain from attacks" }
+  - { name: "Fast Learner",            category: "Skill",       cost: -2, note: "+50% global learning" }
+  - { name: "Photographic Memory",     category: "Skill",       cost: -2, note: "+100% skill gain" }
+  - { name: "Psychically Sensitive",   category: "Psycast",     cost: -2, note: "+1 psycast level" }
+  - { name: "Bloodlust",               category: "Personality", cost: -1, note: "+mood from kills, -5 opinion" }
+  - { name: "Kindred (Sanguophage)",   category: "Sanguophage", cost: -3, note: "Blood feed, needs hemogen" }
+  - { name: "Xenogene only (most)",    category: "General",     cost: 0,  note: "Xenogenes don't pass to children" }
+  - { name: "Dark Vision",             category: "Vision",      cost: -1, note: "See in darkness" }
+  - { name: "Strong Stomach",          category: "Resistance",  cost: -1, note: "No food poisoning penalty" }
+  - { name: "Disease Resistant",       category: "Immunity",    cost: -1, note: "+50% immunity gain" }
+
+# 装配/遗传说明
+notes:
+  - "Xenogenes: installed in a gene assembler, cost metabolic, do NOT pass to offspring."
+  - "Endogenes: inherited by children, cannot be freely changed once set."
+  - "Metabolic budget: pawns need neutral or positive balance; negative genes can offset positive ones."
+  - "Some genes (sanguophage) require special sources like archite capsules."

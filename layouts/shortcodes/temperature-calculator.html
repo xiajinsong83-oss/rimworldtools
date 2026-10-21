@@ -1,0 +1,53 @@
+{{ $climates := site.Data.temperature.climates }}
+{{ $devices := site.Data.temperature.devices }}
+{{ $targets := site.Data.temperature.targets }}
+<div class="temperature" id="temperature">
+  <h3>Temperature & Climate Calculator</h3>
+  <div class="tp-field">
+    <label for="tc-climate">Climate</label>
+    <select id="tc-climate">
+      {{ range $climates }}<option value="{{ .winter_low }}|{{ .summer_high }}">{{ .name }} (winter ~{{ .winter_low }}°C, summer ~{{ .summer_high }}°C)</option>{{ end }}
+    </select>
+  </div>
+  <div class="tp-field">
+    <label for="tc-target">Room target</label>
+    <select id="tc-target">
+      {{ range $targets }}<option value="{{ .temp }}">{{ .label }} ({{ .temp }}°C)</option>{{ end }}
+    </select>
+  </div>
+  <div class="tp-field">
+    <label for="tc-device">Device</label>
+    <select id="tc-device">
+      {{ range $devices }}<option value="{{ .effect }}">{{ .name }} ({{ .effect }})</option>{{ end }}
+    </select>
+  </div>
+  <button id="tc-calc" class="btn">Calculate Heating Gap</button>
+  <div class="tc-result">
+    <p><strong>Winter temp gap to fix:</strong> <span id="tc-gap">—</span></p>
+    <p><strong>Devices needed (approx):</strong> <span id="tc-num">—</span></p>
+    <p><strong>Tip:</strong> <span id="tc-tip">—</span></p>
+  </div>
+  <p class="tc-note">Community-consensus values for RimWorld 1.6. Real temps vary by map size, roofs and seasons — these are planning estimates.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('temperature');
+  var btn = root.querySelector('#tc-calc');
+  var elG = root.querySelector('#tc-gap');
+  var elN = root.querySelector('#tc-num');
+  var elTip = root.querySelector('#tc-tip');
+  function calc(){
+    var v = root.querySelector('#tc-climate').value.split('|');
+    var winter = parseInt(v[0])||0;
+    var target = parseInt(root.querySelector('#tc-target').value)||21;
+    var gap = target - winter;
+    var effect = parseInt(root.querySelector('#tc-device').value.split('°C')[0].replace('+',''))||20;
+    var num = gap > 0 ? Math.ceil(gap / effect) : 0;
+    elG.textContent = (gap > 0 ? '+' : '') + gap + '°C needed';
+    elN.textContent = num > 0 ? '~' + num + ' device(s)' : 'None needed';
+    elTip.textContent = gap > 25 ? 'Cold biome — build heaters early and keep rooms compact.' : (gap <= 0 ? 'Climate matches target — passive cooling or small devices only.' : 'A couple of devices keep rooms comfortable.');
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>

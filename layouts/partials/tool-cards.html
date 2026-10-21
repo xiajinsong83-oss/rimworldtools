@@ -1,0 +1,16 @@
+{{ $toolsPage := .Site.GetPage "/tools" }}
+{{ if $toolsPage }}
+<section class="tools-grid">
+  {{ range $toolsPage.Pages }}
+  {{ if not .IsNode }}
+  <a class="tool-card" href="{{ .Permalink }}">
+    {{ if .Params.icon }}<img class="tool-icon" src="{{ .Params.icon }}" alt="{{ .Title }} icon">{{ end }}
+    <div class="tool-card-body">
+      <h3>{{ .Title }}</h3>
+      <p>{{ .Params.tool_blurb }}</p>
+    </div>
+  </a>
+  {{ end }}
+  {{ end }}
+</section>
+{{ end }}

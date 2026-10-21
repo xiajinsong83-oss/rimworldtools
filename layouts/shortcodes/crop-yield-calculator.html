@@ -1,0 +1,51 @@
+{{ $crops := site.Data.crop_yield.crops }}
+{{ $fert := site.Data.crop_yield.fertility }}
+<div class="crop-yield" id="crop-yield">
+  <h3>Crop Yield Calculator</h3>
+  <div class="cy-field">
+    <label for="cy-crop">Crop</label>
+    <select id="cy-crop">
+      {{ range $crops }}<option value="{{ .yield }}|{{ .grow_days }}">{{ .name }} ({{ .grow_days }}d, ~{{ .yield }} yield)</option>{{ end }}
+    </select>
+  </div>
+  <div class="cy-field">
+    <label for="cy-soil">Soil type</label>
+    <select id="cy-soil">
+      {{ range $fert }}<option value="{{ .mult }}">{{ .label }}</option>{{ end }}
+    </select>
+  </div>
+  <div class="cy-field">
+    <label for="cy-tiles">Tiles planted</label>
+    <input type="number" id="cy-tiles" min="1" value="100">
+  </div>
+  <button id="cy-calc" class="btn">Calculate Harvest</button>
+  <div class="cy-result">
+    <p><strong>Harvest per cycle:</strong> <span id="cy-harvest">—</span></p>
+    <p><strong>Per day (per tile):</strong> <span id="cy-rate">—</span></p>
+    <p><strong>Tip:</strong> <span id="cy-tip">—</span></p>
+  </div>
+  <p class="cy-note">Community-consensus values for RimWorld 1.6. Actual yields vary with plant skill and weather events (blight, cold snaps).</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('crop-yield');
+  var btn = root.querySelector('#cy-calc');
+  var elH = root.querySelector('#cy-harvest');
+  var elR = root.querySelector('#cy-rate');
+  var elTip = root.querySelector('#cy-tip');
+  function calc(){
+    var v = root.querySelector('#cy-crop').value.split('|');
+    var yieldPer = parseFloat(v[0])||1;
+    var days = parseInt(v[1])||1;
+    var mult = parseFloat(root.querySelector('#cy-soil').value);
+    var tiles = parseInt(root.querySelector('#cy-tiles').value)||1;
+    var harvest = Math.round(yieldPer * mult * tiles);
+    var rate = (harvest / days / tiles).toFixed(2);
+    elH.textContent = harvest + ' units';
+    elR.textContent = rate + ' units/day/tile';
+    elTip.textContent = tiles > 0 && harvest > 0 ? 'Rice feeds fast early; corn gives the best per-tile food on rich soil.' : 'Add tiles to see your harvest.';
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>

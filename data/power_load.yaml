@@ -1,0 +1,25 @@
+# RimWorld Power Load — 常用设施功率参考（1.6 社区共识值，估算口径）
+# generators
+generators:
+  - { name: "Solar Generator",     output: 1700, type: gen }
+  - { name: "Wind Turbine",        output: 2300, type: gen }
+  - { name: "Geothermal Generator",output: 3600, type: gen }
+  - { name: "Wood-fired Generator",output: 1000, type: gen }
+  - { name: "Chemfuel Generator",  output: 1000, type: gen }
+
+# consumers (approximate 1.6 values)
+consumers:
+  - { name: "Cooler",            watts: 400, type: con }
+  - { name: "Heater",            watts: 225, type: con }
+  - { name: "Electric smelter",  watts: 1900, type: con }
+  - { name: "Electric smithy",   watts: 700, type: con }
+  - { name: "Machine table",     watts: 700, type: con }
+  - { name: "Electric tailoring",watts: 150, type: con }
+  - { name: "Electric stove",    watts: 350, type: con }
+  - { name: "Electric crematorium", watts: 1000, type: con }
+  - { name: "Lamp (single)",     watts: 12, type: con }
+  - { name: "Sun lamp",          watts: 1700, type: con }
+  - { name: "Nutrient paste dispenser", watts: 150, type: con }
+  - { name: "Deep drill",        watts: 600, type: con }
+  - { name: "Standing lamp",     watts: 12, type: con }
+  - { name: "Turret (mini)",     watts: 5, type: con }

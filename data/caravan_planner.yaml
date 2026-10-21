@@ -1,0 +1,20 @@
+# RimWorld Caravan — 商队负重/速度参考（1.6 社区共识值）
+# 成员基础负重（约值）：成人 ~75kg（受体质/装备影响）
+member_base_carry: 75
+
+# 驮畜负重
+pack_animals:
+  - { name: "Horse",     carry: 70 }
+  - { name: "Donkey",    carry: 60 }
+  - { name: "Muffalo",   carry: 80 }
+  - { name: "Yak",       carry: 80 }
+  - { name: "Dromedary", carry: 70 }
+  - { name: "Elephant",  carry: 160 }
+  - { name: "Thrumbo",   carry: 250 }
+
+# 速度参考：轻载 ~5 km/h，重载 ~3 km/h（社区经验）
+speed_light: 5.0
+speed_heavy: 3.0
+
+# 补给：每人每天约 1.2 营养（简餐/干粮）
+food_per_person_per_day: 1.2

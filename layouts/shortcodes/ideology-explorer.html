@@ -1,0 +1,24 @@
+{{ $precepts := site.Data.ideology.precepts }}
+{{ $rituals := site.Data.ideology.rituals }}
+{{ $builds := site.Data.ideology.builds }}
+<div class="ideology" id="ideology">
+  <h3>Ideology Precept Explorer</h3>
+  <p>Browse precepts by category and pair them with rituals for your ideoligion.</p>
+  <div class="id-precepts">
+    {{ range $precepts }}
+    <div class="id-p"><strong>{{ .name }}</strong> <span class="id-cat">[{{ .category }}]</span><p>{{ .effect }}</p></div>
+    {{ end }}
+  </div>
+  <h4>Rituals & Cooldowns</h4>
+  <table class="id-table">
+    <tr><th>Ritual</th><th>Frequency</th><th>Mood boost</th><th>Note</th></tr>
+    {{ range $rituals }}
+    <tr><td>{{ .name }}</td><td>{{ .frequency }}</td><td>{{ .mood_boost }}</td><td>{{ .note }}</td></tr>
+    {{ end }}
+  </table>
+  <h4>Ideoligion Build Ideas</h4>
+  <ul class="id-builds">
+    {{ range $builds }}<li><strong>{{ .name }}:</strong> {{ .precepts }} — {{ .note }}</li>{{ end }}
+  </ul>
+  <p class="id-note">Community-consensus precept values for RimWorld 1.6 + Ideology. Exact effects vary by precept rank and style.</p>
+</div>

@@ -1,0 +1,19 @@
+# RimWorld Drug Policy — 药物成瘾/效果参考（1.6 社区共识值，估算口径）
+# addiction_chance: 每次使用的成瘾概率（约值）
+# severity: 成瘾严重度
+drugs:
+  - { name: "Smokeleaf",       addiction: 5,  severity: "Minor", effect: "-20% work, +15 mood", note: "Cheap recreation, slows pawns" }
+  - { name: "Psychite Tea",    addiction: 3,  severity: "Minor", effect: "+30% work for a while", note: "Good work buff, mild risk" }
+  - { name: "Yayo",            addiction: 15, severity: "Major", effect: "+50% work, mood +", note: "Strong, faster addiction" }
+  - { name: "Flake",           addiction: 22, severity: "Major", effect: "Big work buff", note: "Cheapest but most addictive" }
+  - { name: "Go-juice",        addiction: 8,  severity: "Major", effect: "Combat buff, pain resist", note: "Combat drug" }
+  - { name: "Wake-up",         addiction: 10, severity: "Minor", effect: "-sleep need, +work", note: "Night-shift staple" }
+  - { name: "Penoxycyline",    addiction: 0,  severity: "None",  effect: "Prevents diseases", note: "Safe, take every 5 days" }
+  - { name: "Luciferium",      addiction: 100, severity: "Fatal", effect: "Huge buffs", note: "Never stop, withdrawal kills" }
+
+# 使用频率对成瘾风险的放大（天数间隔）
+freq_factor:
+  - { label: "Every day",    factor: 1.6 }
+  - { label: "Every 2 days", factor: 1.2 }
+  - { label: "Every 5 days", factor: 0.7 }
+  - { label: "Only when needed", factor: 0.4 }

@@ -1,0 +1,61 @@
+{{ $traits := site.Data.traits.traits }}
+<div class="trait-calculator" id="trait-calculator">
+  <div class="trait-filters">
+    <label><input type="checkbox" class="tf-good" checked> Good traits</label>
+    <label><input type="checkbox" class="tf-bad" checked> Bad traits</label>
+  </div>
+  <table class="trait-table">
+    <thead>
+      <tr><th>Select</th><th>Trait</th><th>Effect</th><th>Tier</th></tr>
+    </thead>
+    <tbody>
+      {{ range $traits }}
+      <tr class="trait-row" data-good="{{ .good }}" data-tier="{{ .tier }}">
+        <td><input type="checkbox" class="trait-check" value="{{ .slug }}"></td>
+        <td><strong>{{ .name }}</strong></td>
+        <td>{{ .effect }}</td>
+        <td>{{ .tier }}</td>
+      </tr>
+      {{ end }}
+    </tbody>
+  </table>
+  <div class="trait-result">
+    <h3>Selected traits (<span class="sel-count">0</span>)</h3>
+    <ul class="sel-list"></ul>
+    <p class="sel-verdict"></p>
+  </div>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('trait-calculator');
+  var rows = root.querySelectorAll('.trait-row');
+  var checks = root.querySelectorAll('.trait-check');
+  var goodF = root.querySelector('.tf-good');
+  var badF = root.querySelector('.tf-bad');
+  var countEl = root.querySelector('.sel-count');
+  var listEl = root.querySelector('.sel-list');
+  var verdictEl = root.querySelector('.sel-verdict');
+
+  function applyFilters(){
+    var showGood = goodF.checked, showBad = badF.checked;
+    rows.forEach(function(r){
+      var good = r.getAttribute('data-good') === 'true';
+      r.style.display = (good ? showGood : showBad) ? '' : 'none';
+    });
+  }
+  function updateResult(){
+    var sel = [];
+    checks.forEach(function(c){ if(c.checked){ sel.push(c.value); } });
+    countEl.textContent = sel.length;
+    listEl.innerHTML = '';
+    sel.forEach(function(v){
+      var li = document.createElement('li'); li.textContent = v; listEl.appendChild(li);
+    });
+    verdictEl.textContent = sel.length === 0 ? 'Select traits to see your pawn build.' : '';
+  }
+  goodF.addEventListener('change', applyFilters);
+  badF.addEventListener('change', applyFilters);
+  checks.forEach(function(c){ c.addEventListener('change', updateResult); });
+  applyFilters(); updateResult();
+})();
+</script>

@@ -1,0 +1,48 @@
+{{ $drugs := site.Data.drug_policy.drugs }}
+{{ $freq := site.Data.drug_policy.freq_factor }}
+<div class="drug-policy" id="drug-policy">
+  <h3>Drug Policy Planner</h3>
+  <div class="dp-field">
+    <label for="dp-drug">Drug</label>
+    <select id="dp-drug">
+      {{ range $drugs }}<option value="{{ .addiction }}|{{ .name }}|{{ .severity }}">{{ .name }}</option>{{ end }}
+    </select>
+  </div>
+  <div class="dp-field">
+    <label for="dp-freq">Use frequency</label>
+    <select id="dp-freq">
+      {{ range $freq }}<option value="{{ .factor }}">{{ .label }}</option>{{ end }}
+    </select>
+  </div>
+  <button id="dp-calc" class="btn">Assess Addiction Risk</button>
+  <div class="dp-result">
+    <p><strong>Estimated addiction risk:</strong> <span id="dp-risk">—</span></p>
+    <p><strong>Severity:</strong> <span id="dp-sev">—</span></p>
+    <p><strong>Note:</strong> <span id="dp-note">—</span></p>
+  </div>
+  <p class="dp-note">Community-consensus estimates for RimWorld 1.6. Real odds depend on drug policy schedule, pawn traits and tolerance.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('drug-policy');
+  var btn = root.querySelector('#dp-calc');
+  var elR = root.querySelector('#dp-risk');
+  var elS = root.querySelector('#dp-sev');
+  var elN = root.querySelector('#dp-note');
+  var drugs = {{ $drugs | jsonify }};
+  function calc(){
+    var raw = root.querySelector('#dp-drug').value.split('|');
+    var drugName = raw[1];
+    var baseAdd = parseFloat(raw[0]);
+    var sev = raw[2];
+    var freqF = parseFloat(root.querySelector('#dp-freq').value);
+    var risk = baseAdd * freqF;
+    var d = drugs.find(function(x){ return x.name === drugName; });
+    elR.textContent = risk.toFixed(1) + '% (per-dose baseline ' + baseAdd + '%)';
+    elS.textContent = sev;
+    elN.textContent = d ? d.note : '';
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>

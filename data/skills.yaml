@@ -1,0 +1,39 @@
+# RimWorld 技能（1.6/Odyssey 口径，用于 Pawn Planner）
+# 字段: slug, name, description
+skills:
+  - slug: shooting
+    name: Shooting
+    description: "Combat accuracy with ranged weapons."
+  - slug: melee
+    name: Melee
+    description: "Combat ability in close combat and crafting of melee weapons."
+  - slug: construction
+    name: Construction
+    description: "Speed and quality of building structures."
+  - slug: mining
+    name: Mining
+    description: "Speed of mining rock and digging underground."
+  - slug: cooking
+    name: Cooking
+    description: "Speed and food-poisoning avoidance when preparing meals."
+  - slug: plants
+    name: Plants
+    description: "Speed of growing, sowing and harvesting crops."
+  - slug: animals
+    name: Animals
+    description: "Taming, handling and training animals."
+  - slug: crafting
+    name: Crafting
+    description: "Quality of crafted items (weapons, armor, apparel)."
+  - slug: artistic
+    name: Artistic
+    description: "Quality of sculptures, art and furniture."
+  - slug: medical
+    name: Medical
+    description: "Speed and success of medical treatment and surgery."
+  - slug: social
+    name: Social
+    description: "Recruitment, negotiation, trade and social interactions."
+  - slug: intellectual
+    name: Intellectual
+    description: "Research speed and programming."

@@ -1,0 +1,16 @@
+# RimWorld Meal Planner — 餐食/营养参考（1.6 社区共识值）
+
+meals:
+  - { name: "Raw food (berries)",   nutrition: 0.3, note: "Cheap, no cooking" }
+  - { name: "Simple meal",          nutrition: 0.9, note: "Basic cooked food" }
+  - { name: "Fine meal",            nutrition: 1.0, note: "Mood boost +6" }
+  - { name: "Lavish meal",          nutrition: 1.0, note: "Mood boost +12" }
+  - { name: "Survival meal",        nutrition: 0.9, note: "Packable, long shelf" }
+  - { name: "Nutrient paste",       nutrition: 1.0, note: "No food poisoning, -5 mood" }
+  - { name: "Pemmican",             nutrition: 0.4, note: "Caravan staple" }
+
+# 每殖民者日营养需求（社区共识约值）
+colonist_needs:
+  - { label: "Normal colonist",  nutrition_per_day: 1.6 }
+  - { label: "Large/active pawn", nutrition_per_day: 1.8 }
+  - { label: "Child",            nutrition_per_day: 1.0 }

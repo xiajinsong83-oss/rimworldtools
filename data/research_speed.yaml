@@ -1,0 +1,28 @@
+# RimWorld Research Speed — 研究速度加成参考（1.6 社区共识值）
+# 基准：一个研究员约 1 点/天（未加成）；速度 = 100% + 各项加成
+# 研究天数估算 = 项目点数 / (基准点数/天 × 速度倍率)
+
+benchmarks:
+  # 常见研究项目点数（1.6 原版，社区共识）
+  - { name: "Electricity", points: 700 }
+  - { name: "Complex Clothing", points: 700 }
+  - { name: "Solar Panels", points: 1000 }
+  - { name: "Microelectronics", points: 1400 }
+  - { name: "Batteries", points: 700 }
+  - { name: "Gunsmithing", points: 1200 }
+  - { name: "Smithing", points: 900 }
+  - { name: "Nutrient Paste", points: 600 }
+  - { name: "Hydroponics", points: 1400 }
+  - { name: "Bionics", points: 2500 }
+  - { name: "Power Armor", points: 3000 }
+
+# 加成来源（百分比）
+bonuses:
+  - { name: "Research bench (basic)", pct: 15 }
+  - { name: "Research bench (advanced)", pct: 30 }
+  - { name: "Multi-analyzer", pct: 20 }
+  - { name: "Too Smart trait", pct: 40 }
+  - { name: "Fast Learner trait", pct: 40 }
+  - { name: "Tech-savvy background", pct: 10 }
+  - { name: "Exoskeleton / archotech spine", pct: 50 }
+  - { name: "Psychic (research focus)", pct: 10 }

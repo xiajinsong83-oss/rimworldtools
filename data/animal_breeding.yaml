@@ -1,0 +1,15 @@
+# RimWorld Animal Breeding — 繁殖参数参考（1.6 社区共识值）
+# gestation: 妊娠天数；litter: 每胎数量；maturity: 幼崽成年天数
+
+breeds:
+  - { name: "Chicken",  gestation: 5,  litter: 2,  maturity: 16, note: "Fastest breeder" }
+  - { name: "Rabbit",   gestation: 6,  litter: 3,  maturity: 12, note: "Explosive growth" }
+  - { name: "Pig",      gestation: 12, litter: 3,  maturity: 25, note: "Fast meat farm" }
+  - { name: "Cow",      gestation: 20, litter: 1,  maturity: 30, note: "Slow but valuable" }
+  - { name: "Goat",     gestation: 15, litter: 2,  maturity: 20, note: "Good dairy breed" }
+  - { name: "Sheep",    gestation: 15, litter: 2,  maturity: 20, note: "Wool breed" }
+  - { name: "Muffalo",  gestation: 30, litter: 1,  maturity: 40, note: "Slow, cold-hardy" }
+  - { name: "Horse",    gestation: 30, litter: 1,  maturity: 40, note: "Pack + speed" }
+  - { name: "Alpaca",   gestation: 20, litter: 1,  maturity: 25, note: "Cheap wool" }
+  - { name: "Elephant", gestation: 60, litter: 1,  maturity: 90, note: "Very slow, huge payoff" }
+  - { name: "Boar",     gestation: 12, litter: 2,  maturity: 20, note: "Wild farmable" }

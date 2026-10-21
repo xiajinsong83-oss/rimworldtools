@@ -1,0 +1,32 @@
+# RimWorld Room Impressiveness — 星级阈值与公式参考（1.6/Odyssey 原版口径）
+# 公式：X = (Wealth/3500 + Beauty/6 + Space/125 + (1+Cleanliness/2.5)) / 4
+#      Y = min(上述4因子)
+#      Score = (X + Y) / 2 * 100
+
+levels:
+  - { name: "Awful",            min: 0,    mood: "-2" }
+  - { name: "Dull",              min: 13,   mood: "-1" }
+  - { name: "Normal",            min: 31,   mood: "0" }
+  - { name: "Nice",              min: 44,   mood: "+1" }
+  - { name: "Very Pleasant",     min: 55,   mood: "+2" }
+  - { name: "Pleasant",          min: 65,   mood: "+3" }
+  - { name: "Cool",              min: 78,   mood: "+4" }
+  - { name: "Impressively Impressive", min: 96, mood: "+5" }
+  - { name: "Extremely Impressive",    min: 120, mood: "+6" }
+  - { name: "Unbelievably Impressive", min: 170, mood: "+7" }
+  - { name: "Wondrously Impressive",   min: 240, mood: "+8" }
+
+factors:
+  - key: wealth
+    label: "Wealth (silver value in room)"
+    divisor: 3500
+  - key: beauty
+    label: "Beauty (total room beauty)"
+    divisor: 6
+  - key: space
+    label: "Space (tiles / 1000?)"
+    divisor: 125
+  - key: cleanliness
+    label: "Cleanliness (room cleanliness)"
+    divisor: 2.5
+    offset: 1

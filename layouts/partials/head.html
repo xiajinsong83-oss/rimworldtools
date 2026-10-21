@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.LanguageCode }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — {{ .Site.Title }}{{ end }}</title>
+<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.siteTagline }}{{ end }}">
+{{- with .OutputFormats.Get "rss" }}
+<link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="RSS">
+{{- end }}
+<link rel="canonical" href="{{ if .Params.canonical }}{{ .Params.canonical }}{{ else }}{{ .Permalink }}{{ end }}">
+{{- if .IsHome }}
+{{- range .Site.Languages }}
+<link rel="alternate" hreflang="{{ .Lang }}" href="{{ if eq .Lang "en" }}{{ $.Site.BaseURL }}{{ else }}{{ $.Site.BaseURL }}{{ .Lang }}/{{ end }}">
+{{- end }}
+<link rel="alternate" hreflang="x-default" href="{{ .Site.BaseURL }}">
+{{- end }}
+<link rel="icon" type="image/png" href="/favicon.png">
+<!-- Google AdSense 全站加载脚本（ca-pub-3866829862674413） -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3866829862674413" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/css/style.css">
+</head>

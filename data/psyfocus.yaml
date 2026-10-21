@@ -1,0 +1,16 @@
+# RimWorld Psyfocus — 灵能聚焦参考（Royalty/Anomaly，1.6 社区共识值）
+# 冥想类型与每日聚焦产量；等级对应可用灵能
+
+psycast_levels:
+  - { level: 1, name: "Novice",     psycasts: 6,  focus_needed: 30 }
+  - { level: 2, name: "Adept",      psycasts: 6,  focus_needed: 45 }
+  - { level: 3, name: "Practitioner", psycasts: 6, focus_needed: 60 }
+  - { level: 4, name: "Expert",     psycasts: 6,  focus_needed: 75 }
+  - { level: 5, name: "Master",     psycasts: 6,  focus_needed: 90 }
+  - { level: 6, name: "Archotech",  psycasts: 6,  focus_needed: 100 }
+
+meditation_types:
+  - { name: "Natural focus (trees, grass)",   daily: 40 }
+  - { name: "Room focus (dignified room)",    daily: 50 }
+  - { name: "Anima tree",                     daily: 60 }
+  - { name: "Psyfocus artefact (best)",       daily: 80 }

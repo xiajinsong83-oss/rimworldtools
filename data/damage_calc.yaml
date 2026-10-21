@@ -1,0 +1,27 @@
+# RimWorld Damage — 武器伤害参考（1.6 社区共识值）
+# base: 单发基础伤害；type: 伤害类型
+
+weapons:
+  - { name: "Knife (steel)",      base: 8,   type: "Cut" }
+  - { name: "Short bow",          base: 7,   type: "Arrow" }
+  - { name: "Recurve bow",        base: 9,   type: "Arrow" }
+  - { name: "Pistol",             base: 10,  type: "Bullet" }
+  - { name: "Revolver",           base: 13,  type: "Bullet" }
+  - { name: "SMG (submachine)",   base: 8,   type: "Bullet" }
+  - { name: "Assault rifle",      base: 11,  type: "Bullet" }
+  - { name: "Heavy SMG",          base: 10,  type: "Bullet" }
+  - { name: "Sniper rifle",       base: 27,  type: "Bullet" }
+  - { name: "Charge rifle",       base: 15,  type: "Charge" }
+  - { name: "Minigun (per bullet)", base: 7, type: "Bullet" }
+  - { name: "Plasma sword",       base: 18,  type: "Cut" }
+  - { name: "Zeushammer",         base: 34,  type: "Blunt" }
+  - { name: "Monosword",          base: 24,  type: "Cut" }
+  - { name: "EMP grenade",        base: 5,   type: "EMP" }
+
+quality_mult:
+  - { label: "Poor",      mult: 0.8 }
+  - { label: "Normal",    mult: 1.0 }
+  - { label: "Good",      mult: 1.15 }
+  - { label: "Excellent", mult: 1.25 }
+  - { label: "Masterwork",mult: 1.5 }
+  - { label: "Legendary", mult: 1.7 }

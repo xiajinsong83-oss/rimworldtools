@@ -1,0 +1,59 @@
+{{ $ql := site.Data.quality_calc.quality_levels }}
+{{ $sb := site.Data.quality_calc.skill_boost }}
+<div class="quality-calculator" id="quality-calculator">
+  <h3>Crafting quality chance estimator</h3>
+  <div class="qc-field">
+    <label for="qc-skill">Crafting skill (0–20)</label>
+    <input type="range" id="qc-skill" min="0" max="20" value="10">
+    <span class="qc-val" id="qc-skill-val">10</span>
+  </div>
+  <div class="qc-field">
+    <label for="qc-inspired">Inspired creativity</label>
+    <input type="checkbox" id="qc-inspired">
+  </div>
+  <div class="qc-results">
+    <table>
+      <thead><tr><th>Quality</th><th>Chance</th></tr></thead>
+      <tbody id="qc-body"></tbody>
+    </table>
+  </div>
+  <p class="qc-note">Approximate baseline for RimWorld 1.6. Actual odds vary by skill passions, inspirations and MODs.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('quality-calculator');
+  var slider = root.querySelector('#qc-skill');
+  var val = root.querySelector('#qc-skill-val');
+  var inspired = root.querySelector('#qc-inspired');
+  var body = root.querySelector('#qc-body');
+
+  var levels = {{ $ql | jsonify }};
+  var boosts = {{ $sb | jsonify }};
+
+  function boostFor(skill){
+    var keys = Object.keys(boosts).map(Number).sort(function(a,b){return a-b;});
+    var chosen = keys[0];
+    keys.forEach(function(k){ if(k <= skill) chosen = k; });
+    return boosts[chosen];
+  }
+  function compute(){
+    var skill = parseInt(slider.value,10);
+    var boost = boostFor(skill);
+    if(inspired.checked) boost *= 1.6;
+    var total = 0;
+    levels.forEach(function(l){ total += l.weight * boost; });
+    body.innerHTML = '';
+    levels.forEach(function(l){
+      var pct = (l.weight * boost / total * 100).toFixed(1);
+      var tr = document.createElement('tr');
+      var td1 = document.createElement('td'); td1.textContent = l.name;
+      var td2 = document.createElement('td'); td2.textContent = pct + '%';
+      tr.appendChild(td1); tr.appendChild(td2);
+      body.appendChild(tr);
+    });
+  }
+  slider.addEventListener('input', function(){ val.textContent = slider.value; compute(); });
+  inspired.addEventListener('change', compute);
+  compute();
+})();
+</script>

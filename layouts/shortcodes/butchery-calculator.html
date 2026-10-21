@@ -1,0 +1,49 @@
+{{ $animals := site.Data.butchery.animals }}
+{{ $quality := site.Data.butchery.butcher_quality }}
+<div class="butchery" id="butchery">
+  <h3>Butchery Yield Calculator</h3>
+  <div class="bu-field">
+    <label for="bu-animal">Animal</label>
+    <select id="bu-animal">
+      {{ range $animals }}<option value="{{ .meat }}|{{ .leather }}">{{ .name }} (~{{ .meat }} meat, ~{{ .leather }} leather)</option>{{ end }}
+    </select>
+  </div>
+  <div class="bu-field">
+    <label for="bu-qty">Number butchered</label>
+    <input type="number" id="bu-qty" min="1" value="1">
+  </div>
+  <div class="bu-field">
+    <label for="bu-table">Butcher station</label>
+    <select id="bu-table">
+      {{ range $quality }}<option value="{{ .mult }}">{{ .label }}</option>{{ end }}
+    </select>
+  </div>
+  <button id="bu-calc" class="btn">Calculate Yield</button>
+  <div class="bu-result">
+    <p><strong>Total meat:</strong> <span id="bu-meat">—</span></p>
+    <p><strong>Total leather:</strong> <span id="bu-leather">—</span></p>
+    <p><strong>Tip:</strong> <span id="bu-tip">—</span></p>
+  </div>
+  <p class="bu-note">Community-consensus estimates for RimWorld 1.6. Yields vary with butcher skill and bill quality.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('butchery');
+  var btn = root.querySelector('#bu-calc');
+  var elM = root.querySelector('#bu-meat');
+  var elL = root.querySelector('#bu-leather');
+  var elTip = root.querySelector('#bu-tip');
+  function calc(){
+    var v = root.querySelector('#bu-animal').value.split('|');
+    var meat = parseFloat(v[0])||0;
+    var leather = parseFloat(v[1])||0;
+    var qty = parseInt(root.querySelector('#bu-qty').value)||1;
+    var mult = parseFloat(root.querySelector('#bu-table').value);
+    elM.textContent = Math.round(meat * qty * mult) + ' meat';
+    elL.textContent = Math.round(leather * qty * mult) + ' leather';
+    elTip.textContent = meat*mult*qty > 400 ? 'A big haul — smoke it or sell the surplus.' : 'Butcher and cook to keep food stable.';
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>

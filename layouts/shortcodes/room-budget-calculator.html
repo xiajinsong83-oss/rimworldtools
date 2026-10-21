@@ -1,0 +1,46 @@
+{{ $furniture := site.Data.room_budget.furniture }}
+{{ $factors := site.Data.room_budget.room_factors }}
+<div class="room-budget" id="room-budget">
+  <h3>Room Budget & Beauty Calculator</h3>
+  <p>Add furniture you plan to build; see total beauty and rough cost.</p>
+  <div class="rb-furn">
+    {{ range $furniture }}
+    <div class="rb-row"><span title="{{ .note }}">{{ .name }} (+{{ .beauty }} beauty, ~{{ .cost }} cost)</span><input type="number" min="0" value="0" data-beauty="{{ .beauty }}" data-cost="{{ .cost }}"></div>
+    {{ end }}
+  </div>
+  <div class="rb-field">
+    <label for="rb-factor">Room factor</label>
+    <select id="rb-factor">
+      {{ range $factors }}<option value="{{ .bonus }}">{{ .label }}</option>{{ end }}
+    </select>
+  </div>
+  <button id="rb-calc" class="btn">Calculate Room Budget</button>
+  <div class="rb-result">
+    <p><strong>Total beauty:</strong> <span id="rb-beauty">—</span></p>
+    <p><strong>Estimated cost:</strong> <span id="rb-cost">—</span></p>
+    <p><strong>Tip:</strong> <span id="rb-tip">—</span></p>
+  </div>
+  <p class="rb-note">Community-consensus values for RimWorld 1.6. Quality tiers (good/masterwork) multiply beauty — invest in your best artist for big gains.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('room-budget');
+  var btn = root.querySelector('#rb-calc');
+  var elB = root.querySelector('#rb-beauty');
+  var elC = root.querySelector('#rb-cost');
+  var elTip = root.querySelector('#rb-tip');
+  function calc(){
+    var beauty = 0, cost = 0, count = 0;
+    root.querySelectorAll('.rb-row input').forEach(function(inp){
+      var n = parseInt(inp.value)||0;
+      if(n>0){ beauty += n * parseInt(inp.getAttribute('data-beauty')); cost += n * parseInt(inp.getAttribute('data-cost')); count += n; }
+    });
+    beauty += parseInt(root.querySelector('#rb-factor').value)||0;
+    elB.textContent = beauty + ' beauty';
+    elC.textContent = '~' + cost + ' resources';
+    elTip.textContent = count === 0 ? 'Add furniture to plan your room budget.' : (beauty >= 100 ? 'Strong room — expect an impressive or better rating.' : 'Add a sculpture or plants to push beauty past 100.');
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>

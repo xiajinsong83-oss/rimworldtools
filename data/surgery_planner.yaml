@@ -1,0 +1,22 @@
+# RimWorld Surgery — 手术成功率参考（1.6 社区共识值）
+# 基准成功率约 98-100%（卫生环境+好医生）；实际受 Medical 技能、台子、麻醉影响
+# difficulty: 手术难度系数（越高越难）
+
+procedures:
+  - { name: "Install peg leg",          difficulty: 1.0,  note: "Simple, low risk" }
+  - { name: "Install bionic arm",       difficulty: 1.2,  note: "Common mid-game" }
+  - { name: "Install bionic eye",       difficulty: 1.1,  note: "Cheap, useful" }
+  - { name: "Install archotech leg",    difficulty: 1.5,  note: "Rare, complex" }
+  - { name: "Install power claw",       difficulty: 1.3,  note: "Combat upgrade" }
+  - { name: "Organ transplant",         difficulty: 1.6,  note: "Needs donor organ" }
+  - { name: "Heart transplant",         difficulty: 2.0,  note: "High risk" }
+  - { name: "Brain implant (psychic)",  difficulty: 2.2,  note: "Highest risk" }
+  - { name: "Remove peg leg",           difficulty: 0.9,  note: "Simple removal" }
+  - { name: "Luci enhancement",         difficulty: 1.4,  note: "Luciferium surgery" }
+
+# 医生 Medical 技能对成功率的加成（基准 ~98% 封顶，减难度影响）
+skill_factor:
+  - { label: "Medical 0-4",   mult: 0.80 }
+  - { label: "Medical 5-9",   mult: 0.90 }
+  - { label: "Medical 10-14", mult: 0.97 }
+  - { label: "Medical 15-20", mult: 1.00 }

@@ -1,0 +1,27 @@
+# RimWorld Weapon DPS — 原版 1.6 武器参考（社区共识值，估算口径）
+# weapons: 基础DPS、射程、伤害、精度系数（供对比工具用）
+weapons:
+  - { name: "Pistol",              dps: 5.2,  damage: 12, range: 24, accuracy: 0.80 }
+  - { name: "Revolver",            dps: 6.1,  damage: 13, range: 26, accuracy: 0.85 }
+  - { name: "Machine Pistol",      dps: 7.9,  damage: 10, range: 23, accuracy: 0.80 }
+  - { name: "SMG",                 dps: 9.4,  damage: 10, range: 25, accuracy: 0.80 }
+  - { name: "Heavy SMG",           dps: 10.5, damage: 12, range: 27, accuracy: 0.80 }
+  - { name: "Assault Rifle",       dps: 11.2, damage: 13, range: 31, accuracy: 0.90 }
+  - { name: "Charge Rifle",        dps: 14.0, damage: 15, range: 28, accuracy: 0.95 }
+  - { name: "Sniper Rifle",        dps: 6.8,  damage: 28, range: 43, accuracy: 0.90 }
+  - { name: "Charge Lance",        dps: 13.5, damage: 26, range: 37, accuracy: 0.95 }
+  - { name: "Minigun",             dps: 14.5, damage: 10, range: 31, accuracy: 0.75 }
+  - { name: "LMG",                 dps: 12.0, damage: 12, range: 33, accuracy: 0.85 }
+  - { name: "Shotgun",             dps: 9.0,  damage: 20, range: 14, accuracy: 0.80 }
+  - { name: "Charge SMG",          dps: 11.8, damage: 13, range: 25, accuracy: 0.90 }
+  - { name: "Great Bow",           dps: 6.8,  damage: 17, range: 30, accuracy: 0.85 }
+
+# 品质对 DPS 的乘数（1.6 社区共识）
+quality_mult:
+  - { q: "Awful",     m: 0.80 }
+  - { q: "Poor",       m: 0.90 }
+  - { q: "Normal",     m: 1.00 }
+  - { q: "Good",       m: 1.10 }
+  - { q: "Excellent",  m: 1.20 }
+  - { q: "Masterwork", m: 1.35 }
+  - { q: "Legendary",  m: 1.50 }

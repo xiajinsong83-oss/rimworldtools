@@ -1,0 +1,46 @@
+{{ $levels := site.Data.psyfocus.psycast_levels }}
+{{ $med := site.Data.psyfocus.meditation_types }}
+<div class="psyfocus" id="psyfocus">
+  <h3>Psyfocus & Meditation Calculator</h3>
+  <div class="pf-field">
+    <label for="pf-level">Psycast level</label>
+    <select id="pf-level">
+      {{ range $levels }}<option value="{{ .focus_needed }}">{{ .level }} — {{ .name }} (needs ~{{ .focus_needed }} focus)</option>{{ end }}
+    </select>
+  </div>
+  <div class="pf-field">
+    <label for="pf-med">Meditation type</label>
+    <select id="pf-med">
+      {{ range $med }}<option value="{{ .daily }}">{{ .name }} (~{{ .daily }}/day)</option>{{ end }}
+    </select>
+  </div>
+  <div class="pf-field">
+    <label for="pf-hours">Meditation hours per day</label>
+    <input type="number" id="pf-hours" min="1" value="4">
+  </div>
+  <button id="pf-calc" class="btn">Calculate Focus Fill</button>
+  <div class="pf-result">
+    <p><strong>Days to full psyfocus:</strong> <span id="pf-days">—</span></p>
+    <p><strong>Tip:</strong> <span id="pf-tip">—</span></p>
+  </div>
+  <p class="pf-note">Community-consensus values for RimWorld 1.6 + Royalty. Psyfocus regenerates while meditating; strong psycasts consume focus.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('psyfocus');
+  var btn = root.querySelector('#pf-calc');
+  var elD = root.querySelector('#pf-days');
+  var elTip = root.querySelector('#pf-tip');
+  function calc(){
+    var need = parseInt(root.querySelector('#pf-level').value)||30;
+    var daily = parseInt(root.querySelector('#pf-med').value)||40;
+    var hours = parseInt(root.querySelector('#pf-hours').value)||4;
+    var gain = daily * (hours/4);
+    var days = Math.ceil(need / Math.max(1, gain));
+    elD.textContent = '~' + days + ' days';
+    elTip.textContent = days > 3 ? 'Boost meditation with better focus (anima tree or artefact) or more hours.' : 'Good setup — focus fills quickly.';
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>

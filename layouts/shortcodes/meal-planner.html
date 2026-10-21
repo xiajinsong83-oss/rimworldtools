@@ -1,0 +1,48 @@
+{{ $meals := site.Data.meal_planner.meals }}
+{{ $needs := site.Data.meal_planner.colonist_needs }}
+<div class="meal-planner" id="meal-planner">
+  <h3>Colony Meal Planner</h3>
+  <div class="mp-field">
+    <label for="mp-pop">Colonists</label>
+    <input type="number" id="mp-pop" min="1" value="5">
+  </div>
+  <div class="mp-field">
+    <label for="mp-need">Pawn type</label>
+    <select id="mp-need">
+      {{ range $needs }}<option value="{{ .nutrition_per_day }}">{{ .label }} ({{ .nutrition_per_day }}/day)</option>{{ end }}
+    </select>
+  </div>
+  <div class="mp-field">
+    <label for="mp-meal">Meal type</label>
+    <select id="mp-meal">
+      {{ range $meals }}<option value="{{ .nutrition }}">{{ .name }} ({{ .nutrition }} nutrition)</option>{{ end }}
+    </select>
+  </div>
+  <button id="mp-calc" class="btn">Calculate Food Needs</button>
+  <div class="mp-result">
+    <p><strong>Meals needed per day:</strong> <span id="mp-daily">—</span></p>
+    <p><strong>Meals for 10 days:</strong> <span id="mp-stock">—</span></p>
+    <p><strong>Tip:</strong> <span id="mp-tip">—</span></p>
+  </div>
+  <p class="mp-note">Community-consensus nutrition values for RimWorld 1.6. Actual needs vary with body size, age and activity.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('meal-planner');
+  var btn = root.querySelector('#mp-calc');
+  var elD = root.querySelector('#mp-daily');
+  var elS = root.querySelector('#mp-stock');
+  var elTip = root.querySelector('#mp-tip');
+  function calc(){
+    var pop = parseInt(root.querySelector('#mp-pop').value)||1;
+    var need = parseFloat(root.querySelector('#mp-need').value)||1.6;
+    var nutrition = parseFloat(root.querySelector('#mp-meal').value)||0.9;
+    var mealsPerDay = Math.ceil(pop * need / nutrition);
+    elD.textContent = mealsPerDay + ' meals';
+    elS.textContent = mealsPerDay * 10 + ' meals (10-day buffer)';
+    elTip.textContent = 'Stock a 10-day buffer at least; winter and raids need more.';
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>

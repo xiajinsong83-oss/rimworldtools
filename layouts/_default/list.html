@@ -1,0 +1,14 @@
+{{ define "main" }}
+<section class="list-page">
+  <h1>{{ .Title }}</h1>
+  <div class="list-content">{{ .Content }}</div>
+  <div class="list-items">
+    {{ range .Pages }}
+    <a class="list-item" href="{{ .Permalink }}">
+      {{ if .Params.icon }}<img class="list-icon" src="{{ .Params.icon }}" alt="" width="32" height="32">{{ end }}
+      <span>{{ .Title }}</span>
+    </a>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

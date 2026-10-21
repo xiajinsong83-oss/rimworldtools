@@ -1,0 +1,21 @@
+# RimWorld Armor — 常见护甲/材质防护参考（1.6 社区共识值，估算口径）
+# 防护百分比：sharp/blunt/heat
+armors:
+  - { name: "No armor",            sharp: 0,  blunt: 0,  heat: 0 }
+  - { name: "Cloth apparel",       sharp: 20, blunt: 20, heat: 20 }
+  - { name: "Leather apparel",     sharp: 35, blunt: 30, heat: 30 }
+  - { name: "Flak jacket",         sharp: 55, blunt: 45, heat: 25 }
+  - { name: "Flak vest",           sharp: 65, blunt: 50, heat: 30 }
+  - { name: "Marine armor",        sharp: 85, blunt: 70, heat: 60 }
+  - { name: "Cataphract armor",    sharp: 90, blunt: 75, heat: 65 }
+  - { name: "Steel plate armor",   sharp: 75, blunt: 65, heat: 50 }
+  - { name: "Recon armor",         sharp: 70, blunt: 55, heat: 50 }
+  - { name: "Prestige marine",     sharp: 88, blunt: 72, heat: 62 }
+
+# 武器的穿透类别（用于减伤比较）
+weapon_types:
+  - { name: "Assault Rifle (sharp)",  pen: "sharp" }
+  - { name: "Charge Rifle (sharp)",   pen: "sharp" }
+  - { name: "Melee sword (sharp)",    pen: "sharp" }
+  - { name: "Blunt mace",             pen: "blunt" }
+  - { name: "Incendiary (heat)",      pen: "heat" }

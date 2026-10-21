@@ -1,0 +1,18 @@
+# RimWorld Mining Yield — 采矿产量参考（1.6 社区共识值）
+# 每格矿石基准产量（约值，受 Mining 技能加成）
+
+ores:
+  - { name: "Steel (compact steel)",  per_tile: 25,  vein: "10-20 tiles" }
+  - { name: "Component (mineable)",   per_tile: 4,   vein: "2-6 tiles" }
+  - { name: "Plasteel",               per_tile: 6,   vein: "3-8 tiles" }
+  - { name: "Gold",                   per_tile: 4,   vein: "2-6 tiles" }
+  - { name: "Silver",                 per_tile: 8,   vein: "4-10 tiles" }
+  - { name: "Uranium",                per_tile: 8,   vein: "4-10 tiles" }
+  - { name: "Jade",                   per_tile: 6,   vein: "3-8 tiles" }
+
+# Mining 技能对产量的加成倍率（社区共识）
+skill_mult:
+  - { label: "Mining 0-4",   mult: 0.6 }
+  - { label: "Mining 5-9",   mult: 0.9 }
+  - { label: "Mining 10-14", mult: 1.1 }
+  - { label: "Mining 15-20", mult: 1.4 }

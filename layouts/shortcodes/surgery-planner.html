@@ -1,0 +1,50 @@
+{{ $procs := site.Data.surgery_planner.procedures }}
+{{ $skills := site.Data.surgery_planner.skill_factor }}
+<div class="surgery-planner" id="surgery-planner">
+  <h3>Surgery Success Calculator</h3>
+  <div class="sp-field">
+    <label for="sp-proc">Procedure</label>
+    <select id="sp-proc">
+      {{ range $procs }}<option value="{{ .difficulty }}">{{ .name }} ({{ .note }})</option>{{ end }}
+    </select>
+  </div>
+  <div class="sp-field">
+    <label for="sp-skill">Doctor's Medical skill</label>
+    <select id="sp-skill">
+      {{ range $skills }}<option value="{{ .mult }}">{{ .label }}</option>{{ end }}
+    </select>
+  </div>
+  <div class="sp-field">
+    <label for="sp-bed">Surgery location</label>
+    <select id="sp-bed">
+      <option value="1.00">Medical bed (clean)</option>
+      <option value="0.96">Medical bed (slightly dirty)</option>
+      <option value="0.92">Regular bed / no light</option>
+    </select>
+  </div>
+  <button id="sp-calc" class="btn">Calculate Success Rate</button>
+  <div class="sp-result">
+    <p><strong>Estimated success rate:</strong> <span id="sp-rate">—</span></p>
+    <p><strong>Advice:</strong> <span id="sp-adv">—</span></p>
+  </div>
+  <p class="sp-note">Community-consensus estimates for RimWorld 1.6. Success also depends on anesthesia, lighting and hospital cleanliness.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('surgery-planner');
+  var btn = root.querySelector('#sp-calc');
+  var elR = root.querySelector('#sp-rate');
+  var elA = root.querySelector('#sp-adv');
+  function calc(){
+    var diff = parseFloat(root.querySelector('#sp-proc').value)||1;
+    var skill = parseFloat(root.querySelector('#sp-skill').value);
+    var bed = parseFloat(root.querySelector('#sp-bed').value);
+    var base = 0.98 * skill * bed;
+    var rate = Math.max(0.1, Math.min(0.995, base / (1 + (diff-1)*0.15)));
+    elR.textContent = (rate*100).toFixed(1) + '%';
+    elA.textContent = rate >= 0.97 ? 'Low risk — proceed.' : (rate >= 0.9 ? 'Some risk — use a skilled doctor.' : 'High risk — consider a better doctor or bed.');
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>
