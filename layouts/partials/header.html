@@ -11,11 +11,9 @@
         {{- $label := .en }}
         {{- if eq $cur.Language.Lang "zh-hans" }}{{ $label = .zh }}{{ else if eq $cur.Language.Lang "de" }}{{ $label = .de }}{{ else if eq $cur.Language.Lang "fr" }}{{ $label = .fr }}{{ end }}
         {{- $target := $cur.Site.GetPage .id }}
-        {{- if $target }}
-          <a href="{{ $target.RelPermalink }}">{{ $label }}</a>
-        {{- else }}
-          <a href="/{{ .id }}/">{{ $label }}</a>
-        {{- end }}
+        {{- $href := $cur.Site.Home.RelPermalink }}
+        {{- if $target }}{{ $href = $target.RelPermalink }}{{ end }}
+          <a href="{{ $href }}">{{ $label }}</a>
       {{- end }}
     </nav>
     <div class="lang-dropdown">
