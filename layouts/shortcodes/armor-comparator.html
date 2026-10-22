@@ -1,0 +1,42 @@
+{{ $armors := site.Data.armor_compare.armors }}
+{{ $wpns := site.Data.armor_compare.weapon_types }}
+<div class="armor-compare" id="armor-compare">
+  <h3>Armor Calculator — Protection vs Penetration</h3>
+  <div class="ac-field">
+    <label for="ac-armor">Armor / apparel</label>
+    <select id="ac-armor">
+      {{ range $armors }}<option value="{{ .sharp }},{{ .blunt }},{{ .heat }}">{{ .name }}</option>{{ end }}
+    </select>
+  </div>
+  <div class="ac-field">
+    <label for="ac-weapon">Incoming weapon</label>
+    <select id="ac-weapon">
+      {{ range $wpns }}<option value="{{ .pen }}">{{ .name }}</option>{{ end }}
+    </select>
+  </div>
+  <button id="ac-calc" class="btn">Calculate Protection</button>
+  <div class="ac-result">
+    <p><strong>Damage absorbed:</strong> <span id="ac-absorb">—</span>%</p>
+    <p><strong>Effective incoming:</strong> <span id="ac-incoming">—</span>%</p>
+  </div>
+  <p class="ac-note">Community-consensus armor values for RimWorld 1.6. Actual absorption also depends on hit location and armor sharp/blunt/heat type.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('armor-compare');
+  var btn = root.querySelector('#ac-calc');
+  var elA = root.querySelector('#ac-absorb');
+  var elI = root.querySelector('#ac-incoming');
+  function val(id){ return root.querySelector(id).value; }
+  function calc(){
+    var a = val('#ac-armor').split(',').map(Number);
+    var pen = val('#ac-weapon');
+    var idx = pen==='sharp'?0:(pen==='blunt'?1:2);
+    var absorb = a[idx];
+    elA.textContent = absorb.toFixed(0);
+    elI.textContent = (100-absorb).toFixed(0);
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>

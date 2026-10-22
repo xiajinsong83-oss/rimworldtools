@@ -1,0 +1,18 @@
+# RimWorld Freezer Cooler Count — 制冷机数量估算（1.6 经验口径）
+# 一台制冷机(cooler)约可维持的冷库容积，随目标温度/温差变化（社区经验值，非官方精确公式）
+
+baseline_tiles_per_cooler: 100
+
+# 目标温度对每台覆盖格数的调整系数
+temp_factor:
+  - { target: -10,  factor: 1.0, note: "Cold freezer (meat)" }
+  - { target: -5,   factor: 1.15, note: "Cold freezer" }
+  - { target: 0,    factor: 1.3, note: "Standard fridge" }
+  - { target: 10,   factor: 1.8, note: "Cool room" }
+
+# 生态基础温差修正（夏季高温需要更多制冷）
+biome_factor:
+  - { name: "Temperate / Boreal", factor: 1.0 }
+  - { name: "Tropical / Desert", factor: 1.4 }
+  - { name: "Arid Shrubland", factor: 1.25 }
+  - { name: "Cold / Tundra / Ice", factor: 0.7 }

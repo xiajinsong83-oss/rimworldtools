@@ -1,0 +1,51 @@
+{{ $gens := site.Data.power_load.generators }}
+{{ $cons := site.Data.power_load.consumers }}
+<div class="power-load" id="power-load">
+  <h3>Power Load Calculator</h3>
+  <h4>Generators</h4>
+  <div class="pl-gens">
+    {{ range $gens }}
+    <div class="pl-row"><span>{{ .name }}</span><input type="number" min="0" value="0" data-watts="{{ .output }}"></div>
+    {{ end }}
+  </div>
+  <h4>Consumers</h4>
+  <div class="pl-cons">
+    {{ range $cons }}
+    <div class="pl-row"><span>{{ .name }}</span><input type="number" min="0" value="0" data-watts="{{ .watts }}"></div>
+    {{ end }}
+  </div>
+  <button id="pl-calc" class="btn">Calculate Power</button>
+  <div class="pl-result">
+    <p><strong>Total generation:</strong> <span id="pl-gen">—</span> W</p>
+    <p><strong>Total consumption:</strong> <span id="pl-con">—</span> W</p>
+    <p><strong>Balance:</strong> <span id="pl-bal">—</span></p>
+  </div>
+  <p class="pl-note">Approximate RimWorld 1.6 power values (community consensus). Solar/wind fluctuate by weather; keep a buffer.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('power-load');
+  var btn = root.querySelector('#pl-calc');
+  var elG = root.querySelector('#pl-gen');
+  var elC = root.querySelector('#pl-con');
+  var elB = root.querySelector('#pl-bal');
+  function sum(sel){
+    var t=0;
+    root.querySelectorAll(sel+' .pl-row input').forEach(function(inp){
+      t += (parseInt(inp.value)||0) * parseInt(inp.getAttribute('data-watts'));
+    });
+    return t;
+  }
+  function calc(){
+    var gen = sum('.pl-gens');
+    var con = sum('.pl-cons');
+    elG.textContent = gen.toLocaleString();
+    elC.textContent = con.toLocaleString();
+    var bal = gen - con;
+    if(bal >= 0){ elB.textContent = '+' + bal.toLocaleString() + ' W surplus'; }
+    else { elB.textContent = bal.toLocaleString() + ' W deficit — add generation!'; }
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>
