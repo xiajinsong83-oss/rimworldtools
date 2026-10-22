@@ -1,0 +1,30 @@
+# RimWorld Trade Price — 交易价格参考（1.6 社区共识值）
+# 基础市场价（silver，社区共识）
+# 实际成交价 = 基础价 × 谈判修正（受 Social 技能/关系影响）
+
+goods:
+  - { name: "Yayo (drug)",            base: 23 }
+  - { name: "Flake (drug)",           base: 13 }
+  - { name: "Smokeleaf joint",        base: 7 }
+  - { name: "Beer",                   base: 12 }
+  - { name: "Silver (raw)",           base: 1 }
+  - { name: "Gold (raw)",             base: 8 }
+  - { name: "Component",              base: 60 }
+  - { name: "Advanced component",     base: 240 }
+  - { name: "Steel (raw)",            base: 1.8 }
+  - { name: "Plasteel (raw)",         base: 12 }
+  - { name: "Cloth (raw)",            base: 1.6 }
+  - { name: "Leather (plain)",        base: 1.5 }
+  - { name: "Survival meal",          base: 8 }
+  - { name: "Fine meal",              base: 12 }
+  - { name: "Drug (yayo) mass",       base: 23 }
+  - { name: "Art (small sculpture)",  base: 200 }
+  - { name: "Masterwork weapon",      base: 1500 }
+
+# 谈判修正（Social 技能 → 成交价倍率，卖出=倍率，买入=2-倍率）
+social_factors:
+  - { label: "Social 0-4 (poor negotiator)", factor: 1.35 }
+  - { label: "Social 5-8",                   factor: 1.25 }
+  - { label: "Social 9-12",                  factor: 1.15 }
+  - { label: "Social 13-16 (good)",           factor: 1.08 }
+  - { label: "Social 17-20 (expert)",         factor: 1.00 }

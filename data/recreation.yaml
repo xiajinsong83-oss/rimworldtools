@@ -1,0 +1,27 @@
+# RimWorld Recreation — 娱乐类型覆盖参考（1.6 社区共识值）
+# 多样性加成：覆盖越多类型，娱乐心情加成越高（约 +4/类 封顶 +12）
+
+recreation_types:
+  - { name: "Social (dining, chairs)",       icon: "🍽" }
+  - { name: "Book / reading (bookshelf)",     icon: "📚" }
+  - { name: "Board game (chess, hoops)",      icon: "♟" }
+  - { name: "Television (tube television)",   icon: "📺" }
+  - { name: "Music (instrument)",              icon: "🎵" }
+  - { name: "Art (sculpture, gallery)",       icon: "🎨" }
+  - { name: "Meditation (anima tree, shrine)", icon: "🧘" }
+  - { name: "Exercise (training dummy, gym)",  icon: "🏋" }
+  - { name: "Drugs (recreational)",            icon: "💊" }
+  - { name: "Combat training (sparring)",      icon: "⚔" }
+
+# 设施 → 提供哪种娱乐
+facilities:
+  - { name: "Dining table + chairs",       types: ["Social"] }
+  - { name: "Bookshelf",                   types: ["Book / reading (bookshelf)"] }
+  - { name: "Chess table",                 types: ["Board game (chess, hoops)"] }
+  - { name: "Hoops basketball hoop",       types: ["Board game (chess, hoops)", "Exercise (training dummy, gym)"] }
+  - { name: "Tube television",             types: ["Television (tube television)"] }
+  - { name: "Piano / harp / drum",         types: ["Music (instrument)"] }
+  - { name: "Sculpture (art)",             types: ["Art (sculpture, gallery)"] }
+  - { name: "Anima tree / shrine",         types: ["Meditation (anima tree, shrine)"] }
+  - { name: "Training dummy",              types: ["Exercise (training dummy, gym)"] }
+  - { name: "Billiards table",             types: ["Board game (chess, hoops)", "Social"] }

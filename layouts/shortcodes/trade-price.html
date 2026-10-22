@@ -1,0 +1,53 @@
+{{ $goods := site.Data.trade_price.goods }}
+{{ $social := site.Data.trade_price.social_factors }}
+<div class="trade-price" id="trade-price">
+  <h3>Trade Price Calculator</h3>
+  <div class="tp-field">
+    <label for="tp-good">Good</label>
+    <select id="tp-good">
+      {{ range $goods }}<option value="{{ .base }}">{{ .name }} (base {{ .base }} silver)</option>{{ end }}
+    </select>
+  </div>
+  <div class="tp-field">
+    <label for="tp-qty">Quantity</label>
+    <input type="number" id="tp-qty" min="1" value="10">
+  </div>
+  <div class="tp-field">
+    <label for="tp-social">Negotiator</label>
+    <select id="tp-social">
+      {{ range $social }}<option value="{{ .factor }}">{{ .label }}</option>{{ end }}
+    </select>
+  </div>
+  <div class="tp-field">
+    <label for="tp-dir">Direction</label>
+    <select id="tp-dir">
+      <option value="sell">Selling to trader</option>
+      <option value="buy">Buying from trader</option>
+    </select>
+  </div>
+  <button id="tp-calc" class="btn">Calculate Price</button>
+  <div class="tp-result">
+    <p><strong>Unit price:</strong> <span id="tp-unit">—</span></p>
+    <p><strong>Total:</strong> <span id="tp-total">—</span></p>
+  </div>
+  <p class="tp-note">Community-consensus base prices for RimWorld 1.6. Real prices shift with relationship, faction goodwill and market events.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('trade-price');
+  var btn = root.querySelector('#tp-calc');
+  var elU = root.querySelector('#tp-unit');
+  var elT = root.querySelector('#tp-total');
+  function calc(){
+    var base = parseFloat(root.querySelector('#tp-good').value)||0;
+    var qty = parseInt(root.querySelector('#tp-qty').value)||1;
+    var factor = parseFloat(root.querySelector('#tp-social').value);
+    var dir = root.querySelector('#tp-dir').value;
+    var unit = dir === 'sell' ? base * factor : base * (2 - factor);
+    elU.textContent = unit.toFixed(1) + ' silver';
+    elT.textContent = (unit*qty).toFixed(0) + ' silver';
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>
