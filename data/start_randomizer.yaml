@@ -1,0 +1,49 @@
+# RimWorld 开局随机化数据（1.6/Odyssey 口径）
+# 用于 Colony Start Randomizer
+scenarios:
+  - name: Crashlanded
+    desc: "Three survivors from a crashed ship. Balanced start, most common."
+  - name: Rich Explorer
+    desc: "One survivor, high starting wealth. Fast start, more danger."
+  - name: Naked Brutality
+    desc: "One naked survivor. Extreme difficulty, highest challenge."
+  - name: Lost Tribe
+    desc: "Five tribals, low tech. Large crew, slow research."
+  - name: Mechanitor
+    desc: "Start with a mechanitor and a mech. Requires Biotech DLC."
+
+biomes:
+  - name: Temperate Forest
+    temp: "Mild, four seasons"
+    difficulty: 1
+  - name: Boreal Forest
+    temp: "Cold winters, short growing season"
+    difficulty: 2
+  - name: Tropical Rainforest
+    temp: "Hot, wet, year-round growing"
+    difficulty: 2
+  - name: Arid Shrubland
+    temp: "Hot, dry, sparse trees"
+    difficulty: 2
+  - name: Desert
+    temp: "Very hot, no trees, little water"
+    difficulty: 3
+  - name: Tundra
+    temp: "Cold year-round, very short growing season"
+    difficulty: 3
+  - name: Ice Sheet
+    temp: "Extreme cold, nearly no life"
+    difficulty: 4
+
+# 推荐的开局特质组合（供随机器参考）
+starter_traits:
+  - name: Sanguine + Industrious
+    role: "Balanced all-rounder"
+  - name: Tough + Brawler
+    role: "Frontline fighter"
+  - name: Too Smart + Quick Sleeper
+    role: "Dedicated researcher"
+  - name: Jogger + Sanguine
+    role: "Scout / hauler"
+  - name: Industrious + Quick Sleeper
+    role: "High productivity builder"

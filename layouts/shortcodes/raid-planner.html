@@ -1,0 +1,46 @@
+{{ $tiers := site.Data.raid_planner.wealth_tiers }}
+{{ $inputs := site.Data.raid_planner.wealth_inputs }}
+<div class="raid-planner" id="raid-planner">
+  <h3>Raid points & wealth estimator</h3>
+  <div class="rp-fields">
+    {{ range $inputs }}
+    <div class="rp-field">
+      <label for="rp-{{ .key }}">{{ .label }}</label>
+      <input type="number" id="rp-{{ .key }}" min="0" value="0">
+    </div>
+    {{ end }}
+  </div>
+  <button id="rp-calc" class="btn">Estimate Raid</button>
+  <div class="rp-result">
+    <p><strong>Estimated raid points:</strong> <span id="rp-points">—</span></p>
+    <p><strong>Threat level:</strong> <span id="rp-tier">—</span></p>
+  </div>
+  <p class="rp-note">Simplified estimate for RimWorld 1.6. Real raids add faction, difficulty and threat modifiers. Lower item wealth to reduce raid size.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('raid-planner');
+  var btn = root.querySelector('#rp-calc');
+  var elP = root.querySelector('#rp-points');
+  var elT = root.querySelector('#rp-tier');
+  var tiers = {{ $tiers | jsonify }};
+  var inputs = {{ $inputs | jsonify }};
+  function calc(){
+    var pts = 0;
+    inputs.forEach(function(inp){
+      var v = parseInt(root.querySelector('#rp-'+inp.key).value,10)||0;
+      pts += v * inp.weight;
+    });
+    elP.textContent = pts.toLocaleString();
+    var tier = 'Unknown';
+    if(pts < 500) tier = tiers[0].name;
+    else if(pts < 1500) tier = tiers[1].name;
+    else if(pts < 5000) tier = tiers[2].name;
+    else if(pts < 15000) tier = tiers[3].name;
+    else tier = tiers[4].name;
+    elT.textContent = tier;
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>

@@ -1,0 +1,26 @@
+# RimWorld 财富 / 袭击点数估算参考（1.6 口径，简化）
+# 用于 Raid Points & Wealth Planner
+# 公式高度复杂（含威胁点数/派系/难度乘数），此处为简化的教学型估算
+
+wealth_tiers:
+  - name: "Very low wealth (< 5k)"
+    base: 300
+  - name: "Low wealth (5k–15k)"
+    base: 500
+  - name: "Moderate wealth (15k–50k)"
+    base: 900
+  - name: "High wealth (50k–120k)"
+    base: 1500
+  - name: "Very high wealth (> 120k)"
+    base: 2500
+
+wealth_inputs:
+  - key: colonists
+    label: "Colonists"
+    weight: 42
+  - key: items
+    label: "Item wealth"
+    weight: 100
+  - key: buildings
+    label: "Building wealth"
+    weight: 200
