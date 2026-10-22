@@ -1,0 +1,40 @@
+{{ $moodMods := site.Data.mood_calc.mood_mods }}
+{{ $base := site.Data.mood_calc.baseline_mood }}
+{{ $break := site.Data.mood_calc.break_threshold }}
+<div class="mood-calc" id="mood-calc">
+  <h3>Mood Impact Calculator</h3>
+  <p>Select the mood modifiers affecting this colonist:</p>
+  <div class="mc-mods">
+    {{ range $moodMods }}
+    <label class="mc-m"><input type="checkbox" data-delta="{{ .delta }}"> {{ .name }} ({{ .delta }} )</label>
+    {{ end }}
+  </div>
+  <button id="mc-calc" class="btn">Calculate Mood</button>
+  <div class="mc-result">
+    <p><strong>Estimated mood:</strong> <span id="mc-mood">—</span></p>
+    <p><strong>Status:</strong> <span id="mc-status">—</span></p>
+  </div>
+  <p class="mc-note">Baseline {{ $base }} mood, then add/remove selected modifiers (community consensus, RimWorld 1.6). Real mood includes traits, needs and random events.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('mood-calc');
+  var btn = root.querySelector('#mc-calc');
+  var elM = root.querySelector('#mc-mood');
+  var elS = root.querySelector('#mc-status');
+  var base = {{ $base }};
+  var breakAt = {{ $break }};
+  function calc(){
+    var mood = base;
+    root.querySelectorAll('.mc-m input:checked').forEach(function(cb){
+      mood += parseInt(cb.getAttribute('data-delta'));
+    });
+    elM.textContent = mood + ' / 100';
+    if(mood < breakAt){ elS.textContent = '⚠️ Break risk — major or extreme break possible!'; }
+    else if(mood < 40){ elS.textContent = 'Unhappy — watch for minor breaks.'; }
+    else { elS.textContent = 'Stable.'; }
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>

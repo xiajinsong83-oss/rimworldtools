@@ -1,0 +1,58 @@
+{{ $baseCarry := site.Data.caravan_planner.member_base_carry }}
+{{ $animals := site.Data.caravan_planner.pack_animals }}
+{{ $spL := site.Data.caravan_planner.speed_light }}
+{{ $spH := site.Data.caravan_planner.speed_heavy }}
+{{ $food := site.Data.caravan_planner.food_per_person_per_day }}
+<div class="caravan-planner" id="caravan-planner">
+  <h3>Caravan Planner — Loadout, Weight & Supply</h3>
+  <div class="cp-field">
+    <label for="cp-members">Colonists</label>
+    <input type="number" id="cp-members" min="1" value="3">
+  </div>
+  <div class="cp-field">
+    <label for="cp-load">Cargo weight (kg)</label>
+    <input type="number" id="cp-load" min="0" value="150">
+  </div>
+  <div class="cp-animals">
+    {{ range $animals }}
+    <div class="cp-row"><span>{{ .name }}</span><input type="number" min="0" value="0" data-carry="{{ .carry }}"></div>
+    {{ end }}
+  </div>
+  <button id="cp-calc" class="btn">Plan Caravan</button>
+  <div class="cp-result">
+    <p><strong>Carry capacity:</strong> <span id="cp-capacity">—</span> kg</p>
+    <p><strong>Load:</strong> <span id="cp-status">—</span></p>
+    <p><strong>Est. speed:</strong> <span id="cp-speed">—</span></p>
+    <p><strong>Food for journey:</strong> <span id="cp-food">—</span></p>
+  </div>
+  <p class="cp-note">Community-consensus values for RimWorld 1.6. Speed and capacity shift with pawn traits, health and gear.</p>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('caravan-planner');
+  var btn = root.querySelector('#cp-calc');
+  var elCap = root.querySelector('#cp-capacity');
+  var elSt = root.querySelector('#cp-status');
+  var elSp = root.querySelector('#cp-speed');
+  var elF = root.querySelector('#cp-food');
+  var baseCarry = {{ $baseCarry }};
+  function num(id){ return parseFloat(root.querySelector(id).value)||0; }
+  function calc(){
+    var members = num('#cp-members');
+    var load = num('#cp-load');
+    var animCap = 0;
+    root.querySelectorAll('.cp-animals .cp-row input').forEach(function(inp){
+      animCap += (parseInt(inp.value)||0) * parseInt(inp.getAttribute('data-carry'));
+    });
+    var capacity = members * baseCarry + animCap;
+    var ratio = load / Math.max(capacity,1);
+    elCap.textContent = capacity.toFixed(0);
+    elSt.textContent = ratio <= 1 ? 'OK — ' + (ratio*100).toFixed(0) + '% of capacity' : 'OVERLOADED — drop cargo!';
+    elSp.textContent = ratio > 0.8 ? {{ $spH }} + ' km/h (heavy)' : {{ $spL }} + ' km/h (light)';
+    var daysFood = members * {{ $food }};
+    elF.textContent = daysFood.toFixed(1) + ' nutrition/day (bring survival meals)';
+  }
+  btn.addEventListener('click', calc);
+  calc();
+})();
+</script>
