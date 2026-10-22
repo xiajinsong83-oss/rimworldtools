@@ -1,0 +1,47 @@
+baseURL = "https://www.rimworldtools.com/"
+title = "RimWorld Tools — Colony Planning Calculators & Guides"
+languageCode = "en-us"
+enableRobotsTXT = true
+enableGitInfo = false
+
+# 站点声明：非官方粉丝站
+copyright = "© 2026 RimWorld Tools · Fan site, not affiliated with Ludeon Studios · Powered by fansweb"
+
+[params]
+  adsensePublisher = "ca-pub-3866829862674413"
+  siteName = "RimWorld Tools"
+  siteTagline = "RimWorld 1.6 & Odyssey colony planning calculators, trait tools, seeds, MOD guides and FAQs."
+  fanSiteNotice = "This is a fan-made guide site. RimWorld is a trademark of Ludeon Studios. We are not affiliated with or endorsed by Ludeon Studios."
+
+# Google AdSense 广告位占位（待用户在后台创建广告单元后回填真实 slot ID）
+[params.ads]
+  headerSlot = "0000000000"
+  toolsSlot = "0000000000"
+  contentSlot = "0000000000"
+
+# 多语言：默认英文，预留德语（Tier1 之后第二大流量池）
+[languages]
+  [languages.en]
+    languageCode = "en-us"
+    weight = 1
+    title = "RimWorld Tools — Calculators & Guides"
+  [languages.zh-hans]
+    languageCode = "zh-cn"
+    weight = 2
+    title = "RimWorld Tools 环世界工具与攻略"
+
+# 输出配置：HTML + RSS + sitemap
+[outputs]
+  home = ["HTML", "RSS"]
+  page = ["HTML"]
+  section = ["HTML", "RSS"]
+
+[outputFormats]
+  [outputFormats.RSS]
+    mediatype = "application/rss"
+    baseName = "index"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

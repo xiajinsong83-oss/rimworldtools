@@ -1,0 +1,17 @@
+{{ define "main" }}
+<article class="page">
+  <h1>{{ .Title }}</h1>
+  <div class="page-content">
+    {{ .Content }}
+  </div>
+  <!-- 内容区广告位（占位 slot，待用户回填） -->
+  <div class="ad-slot ad-content">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-3866829862674413"
+         data-ad-slot="{{ .Site.Params.ads.contentSlot }}"
+         data-ad-format="auto"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+</article>
+{{ end }}

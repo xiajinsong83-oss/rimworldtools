@@ -1,0 +1,85 @@
+# RimWorld 特质数据（1.6/Odyssey 口径，精简版）
+# 用于 Trait Calculator / Pawn Planner 交互
+# 字段: slug, name, effect, good(bool), tier(best/good/neutral/bad/worst)
+
+traits:
+  - slug: sanguine
+    name: Sanguine
+    effect: "+10 mood (always). Immune to several negative moodlets."
+    good: true
+    tier: best
+  - slug: industrious
+    name: Industrious
+    effect: "Global work speed +30%."
+    good: true
+    tier: best
+  - slug: too-smart
+    name: Too Smart
+    effect: "Research +40%, learning +70%, but boredom negative moodlets."
+    good: true
+    tier: best
+  - slug: brawler
+    name: Brawler
+    effect: "Melee +6 skill, melee attack +30%, but social skills reduced."
+    good: true
+    tier: good
+  - slug: jogger
+    name: Jogger
+    effect: "Move speed +25%."
+    good: true
+    tier: good
+  - slug: night-owl
+    name: Night Owl
+    effect: "+5 mood when awake at night, -5 in the day."
+    good: true
+    tier: good
+  - slug: quick-sleeper
+    name: Quick Sleeper
+    effect: "Sleeps faster, needs less sleep."
+    good: true
+    tier: good
+  - slug: tough
+    name: Tough
+    effect: "Incoming damage -50%."
+    good: true
+    tier: good
+  - slug: abrasive
+    name: Abrasive
+    effect: "Social fights more often, -social opinion."
+    good: false
+    tier: bad
+  - slug: greedy
+    name: Greedy
+    effect: "Unhappy without impressive bedroom, -mood from low expectations."
+    good: false
+    tier: bad
+  - slug: jealous
+    name: Jealous
+    effect: "Requires the best bedroom in colony, else -mood."
+    good: false
+    tier: bad
+  - slug: too-slow
+    name: Too Slow
+    effect: "Move speed -20%."
+    good: false
+    tier: bad
+  - slug: pyro
+    name: Pyromaniac
+    effect: "Randomly starts fires, -mood without fire nearby."
+    good: false
+    tier: worst
+  - slug: chemical-interest
+    name: Chemical Interest
+    effect: "Random drug binges, +risk of addiction."
+    good: false
+    tier: worst
+  - slug: wimp
+    name: Wimp
+    effect: "Downed easily by pain (breaks at low pain)."
+    good: false
+    tier: worst
+  - slug: lazy
+    name: Lazy
+    effect: "Global work speed -20%."
+    good: false
+    tier: worst

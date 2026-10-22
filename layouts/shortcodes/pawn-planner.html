@@ -1,0 +1,79 @@
+{{ $skills := site.Data.skills.skills }}
+{{ $traits := site.Data.traits.traits }}
+<div class="pawn-planner" id="pawn-planner">
+  <h3>Step 1 — Choose your skills</h3>
+  <div class="skill-grid">
+    {{ range $skills }}
+    <div class="skill-field">
+      <label for="skill-{{ .slug }}">{{ .name }}</label>
+      <input type="range" id="skill-{{ .slug }}" class="skill-range" data-slug="{{ .slug }}" min="0" max="20" value="5">
+      <span class="skill-val" data-for="{{ .slug }}">5</span>
+    </div>
+    {{ end }}
+  </div>
+
+  <h3>Step 2 — Pick up to 2 traits</h3>
+  <div class="trait-pick-grid">
+    {{ range $traits }}
+    <label class="trait-pick">
+      <input type="checkbox" class="trait-pick-check" data-slug="{{ .slug }}">
+      <span>{{ .name }} <small>({{ .tier }})</small></span>
+    </label>
+    {{ end }}
+  </div>
+
+  <h3>Step 3 — Your pawn build</h3>
+  <div class="pawn-summary">
+    <h4>Selected traits</h4>
+    <ul class="summary-traits"></ul>
+    <h4>Strongest skills</h4>
+    <ul class="summary-skills"></ul>
+  </div>
+</div>
+<script>
+(function(){
+  var root = document.getElementById('pawn-planner');
+  var ranges = root.querySelectorAll('.skill-range');
+  var checks = root.querySelectorAll('.trait-pick-check');
+  var sTraits = root.querySelector('.summary-traits');
+  var sSkills = root.querySelector('.summary-skills');
+
+  ranges.forEach(function(r){
+    r.addEventListener('input', function(){
+      root.querySelector('[data-for="'+r.dataset.slug+'"]').textContent = r.value;
+      updateSummary();
+    });
+  });
+  checks.forEach(function(c){
+    c.addEventListener('change', function(){
+      // 最多选2个特质
+      var sel = root.querySelectorAll('.trait-pick-check:checked');
+      if(sel.length > 2 && c.checked){ c.checked = false; }
+      updateSummary();
+    });
+  });
+
+  function updateSummary(){
+    sTraits.innerHTML = '';
+    root.querySelectorAll('.trait-pick-check:checked').forEach(function(c){
+      var li = document.createElement('li');
+      li.textContent = c.dataset.slug;
+      sTraits.appendChild(li);
+    });
+    sSkills.innerHTML = '';
+    var top = [];
+    ranges.forEach(function(r){
+      top.push({ slug: r.dataset.slug, val: parseInt(r.value,10) });
+    });
+    top.sort(function(a,b){ return b.val - a.val; });
+    top.slice(0,3).forEach(function(t){
+      if(t.val > 0){
+        var li = document.createElement('li');
+        li.textContent = t.slug + ' (' + t.val + ')';
+        sSkills.appendChild(li);
+      }
+    });
+  }
+  updateSummary();
+})();
+</script>
