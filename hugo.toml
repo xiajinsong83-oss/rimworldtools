@@ -30,6 +30,7 @@ copyright = "© 2026 RimWorld Tools · Fan site, not affiliated with Ludeon Stud
   [languages.zh-hans]
     languageCode = "zh-cn"
     weight = 2
+    contentDir = "content/zh-hans"
     title = "RimWorld Tools 环世界工具与攻略"
     [languages.zh-hans.params]
       siteTagline = "环世界 1.6 与 Odyssey 殖民地规划计算器、特性工具、种子、MOD 指南与 FAQ。"
