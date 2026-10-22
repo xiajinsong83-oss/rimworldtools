@@ -9,12 +9,25 @@
 <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="RSS">
 {{- end }}
 <link rel="canonical" href="{{ if .Params.canonical }}{{ .Params.canonical }}{{ else }}{{ .Permalink }}{{ end }}">
-{{- if .IsHome }}
+{{- $cur := . }}
 {{- range .Site.Languages }}
-<link rel="alternate" hreflang="{{ .Lang }}" href="{{ if eq .Lang "en" }}{{ $.Site.BaseURL }}{{ else }}{{ $.Site.BaseURL }}{{ .Lang }}/{{ end }}">
+  {{- $l := . }}
+  {{- $href := "" }}
+  {{- if eq $cur.Language.Lang $l.Lang }}
+    {{- $href = $cur.Permalink }}
+  {{- else }}
+    {{- range $cur.AllTranslations }}
+      {{- if eq .Language.Lang $l.Lang }}{{ $href = .Permalink }}{{ end }}
+    {{- end }}
+    {{- if not $href }}
+      {{- range $cur.Site.Home.AllTranslations }}
+        {{- if eq .Language.Lang $l.Lang }}{{ $href = .Permalink }}{{ end }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+  <link rel="alternate" hreflang="{{ $l.Lang }}" href="{{ $href }}">
 {{- end }}
 <link rel="alternate" hreflang="x-default" href="{{ .Site.BaseURL }}">
-{{- end }}
 <link rel="icon" type="image/png" href="/favicon.png">
 <!-- Google AdSense 全站加载脚本（ca-pub-3866829862674413） -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3866829862674413" crossorigin="anonymous"></script>

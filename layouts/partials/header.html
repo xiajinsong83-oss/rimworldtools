@@ -5,15 +5,36 @@
       <span class="logo-text">{{ .Site.Params.siteName }}</span>
     </a>
     <nav class="main-nav">
-      <a href="/tools/">Tools</a>
-      <a href="/databases/">Guides & Lists</a>
-      <a href="/seeds/">Seeds</a>
-      <a href="/databases/mods/">MODs</a>
-      <a href="/guides/">FAQ</a>
+      {{- $cur := . }}
+      {{- $navItems := slice (dict "id" "tools" "en" "Tools" "de" "Werkzeuge" "fr" "Outils" "zh" "工具") (dict "id" "databases" "en" "Guides & Lists" "de" "Guides & Listen" "fr" "Guides & Listes" "zh" "指南与清单") (dict "id" "seeds" "en" "Seeds" "de" "Seeds" "fr" "Graines" "zh" "种子") (dict "id" "databases/mods" "en" "MODs" "de" "MODs" "fr" "MODs" "zh" "MOD") (dict "id" "guides" "en" "FAQ" "de" "FAQ" "fr" "FAQ" "zh" "FAQ") }}
+      {{- range $navItems }}
+        {{- $label := .en }}
+        {{- if eq $cur.Language.Lang "zh-hans" }}{{ $label = .zh }}{{ else if eq $cur.Language.Lang "de" }}{{ $label = .de }}{{ else if eq $cur.Language.Lang "fr" }}{{ $label = .fr }}{{ end }}
+        {{- $target := $cur.Site.GetPage .id }}
+        {{- if $target }}
+          <a href="{{ $target.RelPermalink }}">{{ $label }}</a>
+        {{- else }}
+          <a href="/{{ .id }}/">{{ $label }}</a>
+        {{- end }}
+      {{- end }}
     </nav>
     <div class="lang-switch">
       {{- range .Site.Languages }}
-      <a href="{{ if eq .Lang "en" }}{{ $.Site.BaseURL }}{{ else }}{{ $.Site.BaseURL }}{{ .Lang }}/{{ end }}" lang="{{ .Lang }}">{{ upper .Lang }}</a>
+        {{- $l := . }}
+        {{- $href := "" }}
+        {{- if eq $cur.Language.Lang $l.Lang }}
+          {{- $href = $cur.Permalink }}
+        {{- else }}
+          {{- range $cur.AllTranslations }}
+            {{- if eq .Language.Lang $l.Lang }}{{ $href = .Permalink }}{{ end }}
+          {{- end }}
+          {{- if not $href }}
+            {{- range $cur.Site.Home.AllTranslations }}
+              {{- if eq .Language.Lang $l.Lang }}{{ $href = .Permalink }}{{ end }}
+            {{- end }}
+          {{- end }}
+        {{- end }}
+        <a href="{{ $href }}" lang="{{ $l.Lang }}">{{ upper $l.Lang }}</a>
       {{- end }}
     </div>
   </div>
