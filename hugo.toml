@@ -13,11 +13,11 @@ copyright = "© 2026 RimWorld Tools · Fan site, not affiliated with Ludeon Stud
   siteTagline = "RimWorld 1.6 & Odyssey colony planning calculators, trait tools, seeds, MOD guides and FAQs."
   fanSiteNotice = "This is a fan-made guide site. RimWorld is a trademark of Ludeon Studios. We are not affiliated with or endorsed by Ludeon Studios."
 
-# Google AdSense 广告位占位（待用户在后台创建广告单元后回填真实 slot ID）
+# Google AdSense 广告位（真实 slot：2718556812，AdSense 后台创建的统一广告单元）
 [params.ads]
-  headerSlot = "0000000000"
-  toolsSlot = "0000000000"
-  contentSlot = "0000000000"
+  headerSlot = "2718556812"
+  toolsSlot = "2718556812"
+  contentSlot = "2718556812"
 
 # 多语言：默认英文，预留德语（Tier1 之后第二大流量池）
 [languages]
