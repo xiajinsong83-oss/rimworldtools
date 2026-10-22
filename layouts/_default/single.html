@@ -4,13 +4,26 @@
   <div class="page-content">
     {{ .Content }}
   </div>
-  <!-- 内容区广告位（占位 slot，待用户回填） -->
+  {{ if eq .Params.type "tool" }}
+  <!-- 工具页交互区下方广告位 -->
+  <div class="ad-slot ad-tools">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-3866829862674413"
+         data-ad-slot="{{ .Site.Params.ads.toolsSlot }}"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  {{ end }}
+  <!-- 内容区广告位 -->
   <div class="ad-slot ad-content">
     <ins class="adsbygoogle"
          style="display:block"
          data-ad-client="ca-pub-3866829862674413"
          data-ad-slot="{{ .Site.Params.ads.contentSlot }}"
-         data-ad-format="auto"></ins>
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
   </div>
 </article>
