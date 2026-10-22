@@ -4,7 +4,11 @@ description: "RimWorld Tools: Kolonie-Planungsrechner für 1.6 & Odyssey — Mer
 tags: [home, de]
 ---
 
-<p><strong>RimWorld Tools</strong> ist deine deutsche Fan-Ressource für Planungsrechner und Anleitungen zu <strong>RimWorld 1.6 &amp; Odyssey</strong>. Wähle unten einen Rechner oder stöbere in den Anleitungen.</p>
+<div class="hero">
+  <img class="hero-img" src="/img/hero-bg.png" alt="RimWorld Kolonie-Siedlung Pixel-Art Szene">
+  <h1>Plane deine Kolonie, überlebe den Rim</h1>
+  <p><strong>RimWorld Tools</strong> ist deine deutsche Fan-Ressource für Planungsrechner und Anleitungen zu <strong>RimWorld 1.6 &amp; Odyssey</strong>. Wähle unten einen Rechner oder stöbere in den Anleitungen.</p>
+</div>
 
 <h2>Rechner &amp; Tools</h2>
 {{< tool-cards >}}

@@ -3,10 +3,49 @@
     <p class="fan-notice">{{ .Site.Params.fanSiteNotice }}</p>
     <p>© {{ now.Format "2006" }} {{ .Site.Params.siteName }} · Powered by fansweb</p>
     <nav class="footer-nav">
-      <a href="/privacy/">Privacy Policy</a>
-      <a href="/terms/">Terms</a>
-      <a href="/dmca/">DMCA</a>
+      {{- $cur := . }}
+      {{- $footerNav := slice (dict "id" "privacy" "en" "Privacy Policy" "de" "Datenschutz" "fr" "Confidentialité" "zh" "隐私政策") (dict "id" "terms" "en" "Terms" "de" "AGB" "fr" "Conditions" "zh" "服务条款") (dict "id" "dmca" "en" "DMCA" "de" "DMCA" "fr" "DMCA" "zh" "DMCA") }}
+      {{- range $footerNav }}
+        {{- $flabel := .en }}
+        {{- if eq $cur.Language.Lang "zh-hans" }}{{ $flabel = .zh }}{{ else if eq $cur.Language.Lang "de" }}{{ $flabel = .de }}{{ else if eq $cur.Language.Lang "fr" }}{{ $flabel = .fr }}{{ end }}
+        {{- $fpage := $cur.Site.GetPage .id }}
+        {{- if $fpage }}
+          <a href="{{ $fpage.RelPermalink }}">{{ $flabel }}</a>
+        {{- else }}
+          <a href="/{{ .id }}/">{{ $flabel }}</a>
+        {{- end }}
+      {{- end }}
       <a href="/sitemap.xml">Sitemap</a>
     </nav>
   </div>
 </footer>
+
+<!-- Cookie 隐私横幅（AdSense 同意模式） -->
+<div id="cookie-banner" class="cookie-banner" role="dialog" aria-label="Cookie consent">
+  <div class="cookie-inner">
+    <span>We use cookies to make our site work and to serve relevant advertising (Google AdSense). Essential cookies are always on; advertising cookies are only placed with your consent. We never collect or store personal data ourselves.
+      {{- with .Site.GetPage "privacy" }} <a href="{{ .RelPermalink }}">Privacy Policy</a>{{ else }}<a href="/privacy/">Privacy Policy</a>{{ end }}</span>
+    <button id="cookie-accept" class="cookie-accept">Accept</button>
+  </div>
+</div>
+<script>
+(function () {
+  var banner = document.getElementById('cookie-banner');
+  var accept = document.getElementById('cookie-accept');
+  function setConsent(granted) {
+    try {
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('consent', 'update', { 'ad_storage': granted ? 'granted' : 'denied', 'ad_user_data': granted ? 'granted' : 'denied', 'ad_personalization': granted ? 'granted' : 'denied' });
+    } catch (e) {}
+    if (granted) {
+      try { localStorage.setItem('rw_cookie_consent', 'accepted'); } catch (e) {}
+      banner.style.display = 'none';
+    }
+  }
+  var saved = null;
+  try { saved = localStorage.getItem('rw_cookie_consent'); } catch (e) {}
+  if (saved === 'accepted') { banner.style.display = 'none'; } else { banner.style.display = 'block'; }
+  if (accept) { accept.addEventListener('click', function () { setConsent(true); }); }
+})();
+</script>

@@ -4,7 +4,11 @@ description: "RimWorld Tools: calculateurs de planification de colonie pour 1.6 
 tags: [home, fr]
 ---
 
-<p><strong>RimWorld Tools</strong> est votre ressource de fans en français pour les calculateurs et guides de <strong>RimWorld 1.6 &amp; Odyssey</strong>. Choisissez un calculateur ci-dessous ou explorez les guides.</p>
+<div class="hero">
+  <img class="hero-img" src="/img/hero-bg.png" alt="Scène de colonie RimWorld en pixel art">
+  <h1>Planifiez votre colonie, survivez sur le Rim</h1>
+  <p><strong>RimWorld Tools</strong> est votre ressource de fans en français pour les calculateurs et guides de <strong>RimWorld 1.6 &amp; Odyssey</strong>. Choisissez un calculateur ci-dessous ou explorez les guides.</p>
+</div>
 
 <h2>Calculateurs &amp; Outils</h2>
 {{< tool-cards >}}

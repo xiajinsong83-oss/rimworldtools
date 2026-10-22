@@ -29,6 +29,12 @@
 {{- end }}
 <link rel="alternate" hreflang="x-default" href="{{ .Site.BaseURL }}">
 <link rel="icon" type="image/png" href="/favicon.png">
+<!-- Google AdSense 同意模式（默认拒绝广告Cookie，用户Accept后granted） -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag('consent', 'default', { 'ad_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied' });
+</script>
 <!-- Google AdSense 全站加载脚本（ca-pub-3866829862674413） -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3866829862674413" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/css/style.css">

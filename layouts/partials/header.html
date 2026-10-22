@@ -18,24 +18,49 @@
         {{- end }}
       {{- end }}
     </nav>
-    <div class="lang-switch">
-      {{- range .Site.Languages }}
-        {{- $l := . }}
-        {{- $href := "" }}
-        {{- if eq $cur.Language.Lang $l.Lang }}
-          {{- $href = $cur.Permalink }}
-        {{- else }}
-          {{- range $cur.AllTranslations }}
-            {{- if eq .Language.Lang $l.Lang }}{{ $href = .Permalink }}{{ end }}
-          {{- end }}
-          {{- if not $href }}
-            {{- range $cur.Site.Home.AllTranslations }}
+    <div class="lang-dropdown">
+      {{- $lbl := slice (dict "lang" "en" "name" "English") (dict "lang" "zh-hans" "name" "简体中文") (dict "lang" "de" "name" "Deutsch") (dict "lang" "fr" "name" "Français") }}
+      {{- $curName := "English" }}
+      {{- range $lbl }}{{ if eq .lang $cur.Language.Lang }}{{ $curName = .name }}{{ end }}{{ end }}
+      <button type="button" class="lang-btn" aria-haspopup="true" aria-expanded="false">{{ $curName }} ▾</button>
+      <div class="lang-menu">
+        {{- range .Site.Languages }}
+          {{- $l := . }}
+          {{- $href := "" }}
+          {{- if eq $cur.Language.Lang $l.Lang }}
+            {{- $href = $cur.Permalink }}
+          {{- else }}
+            {{- range $cur.AllTranslations }}
               {{- if eq .Language.Lang $l.Lang }}{{ $href = .Permalink }}{{ end }}
             {{- end }}
+            {{- if not $href }}
+              {{- range $cur.Site.Home.AllTranslations }}
+                {{- if eq .Language.Lang $l.Lang }}{{ $href = .Permalink }}{{ end }}
+              {{- end }}
+            {{- end }}
           {{- end }}
+          {{- $name := $l.Lang }}
+          {{- range $lbl }}{{ if eq .lang $l.Lang }}{{ $name = .name }}{{ end }}{{ end }}
+          <a href="{{ $href }}" lang="{{ $l.Lang }}"{{ if eq $cur.Language.Lang $l.Lang }} class="active"{{ end }}>{{ $name }}</a>
         {{- end }}
-        <a href="{{ $href }}" lang="{{ $l.Lang }}">{{ upper $l.Lang }}</a>
-      {{- end }}
+      </div>
     </div>
   </div>
 </header>
+<script>
+(function () {
+  var btn = document.querySelector('.lang-btn');
+  var menu = document.querySelector('.lang-menu');
+  if (btn && menu) {
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var open = menu.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('click', function () {
+      menu.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  }
+})();
+</script>

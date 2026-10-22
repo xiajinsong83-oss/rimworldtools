@@ -5,6 +5,7 @@ tags: [rimworld, tools, calculators, guides]
 ---
 
 <div class="hero">
+  <img class="hero-img" src="/img/hero-bg.png" alt="RimWorld colony settlement pixel art scene">
   <h1>Plan Your Colony, Survive the Rim</h1>
   <p>RimWorld Tools gives you interactive calculators and planning tools for <strong>RimWorld 1.6 &amp; Odyssey</strong> — pawn planners, trait calculators, quality chances, raid &amp; wealth planning, seeds and MOD guides. Fan-made, built for players who plan their colony.</p>
 </div>

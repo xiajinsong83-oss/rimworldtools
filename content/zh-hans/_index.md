@@ -5,6 +5,7 @@ tags: [rimworld, 环世界, tools, calculators, 攻略, zh-hans]
 ---
 
 <div class="hero">
+  <img class="hero-img" src="/img/hero-bg.png" alt="环世界殖民地像素场景图">
   <h1>规划你的殖民地，在边缘世界活下去</h1>
   <p>环世界工具站提供针对 <strong>RimWorld 1.6 与 Odyssey</strong> 的交互式计算器与规划工具——殖民者规划器、特性计算器、品质概率、袭击与财富规划、基因设计与 MOD 攻略。玩家自制，为热爱规划的殖民者打造。</p>
 </div>
