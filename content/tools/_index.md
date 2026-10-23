@@ -5,3 +5,7 @@ icon: "/img/app-icons/rimworld-icon.png"
 tags: [rimworld, tools, index]
 date: 2026-10-23
 ---
+
+<p>All our interactive RimWorld tools, built for the current <strong>1.6 / Odyssey</strong> version. Pick a tool below.</p>
+
+{{< tool-cards >}}

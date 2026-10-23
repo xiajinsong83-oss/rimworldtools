@@ -5,3 +5,7 @@ icon: "/img/app-icons/rimworld-icon.png"
 tags: [rimworld, 环世界, tools, index, zh-hans]
 date: 2026-10-23
 ---
+
+<p>我们为当前 <strong>1.6 与 Odyssey</strong> 版本打造的全部交互式环世界工具。点击下方工具开始使用。</p>
+
+{{< tool-cards >}}

@@ -4,3 +4,7 @@ description: "Alle RimWorld-Rechner auf Deutsch: Merkmale, Siedler, Waffen-DPS, 
 tags: [tools, index, de]
 date: 2026-10-23
 ---
+
+<p>Alle <strong>RimWorld-Rechner</strong> auf Deutsch — für die aktuelle <strong>1.6 / Odyssey</strong>-Version.</p>
+
+{{< tool-cards >}}

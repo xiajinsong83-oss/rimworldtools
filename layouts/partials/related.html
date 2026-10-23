@@ -1,0 +1,47 @@
+{{- /* 全站内链系统：相关区块（同板块共享标签优先，不足随机补足）+ 跨板块推荐 */ -}}
+{{- $cur := . -}}
+{{- $L := .Language.Lang -}}
+{{- $secTitle := dict "en" "More" "de" "Mehr" "fr" "En savoir plus" "zh-hans" "更多" -}}
+{{- $secMap := dict "tools" (dict "en" "Tools" "de" "Werkzeuge" "fr" "Outils" "zh-hans" "工具") "guides" (dict "en" "Guides" "de" "Guides" "fr" "Guides" "zh-hans" "指南") "news" (dict "en" "News" "de" "News" "fr" "Actualités" "zh-hans" "资讯") "databases" (dict "en" "Lists & Databases" "de" "Listen & Datenbanken" "fr" "Listes & Données" "zh-hans" "清单与数据库") "seeds" (dict "en" "Seeds" "de" "Seeds" "fr" "Graines" "zh-hans" "种子") "mods" (dict "en" "MODs" "de" "MODs" "fr" "MODs" "zh-hans" "MOD") -}}
+{{- $toolsTitle := dict "en" "Explore Tools" "de" "Werkzeuge entdecken" "fr" "Découvrir les outils" "zh-hans" "探索工具" -}}
+{{- $all := where .Site.RegularPages "Permalink" "ne" $cur.Permalink -}}
+{{- $same := where $all "Section" .Section -}}
+{{- $related := slice -}}
+{{- if .Params.tags -}}
+  {{- $related = where $same "Params.tags" "intersect" .Params.tags | first 5 -}}
+{{- end -}}
+{{- $need := sub 5 (len $related) -}}
+{{- if gt $need 0 -}}
+  {{- $rest := $same | complement $related | shuffle | first $need -}}
+  {{- $related = $related | append $rest -}}
+{{- end -}}
+{{- $tools := where $all "Section" "tools" | first 3 -}}
+{{- if or $related $tools -}}
+<aside class="related-block">
+  {{- if $related -}}
+  <h2>{{ index $secTitle $L }} {{ if isset $secMap .Section }}{{ index (index $secMap .Section) $L }}{{ else }}{{ .Section }}{{ end }}</h2>
+  <div class="related-grid">
+    {{- range $related -}}
+    <a class="related-card" href="{{ .Permalink }}">
+      {{- if .Params.icon }}<img class="related-icon" src="{{ .Params.icon }}" alt="" loading="lazy">{{ end -}}
+      <span class="related-body">
+        <strong>{{ .Title }}</strong>
+        {{- if .Params.tool_blurb }}<small>{{ .Params.tool_blurb }}</small>{{ else if .Params.description }}<small>{{ .Params.description | truncate 90 }}</small>{{ end -}}
+      </span>
+    </a>
+    {{- end -}}
+  </div>
+  {{- end -}}
+  {{- if and $tools (ne .Section "tools") -}}
+  <h2>{{ index $toolsTitle $L }}</h2>
+  <div class="related-grid">
+    {{- range $tools -}}
+    <a class="related-card" href="{{ .Permalink }}">
+      {{- if .Params.icon }}<img class="related-icon" src="{{ .Params.icon }}" alt="" loading="lazy">{{ end -}}
+      <span class="related-body"><strong>{{ .Title }}</strong>{{ if .Params.tool_blurb }}<small>{{ .Params.tool_blurb }}</small>{{ end }}</span>
+    </a>
+    {{- end -}}
+  </div>
+  {{- end -}}
+</aside>
+{{- end -}}
