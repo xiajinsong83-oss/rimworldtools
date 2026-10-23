@@ -1,0 +1,45 @@
+{{ $d := index site.Data "defense_planner" }}
+{{ $L := .Page.Language.Lang }}
+{{ $t := dict "en" (dict "title" "Defense Planner — Turrets, Traps & Cover" "turret" "Turret" "tCount" "Turrets" "trap" "Trap" "trCount" "Traps" "cover" "Cover type" "steel" "Steel needed" "power" "Power draw (W)" "fire" "Turret damage (per volley)" "trapDmg" "Trap damage" "cover" "Cover fraction" "notes" "Calculation notes" "formula" "steel/power/damage summed per turret and trap; cover applies to pawns standing behind it" "disclaimer" "Planning baselines from RimWorld 1.6 turret and trap Def values; mods can change costs." "dataTitle" "Defense reference" ) "de" (dict "title" "Verteidigungs-Planer — Türme, Fallen & Deckung" "turret" "Turm" "tCount" "Türme" "trap" "Falle" "trCount" "Fallen" "cover" "Deckungstyp" "steel" "Stahl nötig" "power" "Leistung (W)" "fire" "Turmschaden (pro Salve)" "trapDmg" "Fallenschaden" "cover" "Deckungsanteil" "notes" "Berechnungsnotizen" "formula" "Stahl/Leistung/Schaden je Turm und Falle summiert; Deckung für dahinterstehende Siedler" "disclaimer" "Planungsrichtwerte aus RimWorld-1.6-Turm/Fallen-Defs; Mods können Kosten ändern." "dataTitle" "Verteidigungs-Referenz" ) "fr" (dict "title" "Planificateur Défense — Tourelles, Pièges & Abris" "turret" "Tourelle" "tCount" "Tourelles" "trap" "Piège" "trCount" "Pièges" "cover" "Type d'abri" "steel" "Acier nécessaire" "power" "Consommation (W)" "fire" "Dégâts tourelles (volée)" "trapDmg" "Dégâts pièges" "cover" "Fraction d'abri" "notes" "Notes de calcul" "formula" "Acier/énergie/dégâts additionnés par tourelle et piège ; abri pour les colons derrière" "disclaimer" "Bases des Def de tourelles et pièges RimWorld 1.6 ; mods peuvent changer les coûts." "dataTitle" "Référence défense" ) "zh-hans" (dict "title" "防御规划器 — 炮塔、陷阱与掩体" "turret" "炮塔" "tCount" "炮塔数量" "trap" "陷阱" "trCount" "陷阱数量" "cover" "掩体类型" "steel" "所需钢材" "power" "总耗电 (W)" "fire" "炮塔齐射伤害" "trapDmg" "陷阱伤害" "cover" "掩体覆盖率" "notes" "计算说明" "formula" "钢材/电力/伤害按炮塔与陷阱逐项加总；掩体保护其后的小人" "disclaimer" "规划基线来自 RimWorld 1.6 炮塔与陷阱 Def 数值；MOD 可能改变成本。" "dataTitle" "防御数据参考" ) }}
+{{ $tt := index $t $L }}
+{{ $turrets := $d.turrets }}{{ $traps := $d.traps }}{{ $covers := $d.covers }}
+<div class="df-planner" id="df-planner">
+  <h3>{{ $tt.title }}</h3>
+  <div class="hp-row">
+    <div class="hp-field"><label>{{ $tt.turret }}</label>
+      <select id="df-turret">{{ range $turrets }}<option value="{{ .steel }}|{{ .power }}|{{ .dmg }}">{{ .name }}</option>{{ end }}</select>
+    </div>
+    <div class="hp-field"><label>{{ $tt.tCount }}</label><input id="df-tcount" type="number" min="0" max="100" value="4"></div>
+    <div class="hp-field"><label>{{ $tt.trap }}</label>
+      <select id="df-trap">{{ range $traps }}<option value="{{ .dmg }}">{{ .name }}</option>{{ end }}</select>
+    </div>
+    <div class="hp-field"><label>{{ $tt.trCount }}</label><input id="df-trcount" type="number" min="0" max="300" value="12"></div>
+    <div class="hp-field"><label>{{ $tt.cover }}</label>
+      <select id="df-cover">{{ range $covers }}<option value="{{ .cover }}">{{ .name }}</option>{{ end }}</select>
+    </div>
+  </div>
+  <div class="hp-result">
+    <div class="hp-metric"><strong id="df-steel">—</strong><small>{{ $tt.steel }}</small></div>
+    <div class="hp-metric"><strong id="df-power">—</strong><small>{{ $tt.power }}</small></div>
+    <div class="hp-metric"><strong id="df-fire">—</strong><small>{{ $tt.fire }}</small></div>
+    <div class="hp-metric"><strong id="df-trapdmg">—</strong><small>{{ $tt.trapDmg }}</small></div>
+    <div class="hp-metric"><strong id="df-cover">—</strong><small>{{ $tt.cover }}</small></div>
+  </div>
+  <details class="calc-notes"><summary>{{ $tt.notes }}</summary><p>{{ $tt.formula }}</p></details>
+  <p class="disclaimer">{{ $tt.disclaimer }}</p>
+  <details class="game-data"><summary>{{ $tt.dataTitle }}</summary>
+    <table><thead><tr><th>Turret</th><th>Steel</th><th>Power</th><th>Dmg</th></tr></thead>
+    <tbody>{{ range $turrets }}<tr><td>{{ .name }}</td><td>{{ .steel }}</td><td>{{ .power }}</td><td>{{ .dmg }}</td></tr>{{ end }}</tbody></table>
+  </details>
+</div>
+<script>
+(function(){var e=function(id){return document.getElementById(id)};
+var calc=function(){var tu=e('df-turret').value.split('|'),tr=e('df-trap').value.split('|');
+var tc=parseInt(e('df-tcount').value)||0,rc=parseInt(e('df-trcount').value)||0;
+var steel=parseInt(tu[0])*tc;var power=parseInt(tu[1])*tc;var fire=parseInt(tu[2])*tc;var td=parseInt(tr[0])*rc;
+var cv=parseFloat(e('df-cover').value)||0;
+e('df-steel').textContent=steel.toLocaleString();e('df-power').textContent=power.toLocaleString();
+e('df-fire').textContent=fire.toLocaleString();e('df-trapdmg').textContent=td.toLocaleString();
+e('df-cover').textContent=(cv*100).toFixed(0)+'%';};
+['df-turret','df-tcount','df-trap','df-trcount','df-cover'].forEach(function(id){var el=e(id);if(el){el.addEventListener('input',calc);el.addEventListener('change',calc);}});calc();})();
+</script>

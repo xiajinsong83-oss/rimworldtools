@@ -177,3 +177,10 @@ th { background: #f0e5cf; color: #6b4a22; }
 .game-data th, .game-data td { border: 1px solid #e0d0ac; padding: 4px 6px; text-align: left; }
 .game-data th { background: #f3e8d2; }
 .disclaimer { margin-top: 12px; font-size: 0.75rem; color: #8a7a5c; font-style: italic; }
+
+/* ===== P2 新工具组件（生产链/服装/防御/狩猎/医院） ===== */
+.pc-calc, .ob-builder, .df-planner, .ht-calc, #hp-planner2 { margin: 18px 0; padding: 16px; background: rgba(255,253,246,.96); border: 2px solid #e5d9c2; border-radius: 10px; }
+.pc-calc h3, .ob-builder h3, .df-planner h3, .ht-calc h3, #hp-planner2 h3 { margin-top: 0; color: #b4562a; }
+.pc-calc .hp-row, .ob-builder .hp-row, .df-planner .hp-row, .ht-calc .hp-row, #hp-planner2 .hp-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+.pc-calc .hp-field input, .ob-builder .hp-field input, .df-planner .hp-field input, .ht-calc .hp-field input, #hp-planner2 .hp-field input { width: 100%; box-sizing: border-box; }
+.pc-calc .hp-result, .ob-builder .hp-result, .df-planner .hp-result, .ht-calc .hp-result, #hp-planner2 .hp-result { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 14px; }

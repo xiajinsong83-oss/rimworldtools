@@ -1,0 +1,45 @@
+{{ $d := index site.Data "production_chain" }}
+{{ $L := .Page.Language.Lang }}
+{{ $t := dict "en" (dict "title" "Production Chain Planner" "item" "Target item" "qty" "Quantity" "steel" "Steel" "plasteel" "Plasteel" "comp" "Components" "adv" "Advanced components" "work" "Work (h)" "notes" "Calculation notes" "formula" "Direct inputs summed per unit × quantity; advanced components are recursively unfolded into steel + components" "disclaimer" "Planning baselines from RimWorld 1.6 vanilla recipes; mods and DLC can change costs." "dataTitle" "Recipe reference" ) "de" (dict "title" "Produktionsketten-Planer" "item" "Zielobjekt" "qty" "Menge" "steel" "Stahl" "plasteel" "Plastahl" "comp" "Bauteile" "adv" "Fortschritt-Bauteile" "work" "Arbeit (h)" "notes" "Berechnungsnotizen" "formula" "Direkte Eingaben pro Einheit × Menge; Fortschritts-Bauteile werden rekursiv in Stahl + Bauteile zerlegt" "disclaimer" "Planungsrichtwerte aus RimWorld-1.6-Rezepten; Mods und DLC können Kosten ändern." "dataTitle" "Rezept-Referenz" ) "fr" (dict "title" "Planificateur Chaîne de production" "item" "Objet cible" "qty" "Quantité" "steel" "Acier" "plasteel" "Plasteel" "comp" "Composants" "adv" "Composants avancés" "work" "Travail (h)" "notes" "Notes de calcul" "formula" "Entrées directes additionnées par unité × quantité ; composants avancés décomposés en acier + composants" "disclaimer" "Bases des recettes vanilla RimWorld 1.6 ; mods et DLC peuvent changer les coûts." "dataTitle" "Référence des recettes" ) "zh-hans" (dict "title" "生产链需求规划器" "item" "目标物品" "qty" "数量" "steel" "钢材" "plasteel" "塑钢" "comp" "零部件" "adv" "高级零部件" "work" "工时 (h)" "notes" "计算说明" "formula" "直接原料按单件×数量汇总；高级零部件递归折算为钢材与零部件" "disclaimer" "规划基线来自 RimWorld 1.6 原版配方；MOD 与 DLC 可能改变成本。" "dataTitle" "配方参考" ) }}
+{{ $tt := index $t $L }}
+{{ $recipes := $d.recipes }}{{ $mats := $d.materials }}
+<div class="pc-calc" id="pc-calc">
+  <h3>{{ $tt.title }}</h3>
+  <div class="hp-row">
+    <div class="hp-field"><label>{{ $tt.item }}</label>
+      <select id="pc-item">
+        {{ range $recipes }}<option value="{{ .name }}">{{ .name }}</option>{{ end }}
+      </select>
+    </div>
+    <div class="hp-field"><label>{{ $tt.qty }}</label><input id="pc-qty" type="number" min="1" max="500" value="5"></div>
+  </div>
+  <div class="hp-result">
+    <div class="hp-metric"><strong id="pc-steel">—</strong><small>{{ $tt.steel }}</small></div>
+    <div class="hp-metric"><strong id="pc-plas">—</strong><small>{{ $tt.plasteel }}</small></div>
+    <div class="hp-metric"><strong id="pc-comp">—</strong><small>{{ $tt.comp }}</small></div>
+    <div class="hp-metric"><strong id="pc-adv">—</strong><small>{{ $tt.adv }}</small></div>
+    <div class="hp-metric"><strong id="pc-work">—</strong><small>{{ $tt.work }}</small></div>
+  </div>
+  <details class="calc-notes"><summary>{{ $tt.notes }}</summary><p>{{ $tt.formula }}</p></details>
+  <p class="disclaimer">{{ $tt.disclaimer }}</p>
+  <details class="game-data"><summary>{{ $tt.dataTitle }} ({{ $recipes | len }} recipes)</summary>
+    <table><thead><tr><th>Recipe</th><th>Inputs</th><th>Work</th></tr></thead>
+    <tbody>{{ range $recipes }}<tr><td>{{ .name }}</td><td>
+      {{ range $k, $v := .inputs }}{{ $k }}×{{ $v }} {{ end }}
+    </td><td>{{ .work }}</td></tr>{{ end }}</tbody></table>
+  </details>
+</div>
+<script>
+var RECIPES = {{ jsonify $recipes | safeJS }};
+(function(){var e=function(id){return document.getElementById(id)};
+var calc=function(){var name=e('pc-item').value;var qty=parseInt(e('pc-qty').value)||1;
+var r=RECIPES.filter(function(x){return x.name===name})[0]||{};var inputs=r.inputs||{};var tot={steel:0,plasteel:0,component:0,advanced_component:0};var work=r.work||0;
+for(var k in inputs){if(k==='advanced_component'){tot.advanced_component+=inputs[k]*qty;}else{tot[k]=(tot[k]||0)+inputs[k]*qty;}}
+var adv=tot.advanced_component;var advR=RECIPES.filter(function(x){return x.name==='Advanced component'})[0]||{inputs:{steel:5,component:1}};
+tot.steel+=adv*advR.inputs.steel;tot.component+=adv*advR.inputs.component;work*=qty;
+e('pc-steel').textContent=tot.steel.toLocaleString();e('pc-plas').textContent=tot.plasteel.toLocaleString();
+e('pc-comp').textContent=tot.component.toLocaleString();e('pc-adv').textContent=adv.toLocaleString();
+e('pc-work').textContent=Math.round(work/600).toLocaleString();};
+['pc-item','pc-qty'].forEach(function(id){var el=e(id);if(el){el.addEventListener('input',calc);el.addEventListener('change',calc);}});
+calc();})();
+</script>

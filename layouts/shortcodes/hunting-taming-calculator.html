@@ -1,0 +1,40 @@
+{{ $d := index site.Data "hunting_taming" }}
+{{ $L := .Page.Language.Lang }}
+{{ $t := dict "en" (dict "title" "Hunting & Taming Risk-Reward Calculator" "animal" "Animal" "count" "Count" "skill" "Taming skill (0–20)" "mode" "Activity" "hunt" "Hunting" "tame" "Taming" "meat" "Meat total" "leather" "Leather total" "revenge" "Hunt revenge risk" "success" "Tame success chance" "manhunter" "Manhunter risk on fail" "notes" "Calculation notes" "formula" "tame success = (0.25 + skill × 0.025) ÷ (1 + wildness × 1.5) ; revenge risk scales with wildness" "disclaimer" "Planning baselines from RimWorld 1.6 animal Def values and community taming math; mods can change outcomes." "dataTitle" "Animal reference" ) "de" (dict "title" "Jagd- & Zähmungs-Risikorechner" "animal" "Tier" "count" "Anzahl" "skill" "Zähmung (0–20)" "mode" "Aktion" "hunt" "Jagen" "tame" "Zähmen" "meat" "Fleisch gesamt" "leather" "Leder gesamt" "revenge" "Jagd-Vergeltungsrisiko" "success" "Zähmchance" "manhunter" "Wahnsinnsrisiko" "notes" "Berechnungsnotizen" "formula" "Zähmchance = (0,25 + Skill × 0,025) ÷ (1 + Wildheit × 1,5) ; Vergeltungsrisiko nach Wildheit" "disclaimer" "Planungsrichtwerte aus RimWorld-1.6-Tier-Defs und Community-Mathe; Mods können Ergebnisse ändern." "dataTitle" "Tier-Referenz" ) "fr" (dict "title" "Calculateur Chasse & Domestication" "animal" "Animal" "count" "Quantité" "skill" "Domestication (0–20)" "mode" "Action" "hunt" "Chasser" "tame" "Dresser" "meat" "Viande totale" "leather" "Cuir total" "revenge" "Risque de revanche" "success" "Chance de dressage" "manhunter" "Risque de folie" "notes" "Notes de calcul" "formula" "Dressage = (0,25 + compétence × 0,025) ÷ (1 + sauvagerie × 1,5) ; revanche selon sauvagerie" "disclaimer" "Bases des Def animaux RimWorld 1.6 et calcul communautaire ; mods peuvent changer les résultats." "dataTitle" "Référence des animaux" ) "zh-hans" (dict "title" "狩猎与驯服风险收益计算器" "animal" "动物" "count" "数量" "skill" "驯服技能 (0–20)" "mode" "活动" "hunt" "狩猎" "tame" "驯服" "meat" "总肉量" "leather" "总皮革" "revenge" "狩猎复仇风险" "success" "驯服成功率" "manhunter" "失败疯狂风险" "notes" "计算说明" "formula" "驯服成功率 = (0.25 + 技能 × 0.025) ÷ (1 + 野性 × 1.5)；复仇风险随野性提高" "disclaimer" "规划基线来自 RimWorld 1.6 动物 Def 数值与社区驯服公式；MOD 可能改变结果。" "dataTitle" "动物数据参考" ) }}
+{{ $tt := index $t $L }}
+{{ $animals := $d.animals }}
+<div class="ht-calc" id="ht-calc">
+  <h3>{{ $tt.title }}</h3>
+  <div class="hp-row">
+    <div class="hp-field"><label>{{ $tt.animal }}</label>
+      <select id="ht-animal">{{ range $animals }}<option value="{{ .meat }}|{{ .leather }}|{{ .wildness }}|{{ .manhunter }}">{{ .name }}</option>{{ end }}</select>
+    </div>
+    <div class="hp-field"><label>{{ $tt.count }}</label><input id="ht-count" type="number" min="1" max="500" value="5"></div>
+    <div class="hp-field"><label>{{ $tt.skill }}</label><input id="ht-skill" type="number" min="0" max="20" value="8"></div>
+    <div class="hp-field"><label>{{ $tt.mode }}</label>
+      <select id="ht-mode"><option value="hunt">{{ $tt.hunt }}</option><option value="tame">{{ $tt.tame }}</option></select>
+    </div>
+  </div>
+  <div class="hp-result">
+    <div class="hp-metric"><strong id="ht-meat">—</strong><small>{{ $tt.meat }}</small></div>
+    <div class="hp-metric"><strong id="ht-leather">—</strong><small>{{ $tt.leather }}</small></div>
+    <div class="hp-metric"><strong id="ht-revenge">—</strong><small>{{ $tt.revenge }}</small></div>
+    <div class="hp-metric"><strong id="ht-success">—</strong><small>{{ $tt.success }}</small></div>
+    <div class="hp-metric"><strong id="ht-mh">—</strong><small>{{ $tt.manhunter }}</small></div>
+  </div>
+  <details class="calc-notes"><summary>{{ $tt.notes }}</summary><p>{{ $tt.formula }}</p></details>
+  <p class="disclaimer">{{ $tt.disclaimer }}</p>
+  <details class="game-data"><summary>{{ $tt.dataTitle }} ({{ $animals | len }} animals)</summary>
+    <table><thead><tr><th>Animal</th><th>Meat</th><th>Leather</th><th>Wildness</th><th>Manhunter</th></tr></thead>
+    <tbody>{{ range $animals }}<tr><td>{{ .name }}</td><td>{{ .meat }}</td><td>{{ .leather }}</td><td>{{ .wildness }}</td><td>{{ .manhunter }}</td></tr>{{ end }}</tbody></table>
+  </details>
+</div>
+<script>
+(function(){var e=function(id){return document.getElementById(id)};
+var calc=function(){var a=e('ht-animal').value.split('|');var n=parseInt(e('ht-count').value)||1;var sk=parseInt(e('ht-skill').value)||0;var mode=e('ht-mode').value;
+var meat=parseInt(a[0])*n,leather=parseInt(a[1])*n,wild=parseFloat(a[2]),mh=parseFloat(a[3]);
+e('ht-meat').textContent=meat.toLocaleString();e('ht-leather').textContent=leather.toLocaleString();
+if(mode==='hunt'){e('ht-revenge').textContent=Math.round(mh*100)+'%';e('ht-success').textContent='—';e('ht-mh').textContent='—';}
+else{var succ=(0.25+sk*0.025)/(1+wild*1.5);e('ht-revenge').textContent='—';e('ht-success').textContent=(Math.min(succ,1)*100).toFixed(1)+'%';e('ht-mh').textContent=Math.round(Math.min(wild*0.6,1)*100)+'%';}};
+['ht-animal','ht-count','ht-skill','ht-mode'].forEach(function(id){var el=e(id);if(el){el.addEventListener('input',calc);el.addEventListener('change',calc);}});calc();})();
+</script>

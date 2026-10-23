@@ -1,0 +1,18 @@
+# RimWorld Turret, Trap & Cover Defense — 炮塔陷阱掩体（1.6 官方/社区共识值）
+
+turrets:
+  - { name: "Mini turret",          steel: 90,  power: 150, dmg: 7,  ap: 0,   note: "Cheap light defense" }
+  - { name: "Machine gun turret",   steel: 200, power: 300, dmg: 8,  ap: 0,   note: "Good vs infantry, x2 burst" }
+  - { name: "Autocannon turret",    steel: 270, power: 600, dmg: 20, ap: 10, note: "3-round burst, high power" }
+  - { name: "Uranium slug turret",  steel: 260, uranium: 40, power: 400, dmg: 36, ap: 45, note: "Armor-piercing sniper turret" }
+
+traps:
+  - { name: "Spike trap",           wood: 40,  dmg: 20, note: "Cheap, wood only" }
+  - { name: "Steel trap",           steel: 40, dmg: 35, note: "Stronger sharp" }
+  - { name: "IED (high explosive)", steel: 20, component: 1, chemfuel: 25, dmg: 60, note: "Blast trap, explodes" }
+
+covers:
+  - { name: "None / open ground", cover: 0.0 }
+  - { name: "Sandbag",             cover: 0.35 }
+  - { name: "Stone wall",          cover: 0.5 }
+  - { name: "Embrasure",           cover: 0.8 }

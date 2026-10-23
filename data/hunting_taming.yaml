@@ -1,0 +1,17 @@
+# RimWorld Hunting & Taming Risk-Reward — 狩猎驯服（1.6 官方/社区共识值）
+# meat/leather 为每只动物屠宰产出（约值）；wildness 为驯服难度（0-1）；manhunter 为猎杀复仇概率基线
+
+animals:
+  - { name: "Squirrel",   meat: 8,   leather: 3,   wildness: 0.6, manhunter: 0.05, note: "Easy, low value" }
+  - { name: "Rabbit",     meat: 10,  leather: 4,   wildness: 0.5, manhunter: 0.05, note: "Fast breeder" }
+  - { name: "Hare",       meat: 12,  leather: 5,   wildness: 0.5, manhunter: 0.05, note: "Fast, small" }
+  - { name: "Wild boar",  meat: 90,  leather: 35,  wildness: 0.5, manhunter: 0.3,  note: "Aggressive when shot" }
+  - { name: "Deer",       meat: 120, leather: 50,  wildness: 0.4, manhunter: 0.05, note: "Good early food" }
+  - { name: "Muffalo",    meat: 210, leather: 80,  wildness: 0.3, manhunter: 0.05, note: "Great leather" }
+  - { name: "Wolf",       meat: 90,  leather: 40,  wildness: 0.7, manhunter: 0.35, note: "Pack attacker" }
+  - { name: "Bear",       meat: 160, leather: 90,  wildness: 0.7, manhunter: 0.4,  note: "Dangerous" }
+  - { name: "Rhino",      meat: 350, leather: 140, wildness: 0.5, manhunter: 0.25, note: "Huge hide" }
+  - { name: "Elephant",   meat: 700, leather: 280, wildness: 0.3, manhunter: 0.2,  note: "Best meat yield" }
+
+# 驯服成功率估算：success = (0.25 + skill×0.025) / (1 + wildness×1.5)，标注 baseline
+# 驯服失败疯狂风险 ≈ wildness × 0.6（约值）

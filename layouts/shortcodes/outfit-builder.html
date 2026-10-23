@@ -1,0 +1,44 @@
+{{ $d := index site.Data "outfit_builder" }}
+{{ $L := .Page.Language.Lang }}
+{{ $t := dict "en" (dict "title" "Outfit Set Builder" "head" "Headwear" "body" "Body" "legs" "Legs" "cold" "Cold insulation (C)" "heat" "Heat insulation (C)" "sharp" "Sharp armor" "blunt" "Blunt armor" "heatArm" "Heat armor" "range" "Comfort range" "notes" "Calculation notes" "formula" "insulation and armor are summed across the three worn layers; comfort low = 10 − cold insulation, high = 20 + heat insulation" "disclaimer" "Planning baselines from RimWorld 1.6 garment Def values; mods and DLC can change stats." "dataTitle" "Garment reference" ) "de" (dict "title" "Outfit-Baukasten" "head" "Kopf" "body" "Oberkörper" "legs" "Beine" "cold" "Kälteisolierung (°C)" "heat" "Hitzeisolierung (°C)" "sharp" "Scharf-Rüstung" "blunt" "Stumpf-Rüstung" "heatArm" "Hitze-Rüstung" "range" "Komfortbereich" "notes" "Berechnungsnotizen" "formula" "Isolierung und Rüstung werden über drei getragene Lagen summiert; Komfort niedrig = 10 − Kälte, hoch = 20 + Hitze" "disclaimer" "Planungsrichtwerte aus RimWorld-1.6-Kleidungs-Defs; Mods und DLC können Werte ändern." "dataTitle" "Kleidungs-Referenz" ) "fr" (dict "title" "Constructeur de tenues" "head" "Tête" "body" "Torse" "legs" "Jambes" "cold" "Isolation froid (°C)" "heat" "Isolation chaleur (°C)" "sharp" "Armure perforante" "blunt" "Armure contondante" "heatArm" "Armure chaleur" "range" "Plage de confort" "notes" "Notes de calcul" "formula" "Isolation et armure sommées sur les trois couches ; confort bas = 10 − froid, haut = 20 + chaleur" "disclaimer" "Bases des valeurs Def de vêtements RimWorld 1.6 ; mods et DLC peuvent changer les statistiques." "dataTitle" "Référence des vêtements" ) "zh-hans" (dict "title" "服装套装构建器" "head" "头部" "body" "躯干" "legs" "腿部" "cold" "防寒 (°C)" "heat" "防暑 (°C)" "sharp" "锋利护甲" "blunt" "钝击护甲" "heatArm" "热能护甲" "range" "舒适区间" "notes" "计算说明" "formula" "三层穿着部件隔绝与护甲直接加总；舒适低温 = 10 − 防寒，高温 = 20 + 防暑" "disclaimer" "规划基线来自 RimWorld 1.6 服装 Def 数值；MOD 与 DLC 可能改变数值。" "dataTitle" "服装数据参考" ) }}
+{{ $tt := index $t $L }}
+{{ $gs := $d.garments }}
+{{ $head := where $gs "slot" "head" }}{{ $body := where $gs "slot" "body" }}{{ $legs := where $gs "slot" "legs" }}
+<div class="ob-builder" id="ob-builder">
+  <h3>{{ $tt.title }}</h3>
+  <div class="hp-row">
+    <div class="hp-field"><label>{{ $tt.head }}</label>
+      <select id="ob-head">{{ range $head }}<option value="{{ .ins_cold }}|{{ .ins_heat }}|{{ .sharp }}|{{ .blunt }}|{{ .heat }}">{{ .name }}</option>{{ end }}</select>
+    </div>
+    <div class="hp-field"><label>{{ $tt.body }}</label>
+      <select id="ob-body">{{ range $body }}<option value="{{ .ins_cold }}|{{ .ins_heat }}|{{ .sharp }}|{{ .blunt }}|{{ .heat }}">{{ .name }}</option>{{ end }}</select>
+    </div>
+    <div class="hp-field"><label>{{ $tt.legs }}</label>
+      <select id="ob-legs">{{ range $legs }}<option value="{{ .ins_cold }}|{{ .ins_heat }}|{{ .sharp }}|{{ .blunt }}|{{ .heat }}">{{ .name }}</option>{{ end }}</select>
+    </div>
+  </div>
+  <div class="hp-result">
+    <div class="hp-metric"><strong id="ob-cold">—</strong><small>{{ $tt.cold }}</small></div>
+    <div class="hp-metric"><strong id="ob-heat">—</strong><small>{{ $tt.heat }}</small></div>
+    <div class="hp-metric"><strong id="ob-sharp">—</strong><small>{{ $tt.sharp }}</small></div>
+    <div class="hp-metric"><strong id="ob-blunt">—</strong><small>{{ $tt.blunt }}</small></div>
+    <div class="hp-metric"><strong id="ob-heatArm">—</strong><small>{{ $tt.heatArm }}</small></div>
+    <div class="hp-metric"><strong id="ob-range">—</strong><small>{{ $tt.range }}</small></div>
+  </div>
+  <details class="calc-notes"><summary>{{ $tt.notes }}</summary><p>{{ $tt.formula }}</p></details>
+  <p class="disclaimer">{{ $tt.disclaimer }}</p>
+  <details class="game-data"><summary>{{ $tt.dataTitle }} ({{ $gs | len }} garments)</summary>
+    <table><thead><tr><th>Garment</th><th>Slot</th><th>Cold</th><th>Heat</th><th>Sharp</th><th>Blunt</th></tr></thead>
+    <tbody>{{ range $gs }}<tr><td>{{ .name }}</td><td>{{ .slot }}</td><td>{{ .ins_cold }}</td><td>{{ .ins_heat }}</td><td>{{ .sharp }}</td><td>{{ .blunt }}</td></tr>{{ end }}</tbody></table>
+  </details>
+</div>
+<script>
+(function(){var e=function(id){return document.getElementById(id)};
+var sum=function(a,b){return a.map(function(x,i){return parseFloat(x)+parseFloat(b[i])})};
+var calc=function(){var h=e('ob-head').value.split('|'),b=e('ob-body').value.split('|'),l=e('ob-legs').value.split('|');
+var c=sum(sum(h,b),l);var low=10-c[0],high=20+c[1];
+e('ob-cold').textContent=c[0].toFixed(0)+'°C';e('ob-heat').textContent=c[1].toFixed(0)+'°C';
+e('ob-sharp').textContent=c[2].toFixed(0)+'%';e('ob-blunt').textContent=c[3].toFixed(0)+'%';e('ob-heatArm').textContent=c[4].toFixed(0)+'%';
+e('ob-range').textContent=low.toFixed(0)+'–'+high.toFixed(0)+'°C';};
+['ob-head','ob-body','ob-legs'].forEach(function(id){var el=e(id);if(el){el.addEventListener('change',calc);}});calc();})();
+</script>

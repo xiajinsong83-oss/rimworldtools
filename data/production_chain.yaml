@@ -1,0 +1,19 @@
+# RimWorld Recursive Production Chain — 生产链递归需求（1.6 官方配方口径）
+# 配方为基础制造/锻造/水培等 vanilla 配方（community-consensus values）
+
+# 配方：item 名 → 每 1 件所需原材料
+recipes:
+  - { name: "Advanced component", outputs: 1, inputs: { steel: 5, component: 1 }, work: 600, note: "Machining bench" }
+  - { name: "Bionic arm",        outputs: 1, inputs: { steel: 25, plasteel: 25, component: 5, advanced_component: 2 }, work: 4500, note: "Health bench, 1.6 vanilla" }
+  - { name: "Bionic leg",        outputs: 1, inputs: { steel: 25, plasteel: 25, component: 5, advanced_component: 2 }, work: 4500, note: "Health bench" }
+  - { name: "Bionic eye",        outputs: 1, inputs: { steel: 15, plasteel: 15, component: 3, advanced_component: 1 }, work: 3000, note: "Health bench" }
+  - { name: "Power claw",        outputs: 1, inputs: { steel: 20, component: 2, advanced_component: 1 }, work: 2200, note: "Machining bench" }
+  - { name: "Charge rifle",      outputs: 1, inputs: { steel: 40, component: 6, advanced_component: 2 }, work: 3200, note: "Smithing/Machining" }
+  - { name: "Marine armor",      outputs: 1, inputs: { steel: 50, plasteel: 25, component: 4, advanced_component: 2 }, work: 5000, note: "Tailoring/1.6 vanilla" }
+
+# 原材料显示名
+materials:
+  - { key: "steel", label: "Steel" }
+  - { key: "plasteel", label: "Plasteel" }
+  - { key: "component", label: "Components" }
+  - { key: "advanced_component", label: "Advanced components" }

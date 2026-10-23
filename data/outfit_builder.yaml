@@ -1,0 +1,25 @@
+# RimWorld Outfit Set Builder — 服装套装构建（1.6 社区共识值）
+# slot: head / body / legs ；insulation 为温度隔绝（℃），sharp/blunt/heat 为护甲（%）
+
+garments:
+  - { name: "Cowboy hat",      slot: head, ins_cold: 5,   ins_heat: -5,  sharp: 0,  blunt: 0,  heat: 0,  note: "Cheap, stylish" }
+  - { name: "Bowler hat",      slot: head, ins_cold: 4,   ins_heat: -4,  sharp: 0,  blunt: 0,  heat: 0,  note: "Cheap" }
+  - { name: "Tuque",           slot: head, ins_cold: 15,  ins_heat: -8,  sharp: 0,  blunt: 0,  heat: 0,  note: "Winter headwear" }
+  - { name: "Flak helmet",     slot: head, ins_cold: 3,   ins_heat: -3,  sharp: 32, blunt: 22, heat: 12, note: "Basic combat helm" }
+  - { name: "Combat helmet",   slot: head, ins_cold: 3,   ins_heat: -3,  sharp: 45, blunt: 30, heat: 20, note: "Marine-tier helm" }
+  - { name: "Recon helmet",    slot: head, ins_cold: 3,   ins_heat: -3,  sharp: 55, blunt: 35, heat: 25, note: "Recon gear" }
+  - { name: "Marine helmet",   slot: head, ins_cold: 3,   ins_heat: -3,  sharp: 60, blunt: 40, heat: 30, note: "Marine gear" }
+  - { name: "T-shirt",         slot: body, ins_cold: -2,  ins_heat: 6,  sharp: 0,  blunt: 0,  heat: 0,  note: "Light layer" }
+  - { name: "Button-down",     slot: body, ins_cold: 2,   ins_heat: 4,  sharp: 0,  blunt: 0,  heat: 0,  note: "Formal layer" }
+  - { name: "Flak vest",       slot: body, ins_cold: 2,   ins_heat: -2,  sharp: 40, blunt: 35, heat: 15, note: "Core torso protection" }
+  - { name: "Duster",          slot: body, ins_cold: 10,  ins_heat: 12, sharp: 0,  blunt: 0,  heat: 0,  note: "Desert/temperate outer" }
+  - { name: "Parka",           slot: body, ins_cold: 25,  ins_heat: -15, sharp: 0,  blunt: 0,  heat: 0,  note: "Winter outer" }
+  - { name: "Recon armor",     slot: body, ins_cold: 12,  ins_heat: -5,  sharp: 45, blunt: 40, heat: 30, note: "Light power armor" }
+  - { name: "Marine armor",    slot: body, ins_cold: 15,  ins_heat: -6,  sharp: 80, blunt: 70, heat: 50, note: "Full marine set" }
+  - { name: "Pants",           slot: legs, ins_cold: 4,   ins_heat: 4,  sharp: 0,  blunt: 0,  heat: 0,  note: "Standard legwear" }
+  - { name: "Flak pants",      slot: legs, ins_cold: 3,   ins_heat: -2,  sharp: 25, blunt: 20, heat: 8,  note: "Leg protection" }
+
+# 舒适温度基线（℃）：舒适低温 = 10 - 冷隔绝，舒适高温 = 20 + 热隔绝（粗略 baseline）
+comfort_base:
+  low: 10
+  high: 20

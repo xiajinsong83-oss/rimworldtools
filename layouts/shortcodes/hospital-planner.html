@@ -1,0 +1,40 @@
+{{ $d := index site.Data "hospital_planner" }}
+{{ $L := .Page.Language.Lang }}
+{{ $t := dict "en" (dict "title" "Hospital & Care Planner" "medicine" "Medicine" "facility" "Facility" "skill" "Care skill (0–20)" "beds" "Patients / beds" "quality" "Tend quality" "speed" "Tend speed" "surgery" "Surgery bonus" "cure" "Days to immunity (base)" "daily" "Medicine per day" "notes" "Calculation notes" "formula" "tend quality % = potency × (0.8 + skill × 0.02) ; immunity ≈ severity 0.15/day vs immunity 0.16/day" "disclaimer" "Planning baselines from RimWorld 1.6 medicine and care mechanics; mods can change outcomes." "dataTitle" "Care reference" ) "de" (dict "title" "Krankenhaus- & Pflege-Planer" "medicine" "Medizin" "facility" "Einrichtung" "skill" "Pflege (0–20)" "beds" "Patienten / Betten" "quality" "Behandlungsqualität" "speed" "Behandlungstempo" "surgery" "OP-Bonus" "cure" "Tage bis Immunität" "daily" "Medizin pro Tag" "notes" "Berechnungsnotizen" "formula" "Qualität % = Wirkung × (0,8 + Skill × 0,02) ; Immunität ≈ 0,16/Tag vs 0,15/Tag Schwere" "disclaimer" "Planungsrichtwerte aus RimWorld-1.6-Medizin/Pflege; Mods können Ergebnisse ändern." "dataTitle" "Pflege-Referenz" ) "fr" (dict "title" "Planificateur Hôpital & Soins" "medicine" "Médecine" "facility" "Équipement" "skill" "Soins (0–20)" "beds" "Patients / lits" "quality" "Qualité des soins" "speed" "Vitesse des soins" "surgery" "Bonus chirurgie" "cure" "Jours avant immunité" "daily" "Médecine / jour" "notes" "Notes de calcul" "formula" "Qualité % = puissance × (0,8 + compétence × 0,02) ; immunité ≈ 0,16/j vs gravité 0,15/j" "disclaimer" "Bases des mécaniques médecine/soins RimWorld 1.6 ; mods peuvent changer les résultats." "dataTitle" "Référence des soins" ) "zh-hans" (dict "title" "医院与护理规划器" "medicine" "药物" "facility" "设施" "skill" "护理技能 (0–20)" "beds" "病人/床位" "quality" "治疗质量" "speed" "治疗速度" "surgery" "手术加成" "cure" "免疫天数 (基础)" "daily" "每日用药" "notes" "计算说明" "formula" "治疗质量 % = 药效 × (0.8 + 技能 × 0.02)；免疫 ≈ 0.16/天 vs 病情 0.15/天" "disclaimer" "规划基线来自 RimWorld 1.6 药物与护理机制；MOD 可能改变结果。" "dataTitle" "护理数据参考" ) }}
+{{ $tt := index $t $L }}
+{{ $meds := $d.medicines }}{{ $facs := $d.facilities }}
+<div class="hp-planner" id="hp-planner2">
+  <h3>{{ $tt.title }}</h3>
+  <div class="hp-row">
+    <div class="hp-field"><label>{{ $tt.medicine }}</label>
+      <select id="hs-med">{{ range $meds }}<option value="{{ .potency }}">{{ .name }}</option>{{ end }}</select>
+    </div>
+    <div class="hp-field"><label>{{ $tt.facility }}</label>
+      <select id="hs-fac">{{ range $facs }}<option value="{{ .tend_speed }}|{{ .surgery }}">{{ .name }}</option>{{ end }}</select>
+    </div>
+    <div class="hp-field"><label>{{ $tt.skill }}</label><input id="hs-skill" type="number" min="0" max="20" value="10"></div>
+    <div class="hp-field"><label>{{ $tt.beds }}</label><input id="hs-beds" type="number" min="1" max="200" value="8"></div>
+  </div>
+  <div class="hp-result">
+    <div class="hp-metric"><strong id="hs-quality">—</strong><small>{{ $tt.quality }}</small></div>
+    <div class="hp-metric"><strong id="hs-speed">—</strong><small>{{ $tt.speed }}</small></div>
+    <div class="hp-metric"><strong id="hs-surgery">—</strong><small>{{ $tt.surgery }}</small></div>
+    <div class="hp-metric"><strong id="hs-cure">—</strong><small>{{ $tt.cure }}</small></div>
+    <div class="hp-metric"><strong id="hs-daily">—</strong><small>{{ $tt.daily }}</small></div>
+  </div>
+  <details class="calc-notes"><summary>{{ $tt.notes }}</summary><p>{{ $tt.formula }}</p></details>
+  <p class="disclaimer">{{ $tt.disclaimer }}</p>
+  <details class="game-data"><summary>{{ $tt.dataTitle }}</summary>
+    <table><thead><tr><th>Medicine</th><th>Potency</th></tr></thead>
+    <tbody>{{ range $meds }}<tr><td>{{ .name }}</td><td>{{ .potency }}</td></tr>{{ end }}</tbody></table>
+  </details>
+</div>
+<script>
+(function(){var e=function(id){return document.getElementById(id)};
+var calc=function(){var pot=parseFloat(e('hs-med').value)||1;var f=e('hs-fac').value.split('|');var sp=parseFloat(f[0]),sg=parseFloat(f[1]);
+var sk=parseInt(e('hs-skill').value)||0,beds=parseInt(e('hs-beds').value)||1;
+var qual=pot*(0.8+sk*0.02);var net=0.16-0.15;var cure=net>0?Math.max(1,Math.round(10/net)):99;
+e('hs-quality').textContent=Math.round(qual*100)+'%';e('hs-speed').textContent=sp.toFixed(1)+'×';e('hs-surgery').textContent=sg.toFixed(1)+'×';
+e('hs-cure').textContent=cure+' days';e('hs-daily').textContent=beds.toLocaleString();};
+['hs-med','hs-fac','hs-skill','hs-beds'].forEach(function(id){var el=e(id);if(el){el.addEventListener('input',calc);el.addEventListener('change',calc);}});calc();})();
+</script>
