@@ -1,0 +1,40 @@
+# RimWorld Bed Capacity, Comfort & Rest — 床位舒适与休息（1.6 社区共识值）
+
+# 床型基础舒适度与休息效率（rest rate multiplier）
+beds:
+  - { name: "Sleeping spot",    comfort: 0.35, rest_mult: 0.8,  note: "Emergency only" }
+  - { name: "Bedroll",          comfort: 0.42, rest_mult: 0.9,  note: "Portable camping" }
+  - { name: "Bed (single)",     comfort: 0.55, rest_mult: 1.0,  note: "Standard" }
+  - { name: "Double bed",       comfort: 0.6,  rest_mult: 1.0,  note: "Two pawns, shared bonus" }
+  - { name: "Royal bed",        comfort: 0.9,  rest_mult: 1.3,  note: "Prestige + best rest" }
+  - { name: "Hospital bed",     comfort: 0.65, rest_mult: 1.0,  note: "Medical treatment speed" }
+  - { name: "Animal sleeping spot", comfort: 0.3, rest_mult: 0.8, note: "Animals" }
+  - { name: "Animal bedroll",   comfort: 0.4,  rest_mult: 0.9,  note: "Animals, portable" }
+
+# 材料舒适度系数（comfortFactor）
+materials:
+  - { name: "Cloth",     comfort_mult: 1.0 }
+  - { name: "Leather",   comfort_mult: 1.1 }
+  - { name: "Wool",      comfort_mult: 1.3 }
+  - { name: "Bluefur",   comfort_mult: 1.15 }
+  - { name: "Hyperweave",comfort_mult: 1.4 }
+  - { name: "Thrumbofur",comfort_mult: 1.5 }
+
+# 品质倍率（quality comfort multiplier，同通用品质表）
+qualities:
+  - { name: "Awful",      mult: 0.5 }
+  - { name: "Shoddy",     mult: 0.65 }
+  - { name: "Poor",       mult: 0.75 }
+  - { name: "Normal",     mult: 1.0 }
+  - { name: "Good",       mult: 1.15 }
+  - { name: "Excellent",  mult: 1.3 }
+  - { name: "Masterwork", mult: 1.45 }
+  - { name: "Legendary",  mult: 1.6 }
+
+# 舒适度→心情/休息参考（社区共识分段）
+comfort_bands:
+  - { label: "0.00–0.40",  mood: "No bonus", rest: "Slow rest" }
+  - { label: "0.40–0.65",  mood: "+2",       rest: "Normal rest" }
+  - { label: "0.65–0.90",  mood: "+4",       rest: "Good rest" }
+  - { label: "0.90–1.20",  mood: "+6",       rest: "Fast rest" }
+  - { label: "1.20+",      mood: "+8",       rest: "Very fast rest" }

@@ -1,0 +1,28 @@
+# RimWorld Storage & Shelf Capacity — 储物与货架容量（1.6 官方/社区共识值）
+
+# 货架：占地 1x2（2 格），每格 1 堆叠；不制冷（除非置于冷藏区）
+shelf:
+  - { name: "Shelf",       tiles: 2, stacks_per_shelf: 2, note: "1 stack per grid tile, does not refrigerate" }
+  - { name: "Storage pile",tiles: 1, stacks_per_shelf: 1, note: "Ground storage, no shelf bonus" }
+
+# 常见物品堆叠上限（stackLimit，1.6 口径）
+stacks:
+  - { name: "Steel",        limit: 250, note: "Bulk metal" }
+  - { name: "Plasteel",     limit: 250, note: "Bulk metal" }
+  - { name: "Uranium",      limit: 250, note: "Bulk metal" }
+  - { name: "Wood",         limit: 150, note: "Fuel / building" }
+  - { name: "Components",   limit: 25,  note: "Industrial parts" }
+  - { name: "Medicine",     limit: 50,  note: "Herbal medicine" }
+  - { name: "Cloth",        limit: 50,  note: "Textile" }
+  - { name: "Raw meat",     limit: 75,  note: "Perishable" }
+  - { name: "Rice / veg",   limit: 75,  note: "Perishable" }
+  - { name: "Meals",        limit: 10,  note: "Cooked food" }
+  - { name: "Beer",         limit: 10,  note: "Brewed" }
+  - { name: "Leather",      limit: 25,  note: "Crafting" }
+
+# 冷藏对保存时长的影响（约值，天）
+perish_guide:
+  - { label: "Refrigerated (-10°C or below)",  meat: 60, veg: 60, meal: 20 }
+  - { label: "Freezer (-20°C)",                meat: 200, veg: 200, meal: 60 }
+  - { label: "Room temperature",               meat: 3,  veg: 4,  meal: 4 }
+  - { label: "Outdoors (summer)",              meat: 1,  veg: 2,  meal: 2 }

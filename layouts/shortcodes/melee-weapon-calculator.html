@@ -1,0 +1,43 @@
+{{ $d := index site.Data "melee_weapon" }}
+{{ $L := .Page.Language.Lang }}
+{{ $t := dict "en" (dict "title" "Melee Weapon Material & Quality Calculator" "weapon" "Weapon" "material" "Material" "quality" "Quality" "dmg" "Damage" "ap" "Armor penetration" "dps" "DPS" "notes" "Calculation notes" "formula" "damage = baseDamage × materialFactor × qualityMultiplier ; DPS = damage ÷ cooldown" "disclaimer" "Planning baselines from RimWorld 1.6 Def fields; mods and DLC can change values." "dataTitle" "Weapon data reference" ) "de" (dict "title" "Nahkampfwaffen-Material & Qualität" "weapon" "Waffe" "material" "Material" "quality" "Qualität" "dmg" "Schaden" "ap" "Panzerdurchdringung" "dps" "DPS" "notes" "Berechnungsnotizen" "formula" "Schaden = Grundschaden × Materialfaktor × Qualität ; DPS = Schaden ÷ Abklingzeit" "disclaimer" "Planungsrichtwerte aus RimWorld-1.6-Def-Feldern; Mods und DLC können Werte ändern." "dataTitle" "Waffendaten-Referenz" ) "fr" (dict "title" "Calculateur Arme de mêlée — Matériau & Qualité" "weapon" "Arme" "material" "Matériau" "quality" "Qualité" "dmg" "Dégâts" "ap" "Perforation" "dps" "DPS" "notes" "Notes de calcul" "formula" "Dégâts = dégâts de base × facteur matériau × qualité ; DPS = dégâts ÷ temps de recharge" "disclaimer" "Bases de planification issues des champs Def de RimWorld 1.6 ; mods et DLC peuvent changer les valeurs." "dataTitle" "Référence des données d'armes" ) "zh-hans" (dict "title" "近战武器材料与品质计算器" "weapon" "武器" "material" "材料" "quality" "品质" "dmg" "伤害" "ap" "穿甲" "dps" "DPS" "notes" "计算说明" "formula" "伤害 = 基础伤害 × 材料系数 × 品质倍率；DPS = 伤害 ÷ 冷却时间" "disclaimer" "规划基线来自 RimWorld 1.6 Def 数值；MOD 与 DLC 可能改变数值。" "dataTitle" "武器数据参考" ) }}
+{{ $tt := index $t $L }}
+{{ $wps := $d.weapons }}{{ $mats := $d.materials }}{{ $quals := $d.qualities }}
+<div class="mw-calc" id="mw-calc">
+  <h3>{{ $tt.title }}</h3>
+  <div class="hp-field"><label>{{ $tt.weapon }}</label>
+    <select id="mw-weapon">
+      {{ range $wps }}<option value="{{ .dmg }}|{{ .ap }}|{{ .cooldown }}">{{ .name }}</option>{{ end }}
+    </select>
+  </div>
+  <div class="hp-row">
+    <div class="hp-field"><label>{{ $tt.material }}</label>
+      <select id="mw-mat">
+        {{ range $mats }}<option value="{{ .dmg_mult }}|{{ .ap_mult }}">{{ .name }}</option>{{ end }}
+      </select>
+    </div>
+    <div class="hp-field"><label>{{ $tt.quality }}</label>
+      <select id="mw-qual">
+        {{ range $quals }}<option value="{{ .mult }}">{{ .name }}</option>{{ end }}
+      </select>
+    </div>
+  </div>
+  <div class="hp-result">
+    <div class="hp-metric"><strong id="mw-dmg">—</strong><small>{{ $tt.dmg }}</small></div>
+    <div class="hp-metric"><strong id="mw-ap">—</strong><small>{{ $tt.ap }} (%)</small></div>
+    <div class="hp-metric"><strong id="mw-dps">—</strong><small>{{ $tt.dps }}</small></div>
+  </div>
+  <details class="calc-notes"><summary>{{ $tt.notes }}</summary><p>{{ $tt.formula }}</p></details>
+  <p class="disclaimer">{{ $tt.disclaimer }}</p>
+  <details class="game-data"><summary>{{ $tt.dataTitle }} ({{ $wps | len }} weapons)</summary>
+    <table><thead><tr><th>Weapon</th><th>Dmg</th><th>AP %</th><th>Cooldown</th></tr></thead>
+    <tbody>{{ range $wps }}<tr><td>{{ .name }}</td><td>{{ .dmg }}</td><td>{{ .ap }}</td><td>{{ .cooldown }}s</td></tr>{{ end }}</tbody></table>
+  </details>
+</div>
+<script>
+(function(){var e=function(id){return document.getElementById(id)};
+var calc=function(){var w=e('mw-weapon').value.split('|'),m=e('mw-mat').value.split('|'),q=parseFloat(e('mw-qual').value)||1;
+var dmg=parseFloat(w[0])*parseFloat(m[0])*q;var ap=parseFloat(w[1])*parseFloat(m[1])*q;var cd=parseFloat(w[2]);
+e('mw-dmg').textContent=dmg.toFixed(1);e('mw-ap').textContent=ap.toFixed(1);e('mw-dps').textContent=(cd>0?(dmg/cd).toFixed(1):'—');};
+['mw-weapon','mw-mat','mw-qual'].forEach(function(id){var el=e(id);if(el){el.addEventListener('change',calc);el.addEventListener('input',calc);}});calc();})();
+</script>

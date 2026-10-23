@@ -1,0 +1,44 @@
+{{ $d := index site.Data "hydroponics_planner" }}
+{{ $L := .Page.Language.Lang }}
+{{ $t := dict "en" (dict "title" "Hydroponics & Sun Lamp Planner" "crop" "Crop" "lamps" "Sun lamps" "colonists" "Colonists" "days" "Days" "buffer" "Buffer %" "tiles" "Tiles needed" "lampsR" "Sun lamps needed" "power" "Power draw (W)" "daily" "Daily nutrition produced" "fed" "Colonists fed" "notes" "Calculation notes" "formula1" "per-tile daily nutrition = (yield × nutrition × growthMult) ÷ growDays" "formula2" "required tiles = (colonists × 1.6 × days × (1 + buffer%)) ÷ per-tile daily" "disclaimer" "Planning baselines from RimWorld 1.6 Def fields; DLC rules and mods can change in-game outcomes." "dataTitle" "Game data reference" ) "de" (dict "title" "Hydrokultur & Sonnenlampen-Planer" "crop" "Pflanze" "lamps" "Sonnenlampen" "colonists" "Kolonisten" "days" "Tage" "buffer" "Puffer %" "tiles" "Benötigte Felder" "lampsR" "Benötigte Sonnenlampen" "power" "Leistung (W)" "daily" "Nahrung pro Tag" "fed" "Versorgte Kolonisten" "notes" "Berechnungsnotizen" "formula1" "Nahrung pro Feld & Tag = (Ertrag × Nährwert × Wachstum) ÷ Wachstumstage" "formula2" "Benötigte Felder = (Kolonisten × 1.6 × Tage × (1 + Puffer)) ÷ pro Feld & Tag" "disclaimer" "Planungsrichtwerte aus RimWorld-1.6-Def-Feldern; DLC und Mods können das Spielergebnis ändern." "dataTitle" "Spieldaten-Referenz" ) "fr" (dict "title" "Planificateur Hydroculture & Lampes solaires" "crop" "Culture" "lamps" "Lampes solaires" "colonists" "Colonistes" "days" "Jours" "buffer" "Marge %" "tiles" "Cases nécessaires" "lampsR" "Lampes nécessaires" "power" "Consommation (W)" "daily" "Nutrition produite / jour" "fed" "Colonistes nourris" "notes" "Notes de calcul" "formula1" "Nutrition par case et jour = (récolte × nutrition × croissance) ÷ jours de croissance" "formula2" "Cases nécessaires = (colonistes × 1,6 × jours × (1 + marge)) ÷ par case et jour" "disclaimer" "Bases de planification issues des champs Def de RimWorld 1.6 ; DLC et mods peuvent changer les résultats." "dataTitle" "Référence des données du jeu" ) "zh-hans" (dict "title" "水培与太阳灯规划器" "crop" "作物" "lamps" "太阳灯数量" "colonists" "殖民者" "days" "天数" "buffer" "缓冲 %" "tiles" "所需种植格" "lampsR" "所需太阳灯" "power" "总耗电 (W)" "daily" "每日产出营养" "fed" "可养活殖民者" "notes" "计算说明" "formula1" "每格每日营养 =（产量 × 营养值 × 生长倍率）÷ 生长天数" "formula2" "所需格数 =（殖民者 × 1.6 × 天数 ×（1+缓冲））÷ 每格每日营养" "disclaimer" "规划基线来自 RimWorld 1.6 Def 数值；DLC 与 MOD 可能改变实际结果。" "dataTitle" "游戏数据参考" ) }}
+{{ $tt := index $t $L }}
+{{ $crops := $d.crops }}{{ $lamps := index $d.sun_lamps 0 }}{{ $basins := index $d.basins 0 }}{{ $npd := $d.nutrition_per_colonist_per_day }}
+<div class="hp-planner" id="hp-planner">
+  <h3>{{ $tt.title }}</h3>
+  <div class="hp-field"><label>{{ $tt.crop }}</label>
+    <select id="hp-crop">
+      {{ range $crops }}<option value="{{ .nutrition }}|{{ .yield }}|{{ .grow_days }}">{{ .name }}</option>{{ end }}
+    </select>
+  </div>
+  <div class="hp-row">
+    <div class="hp-field"><label>{{ $tt.colonists }}</label><input id="hp-colonists" type="number" min="1" max="200" value="6"></div>
+    <div class="hp-field"><label>{{ $tt.days }}</label><input id="hp-days" type="number" min="1" max="365" value="15"></div>
+    <div class="hp-field"><label>{{ $tt.buffer }}</label><input id="hp-buffer" type="number" min="0" max="100" value="15"></div>
+  </div>
+  <div class="hp-result">
+    <div class="hp-metric"><strong id="hp-tiles">—</strong><small>{{ $tt.tiles }}</small></div>
+    <div class="hp-metric"><strong id="hp-lamps">—</strong><small>{{ $tt.lampsR }}</small></div>
+    <div class="hp-metric"><strong id="hp-power">—</strong><small>{{ $tt.power }}</small></div>
+    <div class="hp-metric"><strong id="hp-daily">—</strong><small>{{ $tt.daily }}</small></div>
+    <div class="hp-metric"><strong id="hp-fed">—</strong><small>{{ $tt.fed }}</small></div>
+  </div>
+  <details class="calc-notes"><summary>{{ $tt.notes }}</summary>
+    <p>{{ $tt.formula1 }}</p><p>{{ $tt.formula2 }}</p>
+    <p>Sun lamp: {{ $lamps.radius }} radius, ~{{ $lamps.usable_tiles }} tiles, {{ $lamps.power }}W · Hydroponics basin: {{ $basins.power }}W, {{ $basins.growth_mult }}× growth</p>
+  </details>
+  <p class="disclaimer">{{ $tt.disclaimer }}</p>
+  <details class="game-data"><summary>{{ $tt.dataTitle }} ({{ $crops | len }} crops)</summary>
+    <table><thead><tr><th>Crop</th><th>Grow days</th><th>Yield</th><th>Nutrition</th></tr></thead>
+    <tbody>{{ range $crops }}<tr><td>{{ .name }}</td><td>{{ .grow_days }}</td><td>{{ .yield }}</td><td>{{ .nutrition }}</td></tr>{{ end }}</tbody></table>
+  </details>
+</div>
+<script>
+(function(){var e=function(id){return document.getElementById(id)};
+var calc=function(){var c=e('hp-crop').value.split('|');var nut=parseFloat(c[0]),yld=parseFloat(c[1]),grw=parseFloat(c[2]);
+var cols=parseInt(e('hp-colonists').value)||1,days=parseInt(e('hp-days').value)||1,buf=(parseInt(e('hp-buffer').value)||0)/100;
+var perTile=0;if(grw>0){perTile=(yld*nut*2.3)/grw;}var need=cols*1.6*days*(1+buf);var tiles=perTile>0?Math.ceil(need/perTile):0;var lamps=Math.ceil(tiles/100);
+var power=lamps*290+tiles*70;var daily=tiles*perTile;var fed=daily>0?Math.floor(daily/1.6):0;
+e('hp-tiles').textContent=tiles;e('hp-lamps').textContent=lamps;e('hp-power').textContent=power;
+e('hp-daily').textContent=daily.toFixed(1);e('hp-fed').textContent=fed;};
+['hp-crop','hp-colonists','hp-days','hp-buffer'].forEach(function(id){var el=e(id);if(el){el.addEventListener('input',calc);el.addEventListener('change',calc);}});calc();})();
+</script>

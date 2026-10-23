@@ -1,0 +1,43 @@
+{{ $d := index site.Data "bed_planner" }}
+{{ $L := .Page.Language.Lang }}
+{{ $t := dict "en" (dict "title" "Bed Comfort & Rest Planner" "bed" "Bed type" "material" "Material" "quality" "Quality" "comfort" "Comfort" "rest" "Rest efficiency" "mood" "Mood bonus" "notes" "Calculation notes" "formula" "comfort = baseComfort × materialFactor × qualityMultiplier" "disclaimer" "Planning baselines from RimWorld 1.6 Def fields; mods and DLC can change values." "dataTitle" "Bed data reference" ) "de" (dict "title" "Bett-Komfort & Ruhe-Planer" "bed" "Bettyp" "material" "Material" "quality" "Qualität" "comfort" "Komfort" "rest" "Ruhe-Effizienz" "mood" "Stimmungsbonus" "notes" "Berechnungsnotizen" "formula" "Komfort = Grundkomfort × Materialfaktor × Qualität" "disclaimer" "Planungsrichtwerte aus RimWorld-1.6-Def-Feldern; Mods und DLC können Werte ändern." "dataTitle" "Bettdaten-Referenz" ) "fr" (dict "title" "Planificateur Lit — Confort & Repos" "bed" "Type de lit" "material" "Matériau" "quality" "Qualité" "comfort" "Confort" "rest" "Efficacité du repos" "mood" "Bonus humeur" "notes" "Notes de calcul" "formula" "Confort = confort de base × facteur matériau × qualité" "disclaimer" "Bases de planification issues des champs Def de RimWorld 1.6 ; mods et DLC peuvent changer les valeurs." "dataTitle" "Référence des lits" ) "zh-hans" (dict "title" "床位舒适与休息规划器" "bed" "床型" "material" "材料" "quality" "品质" "comfort" "舒适度" "rest" "休息效率" "mood" "心情加成" "notes" "计算说明" "formula" "舒适度 = 基础舒适 × 材料系数 × 品质倍率" "disclaimer" "规划基线来自 RimWorld 1.6 Def 数值；MOD 与 DLC 可能改变数值。" "dataTitle" "床位数据参考" ) }}
+{{ $tt := index $t $L }}
+{{ $beds := $d.beds }}{{ $mats := $d.materials }}{{ $quals := $d.qualities }}
+<div class="bp-planner" id="bp-planner">
+  <h3>{{ $tt.title }}</h3>
+  <div class="hp-field"><label>{{ $tt.bed }}</label>
+    <select id="bp-bed">
+      {{ range $beds }}<option value="{{ .comfort }}|{{ .rest_mult }}">{{ .name }}</option>{{ end }}
+    </select>
+  </div>
+  <div class="hp-row">
+    <div class="hp-field"><label>{{ $tt.material }}</label>
+      <select id="bp-mat">
+        {{ range $mats }}<option value="{{ .comfort_mult }}">{{ .name }}</option>{{ end }}
+      </select>
+    </div>
+    <div class="hp-field"><label>{{ $tt.quality }}</label>
+      <select id="bp-qual">
+        {{ range $quals }}<option value="{{ .mult }}">{{ .name }}</option>{{ end }}
+      </select>
+    </div>
+  </div>
+  <div class="hp-result">
+    <div class="hp-metric"><strong id="bp-comfort">—</strong><small>{{ $tt.comfort }}</small></div>
+    <div class="hp-metric"><strong id="bp-rest">—</strong><small>{{ $tt.rest }}</small></div>
+    <div class="hp-metric"><strong id="bp-mood">—</strong><small>{{ $tt.mood }}</small></div>
+  </div>
+  <details class="calc-notes"><summary>{{ $tt.notes }}</summary><p>{{ $tt.formula }}</p></details>
+  <p class="disclaimer">{{ $tt.disclaimer }}</p>
+  <details class="game-data"><summary>{{ $tt.dataTitle }} ({{ $beds | len }} beds)</summary>
+    <table><thead><tr><th>Bed</th><th>Base comfort</th><th>Rest mult</th></tr></thead>
+    <tbody>{{ range $beds }}<tr><td>{{ .name }}</td><td>{{ .comfort }}</td><td>{{ .rest_mult }}</td></tr>{{ end }}</tbody></table>
+  </details>
+</div>
+<script>
+(function(){var e=function(id){return document.getElementById(id)};
+var calc=function(){var b=e('bp-bed').value.split('|');var base=parseFloat(b[0]),rest=parseFloat(b[1]);var m=parseFloat(e('bp-mat').value)||1;var q=parseFloat(e('bp-qual').value)||1;
+var comfort=(base*m*q);var mood=comfort>=1.2?'+8':comfort>=0.9?'+6':comfort>=0.65?'+4':comfort>=0.4?'+2':'0';
+e('bp-comfort').textContent=comfort.toFixed(2);e('bp-rest').textContent=(rest*100).toFixed(0)+'%';e('bp-mood').textContent=mood;};
+['bp-bed','bp-mat','bp-qual'].forEach(function(id){var el=e(id);if(el){el.addEventListener('change',calc);el.addEventListener('input',calc);}});calc();})();
+</script>

@@ -159,3 +159,21 @@ th { background: #f0e5cf; color: #6b4a22; }
 .related-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; overflow: hidden; }
 .related-body strong { font-size: 0.88rem; color: #4a3b28; line-height: 1.35; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 .related-body small { font-size: 0.78rem; color: #7a6a4c; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+
+/* ===== P1 新工具组件（Hub 风格：实时指标卡 + 公式区 + 数据表 + 免责） ===== */
+.hp-planner, .mw-calc, .kc-calc, .bp-planner, .sp-planner { margin: 18px 0; padding: 16px; background: rgba(255,253,246,.96); border: 2px solid #e5d9c2; border-radius: 10px; }
+.hp-planner h3, .mw-calc h3, .kc-calc h3, .bp-planner h3, .sp-planner h3 { margin-top: 0; color: #b4562a; }
+.hp-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+.hp-field input[type=number] { width: 100%; box-sizing: border-box; }
+.hp-field input[type=range] { width: 100%; }
+.hp-result { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 14px; }
+.hp-metric { background: #f3e8d2; border: 2px solid #e0d0ac; border-radius: 8px; padding: 10px 8px; text-align: center; }
+.hp-metric strong { display: block; font-size: 1.35rem; color: #8a4a1c; }
+.hp-metric small { font-size: 0.72rem; color: #6d5b3c; }
+.calc-notes, .game-data { margin-top: 12px; }
+.calc-notes summary, .game-data summary { cursor: pointer; font-weight: 700; color: #8a4a1c; }
+.calc-notes p { margin: 6px 0 0; font-size: 0.85rem; color: #5d4c33; }
+.game-data table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 0.82rem; }
+.game-data th, .game-data td { border: 1px solid #e0d0ac; padding: 4px 6px; text-align: left; }
+.game-data th { background: #f3e8d2; }
+.disclaimer { margin-top: 12px; font-size: 0.75rem; color: #8a7a5c; font-style: italic; }

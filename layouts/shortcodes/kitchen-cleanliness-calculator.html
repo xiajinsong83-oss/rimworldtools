@@ -1,0 +1,32 @@
+{{ $d := index site.Data "kitchen_cleanliness" }}
+{{ $L := .Page.Language.Lang }}
+{{ $t := dict "en" (dict "title" "Kitchen Cleanliness & Food Poisoning Calculator" "filth" "Kitchen filth (0–50)" "cookSkill" "Cooking skill (0–20)" "meals" "Meals per day" "perMeal" "Risk per meal" "perDay" "Expected poisonings per day" "perMonth" "Expected per month (30d)" "notes" "Calculation notes" "formula" "per-meal risk % = 0.1 + filth × 0.17 − skill × 0.05 (min 0.1)" "disclaimer" "Planning baseline from community consensus of RimWorld 1.6 mechanics; mods and DLC can change outcomes." "dataTitle" "Filth risk reference" ) "de" (dict "title" "Küchenreinheit & Lebensmittelvergiftung" "filth" "Küchen-Verschmutzung (0–50)" "cookSkill" "Kochfertigkeit (0–20)" "meals" "Mahlzeiten pro Tag" "perMeal" "Risiko pro Mahlzeit" "perDay" "Vergiftungen pro Tag" "perMonth" "Pro Monat (30T)" "notes" "Berechnungsnotizen" "formula" "Risiko pro Mahlzeit % = 0,1 + Schmutz × 0,17 − Fertigkeit × 0,05 (min 0,1)" "disclaimer" "Planungsrichtwert aus Community-Konsens der RimWorld-1.6-Mechanik; Mods und DLC können Ergebnisse ändern." "dataTitle" "Schmutzrisiko-Referenz" ) "fr" (dict "title" "Propreté cuisine & Intoxication alimentaire" "filth" "Saleté cuisine (0–50)" "cookSkill" "Compétence cuisine (0–20)" "meals" "Repas par jour" "perMeal" "Risque par repas" "perDay" "Intoxications / jour" "perMonth" "Par mois (30j)" "notes" "Notes de calcul" "formula" "Risque par repas % = 0,1 + saleté × 0,17 − compétence × 0,05 (min 0,1)" "disclaimer" "Base de planification issue du consensus communautaire des mécaniques 1.6 ; mods et DLC peuvent changer les résultats." "dataTitle" "Référence des risques" ) "zh-hans" (dict "title" "厨房清洁与食物中毒计算器" "filth" "厨房污染度 (0–50)" "cookSkill" "烹饪技能 (0–20)" "meals" "每日餐数" "perMeal" "每餐风险" "perDay" "每日预期中毒" "perMonth" "每月预期 (30天)" "notes" "计算说明" "formula" "每餐风险 % = 0.1 + 污染度 × 0.17 − 技能 × 0.05（最低 0.1）" "disclaimer" "规划基线来自 RimWorld 1.6 机制的社区共识；MOD 与 DLC 可能改变结果。" "dataTitle" "污染度风险参考" ) }}
+{{ $tt := index $t $L }}
+{{ $guide := $d.filth_guide }}
+<div class="kc-calc" id="kc-calc">
+  <h3>{{ $tt.title }}</h3>
+  <div class="hp-row">
+    <div class="hp-field"><label>{{ $tt.filth }}</label><input id="kc-filth" type="range" min="0" max="50" step="1" value="2"></div>
+    <div class="hp-field"><label>{{ $tt.cookSkill }}</label><input id="kc-skill" type="number" min="0" max="20" value="8"></div>
+    <div class="hp-field"><label>{{ $tt.meals }}</label><input id="kc-meals" type="number" min="1" max="200" value="20"></div>
+  </div>
+  <div class="hp-result">
+    <div class="hp-metric"><strong id="kc-risk">—</strong><small>{{ $tt.perMeal }}</small></div>
+    <div class="hp-metric"><strong id="kc-day">—</strong><small>{{ $tt.perDay }}</small></div>
+    <div class="hp-metric"><strong id="kc-month">—</strong><small>{{ $tt.perMonth }}</small></div>
+  </div>
+  <details class="calc-notes"><summary>{{ $tt.notes }}</summary><p>{{ $tt.formula }}</p></details>
+  <p class="disclaimer">{{ $tt.disclaimer }}</p>
+  <details class="game-data"><summary>{{ $tt.dataTitle }}</summary>
+    <table><thead><tr><th>Kitchen state</th><th>Filth</th><th>~Risk</th></tr></thead>
+    <tbody>{{ range $guide }}<tr><td>{{ .label }}</td><td>{{ .filth }}</td><td>{{ .risk }}</td></tr>{{ end }}</tbody></table>
+  </details>
+</div>
+<script>
+(function(){var e=function(id){return document.getElementById(id)};
+var fmt=function(v){return v<0.01?'<0.01':v.toFixed(2)};
+var calc=function(){var filth=parseFloat(e('kc-filth').value)||0;var skill=parseInt(e('kc-skill').value)||0;var meals=parseInt(e('kc-meals').value)||1;
+var risk=0.1+filth*0.17-skill*0.05;if(risk<0.1)risk=0.1;var day=(meals*risk)/100;var month=day*30;
+e('kc-risk').textContent=fmt(risk)+'%';e('kc-day').textContent=day.toFixed(2);e('kc-month').textContent=month.toFixed(1);};
+['kc-filth','kc-skill','kc-meals'].forEach(function(id){var el=e(id);if(el){el.addEventListener('input',calc);el.addEventListener('change',calc);}});calc();})();
+</script>

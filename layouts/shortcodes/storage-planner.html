@@ -1,0 +1,37 @@
+{{ $d := index site.Data "storage_planner" }}
+{{ $L := .Page.Language.Lang }}
+{{ $t := dict "en" (dict "title" "Storage & Shelf Capacity Planner" "width" "Room width (tiles)" "length" "Room length (tiles)" "shelf" "Shelves (%)" "item" "Item type" "stacks" "Total stacks" "units" "Total units stored" "shelves" "Shelves needed" "tiles" "Storage tiles" "notes" "Calculation notes" "formula" "shelf tiles = floor(W×L×shelf%) ; stacks per tile = 1 (shelf) or 1 (pile) ; units = stacks × stackLimit" "disclaimer" "Planning baselines from RimWorld 1.6 stackLimit fields; mods can change stack sizes." "dataTitle" "Stack limit reference" ) "de" (dict "title" "Lager- & Regalkapazitäts-Planer" "width" "Raumbreite (Felder)" "length" "Raumlänge (Felder)" "shelf" "Regale (%)" "item" "Gegenstand" "stacks" "Stapel gesamt" "units" "Einheiten gesamt" "shelves" "Regale nötig" "tiles" "Lagerfelder" "notes" "Berechnungsnotizen" "formula" "Regalfelder = floor(B×L×Regal%) ; Stapel pro Feld = 1 ; Einheiten = Stapel × Stapellimit" "disclaimer" "Planungsrichtwerte aus RimWorld-1.6-Stapellimit-Feldern; Mods können Stapelgrößen ändern." "dataTitle" "Stapellimit-Referenz" ) "fr" (dict "title" "Planificateur Stockage & Étagères" "width" "Largeur (cases)" "length" "Longueur (cases)" "shelf" "Étagères (%)" "item" "Type d'objet" "stacks" "Piles totales" "units" "Unités stockées" "shelves" "Étagères nécessaires" "tiles" "Cases de stockage" "notes" "Notes de calcul" "formula" "Cases d'étagères = plancher(L×l×%) ; piles par case = 1 ; unités = piles × limite de pile" "disclaimer" "Bases de planification issues des limites de pile RimWorld 1.6 ; mods peuvent changer les tailles." "dataTitle" "Référence des limites de pile" ) "zh-hans" (dict "title" "储物与货架容量规划器" "width" "房间宽 (格)" "length" "房间长 (格)" "shelf" "货架占比 (%)" "item" "物品类型" "stacks" "总堆叠数" "units" "总储量" "shelves" "所需货架数" "tiles" "储物格数" "notes" "计算说明" "formula" "货架格 = floor(宽×长×货架%)；每格 1 堆叠；总储量 = 堆叠 × 堆叠上限" "disclaimer" "规划基线来自 RimWorld 1.6 堆叠上限数值；MOD 可能改变堆叠大小。" "dataTitle" "堆叠上限参考" ) }}
+{{ $tt := index $t $L }}
+{{ $stacks := $d.stacks }}
+<div class="sp-planner" id="sp-planner">
+  <h3>{{ $tt.title }}</h3>
+  <div class="hp-row">
+    <div class="hp-field"><label>{{ $tt.width }}</label><input id="sp-w" type="number" min="1" max="200" value="9"></div>
+    <div class="hp-field"><label>{{ $tt.length }}</label><input id="sp-l" type="number" min="1" max="200" value="7"></div>
+    <div class="hp-field"><label>{{ $tt.shelf }}</label><input id="sp-shelf" type="number" min="0" max="100" value="50"></div>
+  </div>
+  <div class="hp-field"><label>{{ $tt.item }}</label>
+    <select id="sp-item">
+      {{ range $stacks }}<option value="{{ .limit }}">{{ .name }} (×{{ .limit }})</option>{{ end }}
+    </select>
+  </div>
+  <div class="hp-result">
+    <div class="hp-metric"><strong id="sp-stacks">—</strong><small>{{ $tt.stacks }}</small></div>
+    <div class="hp-metric"><strong id="sp-units">—</strong><small>{{ $tt.units }}</small></div>
+    <div class="hp-metric"><strong id="sp-shelves">—</strong><small>{{ $tt.shelves }}</small></div>
+    <div class="hp-metric"><strong id="sp-tiles">—</strong><small>{{ $tt.tiles }}</small></div>
+  </div>
+  <details class="calc-notes"><summary>{{ $tt.notes }}</summary><p>{{ $tt.formula }}</p></details>
+  <p class="disclaimer">{{ $tt.disclaimer }}</p>
+  <details class="game-data"><summary>{{ $tt.dataTitle }} ({{ $stacks | len }} items)</summary>
+    <table><thead><tr><th>Item</th><th>Stack limit</th></tr></thead>
+    <tbody>{{ range $stacks }}<tr><td>{{ .name }}</td><td>{{ .limit }}</td></tr>{{ end }}</tbody></table>
+  </details>
+</div>
+<script>
+(function(){var e=function(id){return document.getElementById(id)};
+var calc=function(){var w=parseInt(e('sp-w').value)||1,l=parseInt(e('sp-l').value)||1,s=Math.min(100,Math.max(0,parseInt(e('sp-shelf').value)||0))/100;
+var limit=parseInt(e('sp-item').value)||10;var tiles=Math.floor(w*l*s);var stacks=tiles;var units=stacks*limit;var shelves=Math.ceil(tiles/2);
+e('sp-stacks').textContent=stacks;e('sp-units').textContent=units.toLocaleString();e('sp-shelves').textContent=shelves;e('sp-tiles').textContent=tiles;};
+['sp-w','sp-l','sp-shelf','sp-item'].forEach(function(id){var el=e(id);if(el){el.addEventListener('input',calc);el.addEventListener('change',calc);}});calc();})();
+</script>

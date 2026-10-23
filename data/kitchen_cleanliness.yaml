@@ -1,0 +1,22 @@
+# RimWorld Kitchen Cleanliness & Food Poisoning — 厨房清洁与食物中毒（1.6 社区共识公式）
+# 公式口径：每餐中毒基础概率 + 厨房污染度加成 - 厨师技能减免（社区共识，官方 Def 推论）
+
+# 每餐基础中毒率（%）——干净厨房
+base_risk_per_meal: 0.1
+
+# 每 1 点厨房污染度（filth total）额外增加每餐风险（%）
+filth_risk_per_point: 0.17
+
+# 厨师每级烹饪技能降低的每餐风险（%）
+skill_reduction_per_level: 0.05
+
+# 每名殖民者每日餐数（官方生理节奏约值）
+meals_per_colonist_per_day: 2.5
+
+# 污染度常见区间（用于 Game Data 表）
+filth_guide:
+  - { label: "Spotless (cleaned)",          filth: 0.0,  risk: "~0.10%" }
+  - { label: "Light debris (1 point)",      filth: 1.0,  risk: "~0.27%" }
+  - { label: "Dirty kitchen (10 points)",   filth: 10.0, risk: "~1.80%" }
+  - { label: "Messy after raid (30 pts)",   filth: 30.0, risk: "~5.20%" }
+  - { label: "Neglected (50 points)",       filth: 50.0, risk: "~8.60%" }
