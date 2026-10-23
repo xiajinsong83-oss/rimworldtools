@@ -1,5 +1,5 @@
 {{ define "main" }}
-{{ if eq .Params.type "tool" }}
+{{ if or (eq .Params.type "tool") (eq .Section "tools") }}
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"SoftwareApplication","name":"{{ .Title }}","description":"{{ .Description }}","url":"{{ .Permalink }}","applicationCategory":"GameApplication","operatingSystem":"Web","inLanguage":"{{ .Site.Language.LanguageCode }}","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"{{ .Site.Title }}","url":"{{ .Site.BaseURL }}"}}
 </script>
@@ -8,11 +8,27 @@
 {"@context":"https://schema.org","@type":"Article","headline":"{{ .Title }}","description":"{{ .Description }}","url":"{{ .Permalink }}","datePublished":"{{ .Date.Format "2006-01-02" }}","inLanguage":"{{ .Site.Language.LanguageCode }}","author":{"@type":"Organization","name":"{{ .Site.Title }}","url":"{{ .Site.BaseURL }}"}}
 </script>
 {{ end }}
+{{ if .Params.faq }}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{{ range $i, $f := .Params.faq }}{{ if $i }},{{ end }}{"@type":"Question","name":{{ $f.q | jsonify }},"acceptedAnswer":{"@type":"Answer","text":{{ $f.a | jsonify }}}}{{ end }}]}
+</script>
+{{ end }}
 <article class="page">
   <h1>{{ .Title }}</h1>
   <div class="page-content">
     {{ .Content }}
   </div>
+  {{ if .Params.faq }}
+  <div class="faq-list">
+    <h2>FAQ</h2>
+    {{ range .Params.faq }}
+    <div class="faq-item">
+      <h3>{{ .q }}</h3>
+      <p>{{ .a }}</p>
+    </div>
+    {{ end }}
+  </div>
+  {{ end }}
   {{ if eq .Params.type "tool" }}
   <!-- 工具页交互区下方广告位 -->
   <div class="ad-slot ad-tools">
