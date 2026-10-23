@@ -1,4 +1,13 @@
 {{ define "main" }}
+{{ if eq .Params.type "tool" }}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"{{ .Title }}","description":"{{ .Description }}","url":"{{ .Permalink }}","applicationCategory":"GameApplication","operatingSystem":"Web","inLanguage":"{{ .Site.Language.LanguageCode }}","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"{{ .Site.Title }}","url":"{{ .Site.BaseURL }}"}}
+</script>
+{{ else if not .Date.IsZero }}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"{{ .Title }}","description":"{{ .Description }}","url":"{{ .Permalink }}","datePublished":"{{ .Date.Format "2006-01-02" }}","inLanguage":"{{ .Site.Language.LanguageCode }}","author":{"@type":"Organization","name":"{{ .Site.Title }}","url":"{{ .Site.BaseURL }}"}}
+</script>
+{{ end }}
 <article class="page">
   <h1>{{ .Title }}</h1>
   <div class="page-content">
