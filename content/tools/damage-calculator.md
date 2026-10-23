@@ -17,3 +17,4 @@ faq:
 <h2>How to use</h2>
 <p>How to use: select or enter your values in the form, hit the calculate button, and read the result panel. All numbers follow the current 1.6 / Odyssey vanilla values and community-consensus data.</p>
 
+{{< damage-calculator >}}

@@ -14,3 +14,4 @@ faq:
 <h2>So funktioniert es</h2>
 <p>So funktioniert es: Werte in das Formular eintragen, auf Berechnen klicken und das Ergebnis ablesen. Alle Werte entsprechen RimWorld 1.6 / Odyssey.</p>
 
+{{< pawn-planner >}}

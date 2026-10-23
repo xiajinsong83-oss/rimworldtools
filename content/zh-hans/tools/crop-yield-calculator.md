@@ -15,3 +15,4 @@ faq:
 <h2>使用方法</h2>
 <p>使用方法：在表单中填入数值，点击计算按钮，然后查看结果面板。全部数值基于 RimWorld 1.6 与 Odyssey 版本口径。</p>
 
+{{< crop-yield-calculator >}}
